@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAFAF7; }
+  nav {
+    background: #FAFAF7;
+    border-bottom: 1px solid rgba(17,17,17,0.12);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+  .back { color: #1B3A5C; cursor: pointer; }
+  .sep  { color: rgba(17,17,17,0.2); }
+  .title { color: #555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .home-nav { padding: 24px 24px 0; }
+  .home-links { display: flex; flex-direction: column; gap: 0; margin-top: 20px; }
+  .home-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: #555;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(17,17,17,0.08);
+    display: flex;
+    gap: 12px;
+  }
+  .home-link .num { color: #1B3A5C; }
+</style>
+</head>
+<body>
+  <nav>
+    <span class="back">← back</span>
+    <span class="sep">/</span>
+    <span class="title">rf-test-fixture-fabrication</span>
+  </nav>
+  <div class="home-nav">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#888;margin-bottom:8px">home navigation</div>
+    <div class="home-links">
+      <div class="home-link"><span class="num">§01</span> projects</div>
+      <div class="home-link"><span class="num">§02</span> leadership</div>
+      <div class="home-link"><span class="num">§03</span> about</div>
+      <div class="home-link"><span class="num">§04</span> contact</div>
+    </div>
+  </div>
+</body>
+</html>
