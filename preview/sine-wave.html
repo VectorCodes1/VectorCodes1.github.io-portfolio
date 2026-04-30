@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=JetBrains+Mono:wght@400&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAFAF7; padding: 32px 28px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+  .name-row { display: flex; align-items: center; gap: 12px; }
+  .name { font-family: 'EB Garamond', serif; font-size: 42px; color: #111; line-height: 1; }
+
+  /* Rectified sine — full-wave, all humps positive */
+  .rectifier { display: inline-block; overflow: hidden; width: 88px; height: 18px; opacity: 0.4; }
+  .rectifier svg { animation: drift 3.2s linear infinite; width: 200%; height: 100%; }
+  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .subtitle { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #555; letter-spacing: 0.02em; }
+  .label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #1B3A5C; letter-spacing: 0.06em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <div class="label">full-wave rectified · loops</div>
+  <div class="name-row">
+    <span class="name">Matias Guillen</span>
+    <span class="rectifier">
+      <!--
+        Full-wave rectified sine: all arcs curve upward from baseline.
+        Each arch spans 30px wide, peak at y=1 (top), valley touches y=17 (baseline).
+        Two full periods tiled so the seamless loop covers translateX(-50%).
+      -->
+      <svg viewBox="0 0 240 18" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <!-- Half-wave rectifier: arch then flat, alternating. 30px per half-cycle. -->
+        <path d="
+          M0 17 Q7.5 1 15 17
+          L30 17
+          Q37.5 1 45 17
+          L60 17
+          Q67.5 1 75 17
+          L90 17
+          Q97.5 1 105 17
+          L120 17
+          Q127.5 1 135 17
+          L150 17
+          Q157.5 1 165 17
+          L180 17
+          Q187.5 1 195 17
+          L210 17
+          Q217.5 1 225 17
+          L240 17
+        " stroke="#1B3A5C" stroke-width="1.5" fill="none"/>
+      </svg>
+    </span>
+  </div>
+  <div class="subtitle">Power Electronics &amp; RF Systems Engineer</div>
+</body>
+</html>

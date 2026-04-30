@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAFAF7; padding: 0 24px; }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(17,17,17,0.12);
+    cursor: pointer;
+    position: relative;
+  }
+  .row:first-child { border-top: 1px solid rgba(17,17,17,0.12); }
+  .row:hover { background: rgba(27,58,92,0.04); margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
+  .title { font-family: 'EB Garamond', serif; font-size: 17px; color: #111; grid-column:1; grid-row:1; }
+  .date  { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #555; grid-column:2; grid-row:1; letter-spacing:0.02em; white-space:nowrap; }
+  .desc  { font-family: 'EB Garamond', serif; font-style:italic; font-size:15px; color:#555; grid-column:1/-1; grid-row:2; margin-top:2px; }
+  .node { position:absolute; top:-3px; left:-24px; width:5px; height:5px; background:#1B3A5C; border-radius:50%; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="title">Buck Converter Design</div>
+    <div class="date">Jan 2024</div>
+    <div class="desc">Switching power supply for embedded audio amplifier; KiCad PCB layout</div>
+  </div>
+  <div class="row">
+    <div class="title">Phased Array Antenna Simulation</div>
+    <div class="date">Sep 2023</div>
+    <div class="desc">Beamforming model and pattern analysis in MATLAB</div>
+  </div>
+  <div class="row">
+    <div class="title">RF Test Fixture Fabrication</div>
+    <div class="date">Apr 2024</div>
+    <div class="desc">Custom SolidWorks and FDM fixture improving RF signal path integrity</div>
+  </div>
+</body>
+</html>

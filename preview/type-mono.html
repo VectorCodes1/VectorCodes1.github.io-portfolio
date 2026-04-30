@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAFAF7; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .cell { padding: 10px 0; border-bottom: 1px solid rgba(17,17,17,0.08); }
+  .cell:nth-child(odd) { padding-right: 24px; border-right: 1px solid rgba(17,17,17,0.08); }
+  .cell:nth-child(even) { padding-left: 24px; }
+  .token { font-size: 9px; color: #1B3A5C; letter-spacing: 0.06em; margin-bottom: 4px; text-transform: uppercase; }
+  .specimen { color: #111; letter-spacing: 0.02em; line-height: 1.3; }
+  .sz-xs  { font-size: 10px; color: #555; }
+  .sz-sm  { font-size: 11px; }
+  .sz-md  { font-size: 13px; }
+  .sz-lg  { font-size: 16px; font-weight: 500; }
+  .sz-acc { font-size: 11px; color: #1B3A5C; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="cell">
+    <div class="token">nav · 11px</div>
+    <div class="specimen sz-sm">§01 projects  §02 leadership</div>
+  </div>
+  <div class="cell">
+    <div class="token">date · 10px</div>
+    <div class="specimen sz-xs">Apr 2024 – Apr 2026</div>
+  </div>
+  <div class="cell">
+    <div class="token">spec key · 12px</div>
+    <div class="specimen sz-md" style="color:#555">Frequency<br>Topology<br>Tools</div>
+  </div>
+  <div class="cell">
+    <div class="token">spec val · 12px · 500</div>
+    <div class="specimen sz-md" style="font-weight:500">2.4 GHz – 18 GHz<br>Buck / Flyback<br>KiCad, LTSpice</div>
+  </div>
+  <div class="cell">
+    <div class="token">section num · accent</div>
+    <div class="specimen sz-acc">§01&ensp;§02&ensp;§03&ensp;§04&ensp;§05</div>
+  </div>
+  <div class="cell">
+    <div class="token">back nav · accent</div>
+    <div class="specimen sz-acc">← back to projects</div>
+  </div>
+</div>
+</body>
+</html>

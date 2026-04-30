@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matias Guillen — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body { background: #FAFAF7; }
+  @keyframes sineDrift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Mobile viewport */
+  #root { max-width: 430px; margin: 0 auto; min-height: 100vh; box-shadow: 0 0 0 1px rgba(0,0,0,0.06); background: #FAFAF7; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(17,17,17,0.15); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Shared StickyNav component -->
+<script type="text/babel">
+const StickyNav = ({ title, onBack }) => (
+  <nav style={{
+    position: 'sticky', top: 0, background: '#FAFAF7',
+    borderBottom: '1px solid rgba(17,17,17,0.12)',
+    zIndex: 100, padding: '12px 20px',
+    display: 'flex', alignItems: 'center', gap: 12,
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: 11, letterSpacing: '0.02em',
+  }}>
+    <button onClick={onBack} style={{
+      color: '#1B3A5C', background: 'none', border: 'none',
+      cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit',
+      letterSpacing: 'inherit', padding: 0, minHeight: 44,
+    }}>← back</button>
+    <span style={{ color: 'rgba(17,17,17,0.2)' }}>/</span>
+    <span style={{ color: '#555', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</span>
+  </nav>
+);
+Object.assign(window, { StickyNav });
+</script>
+
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="ProjectsIndex.jsx"></script>
+<script type="text/babel" src="LeadershipIndex.jsx"></script>
+<script type="text/babel" src="DetailPage.jsx"></script>
+<script type="text/babel" src="AboutContact.jsx"></script>
+<script type="text/babel" src="ExperiencePage.jsx"></script>
+
+<script type="text/babel">
+// ─── Photo data (real assets) ────────────────────────────────────────────
+const PHOTO_MAP = {
+  'ieee-president': [
+    { src: '../../assets/photos/president-1.jpg', caption: 'Leading the IEEE UCF general meeting, Spring 2025.' },
+    { src: '../../assets/photos/president-2.jpg', caption: 'Officer board photo at UCF Engineering Building, Apr 2025.' },
+    { src: '../../assets/photos/president-3.jpg', caption: 'Receiving the Region 3 Exemplary Student Branch Award.' },
+  ],
+  'ieee-project-chair': [
+    { src: '../../assets/photos/project-chair-1.jpg', caption: 'Presenting technical workshop to new members, Fall 2024.' },
+    { src: '../../assets/photos/project-chair-2.jpg', caption: 'Project review session with team leads, Mar 2025.' },
+  ],
+  'ieee-service': [
+    { src: '../../assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop at a local Orlando school.' },
+    { src: '../../assets/photos/service-committee-2.jpg', caption: 'FIRST Robotics volunteering, Feb 2024.' },
+    { src: '../../assets/photos/service-committee-3.jpg', caption: 'Beach cleanup event with IEEE UCF Service Committee.' },
+    { src: '../../assets/photos/service-committee-4.jpg', caption: 'Community outreach — STEM demonstration.' },
+  ],
+  'circuit-comp': [
+    { src: '../../assets/photos/circuit-design-competition-1.jpg', caption: 'Circuit Design Competition setup, UCF, Mar 2024.' },
+    { src: '../../assets/photos/circuit-design-competition-2.jpg', caption: 'Analog signal conditioning circuit under test.' },
+    { src: '../../assets/photos/circuit-design-competition-3.jpg', caption: '2nd place award presentation.' },
+  ],
+  'lockheed': [
+    { src: '../../assets/photos/solidworks-cert.jpg', caption: 'SolidWorks Certified Associate (CSWA) certificate.' },
+    { src: '../../assets/photos/exemplary-student-branch.jpg', caption: 'Region 3 Exemplary Student Branch Award.' },
+  ],
+};
+
+// Attach photos to existing data
+(window.LEADERSHIP || []).forEach(item => { item.photos = PHOTO_MAP[item.id] || []; });
+(window.PROJECTS   || []).forEach(item => { item.photos = PHOTO_MAP[item.id] || []; });
+(window.EXPERIENCE || []).forEach(item => { item.photos = PHOTO_MAP[item.id] || []; });
+
+// ─── Router / App ────────────────────────────────────────────────────────
+const App = () => {
+  const [page, setPage] = React.useState('home');
+  const [detail, setDetail] = React.useState(null);
+  const [detailType, setDetailType] = React.useState(null);
+
+  const navigate = (p) => { setPage(p); setDetail(null); window.scrollTo(0, 0); };
+
+  const openDetail = (item, type) => {
+    // Enrich with photos
+    item.photos = PHOTO_MAP[item.id] || [];
+    setDetail(item);
+    setDetailType(type);
+    window.scrollTo(0, 0);
+  };
+
+  if (detail) {
+    return <DetailPage item={detail} type={detailType} onBack={() => { setDetail(null); window.scrollTo(0, 0); }} />;
+  }
+
+  switch (page) {
+    case 'home':       return <Home onNavigate={navigate} />;
+    case 'projects':   return <ProjectsIndex onNavigate={navigate} onSelectProject={p => openDetail(p, 'project')} />;
+    case 'leadership': return <LeadershipIndex onNavigate={navigate} onSelectLeadership={l => openDetail(l, 'leadership')} />;
+    case 'experience': return <ExperiencePage onNavigate={navigate} />;
+    case 'contact':    return <Contact onNavigate={navigate} />;
+    case 'resume':     return <ResumeMobile onNavigate={navigate} />;
+    default:           return <Home onNavigate={navigate} />;
+  }
+};
+
+// Mobile resume page
+const ResumeMobile = ({ onNavigate }) => (
+  <div style={{minHeight:'100vh',background:'#FAFAF7',display:'flex',flexDirection:'column'}}>
+    <nav style={{position:'sticky',top:0,background:'#FAFAF7',borderBottom:'1px solid rgba(17,17,17,0.12)',zIndex:100,padding:'12px 20px',display:'flex',alignItems:'center',gap:12,fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.02em'}}>
+      <button onClick={() => onNavigate('home')} style={{color:'#1B3A5C',background:'none',border:'none',cursor:'pointer',fontFamily:'inherit',fontSize:'inherit',letterSpacing:'inherit',padding:0,minHeight:44}}>← back</button>
+      <span style={{color:'rgba(17,17,17,0.2)'}}>/</span>
+      <span style={{color:'#555'}}>resume</span>
+    </nav>
+    <div style={{padding:'20px 20px 12px',display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'1px solid rgba(17,17,17,0.12)'}}>
+      <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,color:'#1B3A5C',letterSpacing:'0.02em'}}>§05 resume</span>
+      <a href="../../assets/Profile.pdf" download style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,color:'#1B3A5C',border:'1px solid rgba(27,58,92,0.35)',padding:'6px 12px',textDecoration:'none'}}>↓ download</a>
+    </div>
+    <iframe src="../../assets/Profile.pdf" style={{flex:1,width:'100%',border:'none',minHeight:'80vh'}} title="Resume"></iframe>
+  </div>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
