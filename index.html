@@ -63,6 +63,17 @@ const Reveal = ({ children, delay = 0 }) => {
   );
 };
 
+/* ─── Mobile detection hook ─────────────────────────────────────────────── */
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+  React.useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return isMobile;
+};
+
 /* ─── Sidebar ──────────────────────────────────────────────────────────── */
 const NAV_ITEMS = [
   { label: 'Experience',  page: 'experience' },
@@ -72,48 +83,106 @@ const NAV_ITEMS = [
   { label: 'Contact',     page: 'contact'    },
 ];
 
-const Sidebar = ({ activePage, onNavigate }) => {
+const NavItems = ({ activePage, onNavigate, onClose }) => {
   const [hovered, setHovered] = React.useState(null);
   return (
-    <aside style={sb.aside}>
-      {/* Name + wave */}
-      <div style={sb.nameBlock} onClick={() => onNavigate('home')} role="button" tabIndex={0}
-           onKeyDown={e => e.key==='Enter' && onNavigate('home')} aria-label="Home">
-        <img src="assets/profileimage1.png" alt="Matias Guillen" style={sb.profileImg} />
-        <div style={sb.nameRow}>
-          <span style={sb.name}>Matias Guillen</span>
-        </div>
-        <div style={sb.wave}>
-          <svg viewBox="0 0 240 18" style={sb.waveSvg} fill="none" preserveAspectRatio="none">
-            <path d="M0 17 Q7.5 1 15 17 L30 17 Q37.5 1 45 17 L60 17 Q67.5 1 75 17 L90 17 Q97.5 1 105 17 L120 17 Q127.5 1 135 17 L150 17 Q157.5 1 165 17 L180 17 Q187.5 1 195 17 L210 17 Q217.5 1 225 17 L240 17"
-              stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
-          </svg>
-        </div>
-        <div style={sb.subtitle}>Hey — I'm Matias!</div>
-      </div>
-
-      <div style={sb.dividerFull}></div>
-
-      {/* Nav */}
-      <nav style={sb.nav}>
-        {NAV_ITEMS.map(({label, page}) => {
-          const active = activePage === page;
-          return (
-            <button
-              key={page}
-              style={{...sb.navBtn, ...(active ? sb.navBtnActive : {}), ...(hovered===page && !active ? sb.navBtnHover : {})}}
-              onMouseEnter={() => setHovered(page)}
-              onMouseLeave={() => setHovered(null)}
-              onClick={() => onNavigate(page)}
-            >
-              <span style={{...sb.navLabel, ...(active ? {color:'#111'} : {})}}>{label}</span>
-            </button>
-          );
-        })}
-      </nav>
-
-    </aside>
+    <>
+      {NAV_ITEMS.map(({label, page}) => {
+        const active = activePage === page;
+        return (
+          <button
+            key={page}
+            style={{...sb.navBtn, ...(active ? sb.navBtnActive : {}), ...(hovered===page && !active ? sb.navBtnHover : {})}}
+            onMouseEnter={() => setHovered(page)}
+            onMouseLeave={() => setHovered(null)}
+            onClick={() => { onNavigate(page); onClose && onClose(); }}
+          >
+            <span style={{...sb.navLabel, ...(active ? {color:'#111'} : {})}}>{label}</span>
+          </button>
+        );
+      })}
+    </>
   );
+};
+
+const Sidebar = ({ activePage, onNavigate }) => (
+  <aside style={sb.aside}>
+    <div style={sb.nameBlock} onClick={() => onNavigate('home')} role="button" tabIndex={0}
+         onKeyDown={e => e.key==='Enter' && onNavigate('home')} aria-label="Home">
+      <img src="assets/profileimage1.png" alt="Matias Guillen" style={sb.profileImg} />
+      <div style={sb.nameRow}><span style={sb.name}>Matias Guillen</span></div>
+      <div style={sb.wave}>
+        <svg viewBox="0 0 240 18" style={sb.waveSvg} fill="none" preserveAspectRatio="none">
+          <path d="M0 17 Q7.5 1 15 17 L30 17 Q37.5 1 45 17 L60 17 Q67.5 1 75 17 L90 17 Q97.5 1 105 17 L120 17 Q127.5 1 135 17 L150 17 Q157.5 1 165 17 L180 17 Q187.5 1 195 17 L210 17 Q217.5 1 225 17 L240 17"
+            stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div style={sb.subtitle}>Hey — I'm Matias!</div>
+    </div>
+    <div style={sb.dividerFull}></div>
+    <nav style={sb.nav}>
+      <NavItems activePage={activePage} onNavigate={onNavigate} />
+    </nav>
+  </aside>
+);
+
+/* ─── Mobile header + drawer ────────────────────────────────────────────── */
+const MobileHeader = ({ activePage, onNavigate }) => {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+  return (
+    <>
+      {/* Top bar */}
+      <header style={mh.bar}>
+        <div style={mh.barLeft} onClick={() => onNavigate('home')} role="button" tabIndex={0}>
+          <img src="assets/profileimage1.png" alt="Matias Guillen" style={mh.avatar} />
+          <span style={mh.name}>Matias Guillen</span>
+        </div>
+        <button style={mh.burger} onClick={() => setOpen(o => !o)} aria-label="Menu">
+          {open
+            ? <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="#1B3A5C" strokeWidth="1.8"/><line x1="16" y1="4" x2="4" y2="16" stroke="#1B3A5C" strokeWidth="1.8"/></svg>
+            : <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="3" y1="6" x2="17" y2="6" stroke="#1B3A5C" strokeWidth="1.8"/><line x1="3" y1="10" x2="17" y2="10" stroke="#1B3A5C" strokeWidth="1.8"/><line x1="3" y1="14" x2="17" y2="14" stroke="#1B3A5C" strokeWidth="1.8"/></svg>
+          }
+        </button>
+      </header>
+      {/* Drawer overlay */}
+      {open && (
+        <div style={mh.overlay} onClick={() => setOpen(false)}>
+          <div style={mh.drawer} onClick={e => e.stopPropagation()}>
+            <div style={mh.drawerProfile}>
+              <img src="assets/profileimage1.png" alt="Matias Guillen" style={mh.drawerAvatar} />
+              <span style={mh.drawerName}>Matias Guillen</span>
+              <div style={{overflow:'hidden', width:64, height:12, opacity:0.4}}>
+                <svg viewBox="0 0 240 18" style={{animation:'sineDrift 3.2s linear infinite', width:'200%', height:'100%'}} fill="none" preserveAspectRatio="none">
+                  <path d="M0 17 Q7.5 1 15 17 L30 17 Q37.5 1 45 17 L60 17 Q67.5 1 75 17 L90 17 Q97.5 1 105 17 L120 17 Q127.5 1 135 17 L150 17 Q157.5 1 165 17 L180 17 Q187.5 1 195 17 L210 17 Q217.5 1 225 17 L240 17" stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
+                </svg>
+              </div>
+            </div>
+            <div style={{borderTop:'1px solid rgba(17,17,17,0.12)'}}></div>
+            <nav style={{display:'flex', flexDirection:'column', padding:'8px 0'}}>
+              <NavItems activePage={activePage} onNavigate={onNavigate} onClose={() => setOpen(false)} />
+            </nav>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+const mh = {
+  bar: { position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', height: 56, borderBottom: '1px solid rgba(17,17,17,0.12)', borderLeft: '3px solid #1B3A5C', background: '#FAFAF7', backgroundImage: 'radial-gradient(circle,rgba(17,17,17,0.04) 1px,transparent 1px)', backgroundSize: '20px 20px' },
+  barLeft: { display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' },
+  avatar: { width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 },
+  name: { fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111', letterSpacing: '-0.01em' },
+  burger: { background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  overlay: { position: 'fixed', inset: 0, background: 'rgba(17,17,17,0.4)', zIndex: 200, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end' },
+  drawer: { width: 260, height: '100vh', background: '#FAFAF7', backgroundImage: 'radial-gradient(circle,rgba(17,17,17,0.04) 1px,transparent 1px)', backgroundSize: '20px 20px', borderLeft: '1px solid rgba(17,17,17,0.12)', display: 'flex', flexDirection: 'column', overflowY: 'auto' },
+  drawerProfile: { padding: '32px 24px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 },
+  drawerAvatar: { width: 72, height: 72, borderRadius: '50%', objectFit: 'cover' },
+  drawerName: { fontFamily: "'EB Garamond',serif", fontSize: 18, color: '#111', letterSpacing: '-0.01em' },
 };
 
 const sb = {
@@ -134,17 +203,20 @@ const sb = {
 };
 
 /* ─── Shared breadcrumb nav for inner pages ────────────────────────────── */
-const StickyNav = ({ title }) => (
-  <div style={{
-    borderBottom: '1px solid rgba(17,17,17,0.12)',
-    padding: '14px 56px',
-    fontFamily: "'JetBrains Mono',monospace",
-    fontSize: 11, letterSpacing: '0.02em',
-    color: '#555', background: '#FAFAF7',
-  }}>
-    {title}
-  </div>
-);
+const StickyNav = ({ title }) => {
+  const isMobile = useIsMobile();
+  return (
+    <div style={{
+      borderBottom: '1px solid rgba(17,17,17,0.12)',
+      padding: isMobile ? '14px 20px' : '14px 56px',
+      fontFamily: "'JetBrains Mono',monospace",
+      fontSize: 11, letterSpacing: '0.02em',
+      color: '#555', background: '#FAFAF7',
+    }}>
+      {title}
+    </div>
+  );
+};
 
 /* ─── Home / Hero content ───────────────────────────────────────────────── */
 
@@ -181,10 +253,11 @@ const LEVEL_COLOR = {
 
 const HomeFull = ({ onNavigate }) => {
   const [skillFilter, setSkillFilter] = React.useState('All');
+  const isMobile = useIsMobile();
   const levels = ['All','Proficient','Intermediate','Beginner'];
 
   return (
-  <div style={{...hf.page, position:'relative'}}>
+  <div style={{...hf.page, padding: isMobile ? '32px 20px 64px' : '64px 56px 96px', position:'relative'}}>
 
     {/* Subtle right-side gradient accent */}
     <div style={{position:'fixed', right:0, top:0, width:320, height:'100vh', pointerEvents:'none', zIndex:0,
@@ -363,12 +436,13 @@ const ICONS = {
 /* ─── Projects index — cards with thumbnail ────────────────────────────── */
 const ProjectsIndex = ({ onSelect }) => {
   const [hovered, setHovered] = React.useState(null);
+  const isMobile = useIsMobile();
   return (
     <div style={di.page}>
       <StickyNav title="Projects" />
-      <div style={di.inner}>
+      <div style={{...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
         <h1 style={di.h1}>Projects</h1>
-        <div style={di.grid}>
+        <div style={{...di.grid, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px,1fr))'}}>
           {PROJECTS_DATA.map((item, i) => (
             <Reveal key={item.id} delay={i * 80}>
             <div
@@ -409,12 +483,13 @@ const ProjectsIndex = ({ onSelect }) => {
 /* ─── Leadership index — same grid as Projects ──────────────────────────── */
 const LeadershipIndex = ({ onSelect }) => {
   const [hovered, setHovered] = React.useState(null);
+  const isMobile = useIsMobile();
   return (
     <div style={di.page}>
       <StickyNav title="Leadership" />
-      <div style={di.inner}>
+      <div style={{...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
         <h1 style={di.h1}>Leadership</h1>
-        <div style={di.grid}>
+        <div style={{...di.grid, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px,1fr))'}}>
           {LEADERSHIP_DATA.map((item, i) => (
             <Reveal key={item.id} delay={i * 80}>
             <div
@@ -470,6 +545,7 @@ const di = {
 /* ─── Detail page — desktop ─────────────────────────────────────────────── */
 const DesktopDetail = ({ item, type, onBack }) => {
   const [zoom, setZoom] = React.useState(null);
+  const isMobile = useIsMobile();
   const photos = item.photos || [];
   const specs = item.specs || defaultDetailSpecs(item, type);
 
@@ -481,7 +557,7 @@ const DesktopDetail = ({ item, type, onBack }) => {
         </div>
       )}
       <StickyNav title={item.id} />
-      <div style={dd.inner}>
+      <div style={{...dd.inner, padding: isMobile ? '24px 20px 64px' : '32px 56px 96px'}}>
         <button onClick={onBack} style={dd.backBtn}>← back to {type === 'project' ? 'Projects' : type === 'leadership' ? 'Leadership' : 'Experience'}</button>
 
         <div style={dd.titleBlock}>
@@ -489,7 +565,7 @@ const DesktopDetail = ({ item, type, onBack }) => {
           <h1 style={dd.h1}>{item.title}</h1>
         </div>
 
-        <div style={dd.twoCol}>
+        <div style={{...dd.twoCol, gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 32 : 64}}>
           {/* Left: spec block + body */}
           <div style={dd.leftCol}>
             <dl style={dd.specBlock}>
@@ -580,10 +656,12 @@ const EXPERIENCE_DATA = [
   },
 ];
 
-const ExperiencePage = () => (
+const ExperiencePage = () => {
+  const isMobile = useIsMobile();
+  return (
   <div style={exp.page}>
     <StickyNav title="Experience" />
-    <div style={exp.inner}>
+    <div style={{...exp.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
       <h1 style={exp.h1}>Experience</h1>
       <div style={exp.cards}>
         {EXPERIENCE_DATA.map((item, i) => (
@@ -611,7 +689,8 @@ const ExperiencePage = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 const exp = {
   page: { flex: 1 },
@@ -660,28 +739,31 @@ const PHOTO_MAP = {
 };
 
 /* ─── Resume page ───────────────────────────────────────────────────────── */
-const ResumePage = () => (
-  <div style={{flex:1, display:'flex', flexDirection:'column', height:'100vh'}}>
+const ResumePage = () => {
+  const isMobile = useIsMobile();
+  return (
+  <div style={{flex:1, display:'flex', flexDirection:'column', minHeight: isMobile ? 'calc(100vh - 56px)' : '100vh'}}>
     <StickyNav title="Resume" />
-    <div style={{padding:'24px 56px 16px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(17,17,17,0.12)'}}>
-      <div>
-        <h1 style={{fontFamily:"'EB Garamond',serif", fontSize:'clamp(1.4rem,2.5vw,1.9rem)', fontWeight:400, color:'#111', margin:0}}>Resume</h1>
-      </div>
-      <a href="assets/Profile.pdf" download style={{fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:'#1B3A5C', letterSpacing:'0.02em', border:'1px solid rgba(27,58,92,0.35)', padding:'8px 14px', textDecoration:'none'}}>↓ download pdf</a>
+    <div style={{padding: isMobile ? '16px 20px' : '24px 56px 16px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(17,17,17,0.12)'}}>
+      <h1 style={{fontFamily:"'EB Garamond',serif", fontSize:'clamp(1.4rem,2.5vw,1.9rem)', fontWeight:400, color:'#111', margin:0}}>Resume</h1>
+      <a href="assets/Profile.pdf" download style={{fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:'#1B3A5C', letterSpacing:'0.02em', border:'1px solid rgba(27,58,92,0.35)', padding:'8px 14px', textDecoration:'none', whiteSpace:'nowrap'}}>↓ download pdf</a>
     </div>
     <iframe
       src="assets/Profile.pdf"
-      style={{flex:1, width:'100%', border:'none', display:'block'}}
+      style={{flex:1, width:'100%', border:'none', display:'block', minHeight: isMobile ? 500 : undefined}}
       title="Matias Guillen Resume"
     ></iframe>
   </div>
-);
+  );
+};
 
-/* ─── Contact (desktop) ─────────────────────────────────────────────────── */
-const ContactDesktop = () => (
+/* ─── Contact page ──────────────────────────────────────────────────────── */
+const ContactDesktop = () => {
+  const isMobile = useIsMobile();
+  return (
   <div style={{flex:1}}>
     <StickyNav title="Contact" />
-    <div style={{padding:'40px 56px 96px',maxWidth:680}}>
+    <div style={{padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth:680}}>
       <div style={{marginBottom:36}}>
         <h1 style={{fontFamily:"'EB Garamond',serif",fontSize:'clamp(1.6rem,3vw,2.2rem)',fontWeight:400,color:'#111',margin:0}}>Contact</h1>
       </div>
@@ -691,16 +773,17 @@ const ContactDesktop = () => (
       {[['email','mattg.guillen@gmail.com','mailto:mattg.guillen@gmail.com'],['phone','(407) 907-5123','tel:4079075123'],['linkedin','linkedin.com/in/matias-guillen','https://linkedin.com/in/matias-guillen']].map(([label,val,href]) => (
         <div key={label}>
           <div style={{position:'relative'}}><div style={{position:'absolute',top:-3,left:0,width:5,height:5,background:'#1B3A5C',borderRadius:'50%'}}></div><div style={{borderTop:'1px solid rgba(17,17,17,0.12)'}}></div></div>
-          <div style={{display:'flex',alignItems:'baseline',gap:32,padding:'16px 0',minHeight:44}}>
+          <div style={{display:'flex',alignItems:'baseline',gap:isMobile?16:32,padding:'16px 0',minHeight:44,flexWrap:'wrap'}}>
             <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,color:'#555',letterSpacing:'0.02em',width:72,flexShrink:0}}>{label}</span>
-            <a href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" style={{fontFamily:"'EB Garamond',serif",fontSize:17,color:'#1B3A5C',textDecoration:'none'}}>{val}</a>
+            <a href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" style={{fontFamily:"'EB Garamond',serif",fontSize:17,color:'#1B3A5C',textDecoration:'none',wordBreak:'break-all'}}>{val}</a>
           </div>
         </div>
       ))}
       <div style={{borderTop:'1px solid rgba(17,17,17,0.12)'}}></div>
     </div>
   </div>
-);
+  );
+};
 
 /* ─── App ───────────────────────────────────────────────────────────────── */
 const App = () => {
@@ -708,6 +791,7 @@ const App = () => {
   const [detail, setDetail] = React.useState(null);
   const [detailType, setDetailType] = React.useState(null);
   const mainRef = React.useRef(null);
+  const isMobile = useIsMobile();
 
   const navigate = (p) => { setPage(p); setDetail(null); if(mainRef.current) mainRef.current.scrollTop=0; };
   const openDetail = (item, type) => {
@@ -732,6 +816,17 @@ const App = () => {
   }
 
   const activePage = detail ? (detailType === 'project' ? 'projects' : detailType === 'leadership' ? 'leadership' : 'experience') : page;
+
+  if (isMobile) {
+    return (
+      <div style={{display:'flex', flexDirection:'column', width:'100%', minHeight:'100vh'}}>
+        <MobileHeader activePage={activePage} onNavigate={navigate} />
+        <main style={{flex:1}}>
+          {content}
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div style={{display:'flex',width:'100%',minHeight:'100vh'}}>
