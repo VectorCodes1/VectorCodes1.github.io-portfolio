@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAFAF7; padding: 24px 28px; }
+  .divider {
+    position: relative;
+    border: none;
+    border-top: 1px solid rgba(17,17,17,0.12);
+    margin: 20px 0;
+  }
+  .divider::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: 0;
+    width: 5px; height: 5px;
+    background: #1B3A5C;
+    border-radius: 50%;
+  }
+  .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888; margin-bottom: 4px; }
+  .text  { font-family: 'EB Garamond', serif; font-size: 17px; color: #111; line-height: 1.5; }
+  .muted { font-family: 'EB Garamond', serif; font-style: italic; font-size: 14px; color: #555; }
+</style>
+</head>
+<body>
+  <div class="label">section divider with node</div>
+  <hr class="divider">
+  <div class="text">Buck Converter Design</div>
+  <div class="muted">Switching power supply for embedded audio amplifier</div>
+  <hr class="divider">
+  <div class="text">Antenna Array Simulation</div>
+  <div class="muted">Phased array beamforming model in MATLAB</div>
+  <hr class="divider">
+  <div class="text">RF Test Fixture</div>
+  <div class="muted">Custom SolidWorks + FDM fixture for signal path validation</div>
+  <hr class="divider">
+</body>
+</html>
