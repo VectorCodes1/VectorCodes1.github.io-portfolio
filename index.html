@@ -112,7 +112,6 @@ const Sidebar = ({ activePage, onNavigate }) => {
         })}
       </nav>
 
-
     </aside>
   );
 };
@@ -131,9 +130,7 @@ const sb = {
   navBtn: { display: 'flex', alignItems: 'baseline', gap: 10, padding: '11px 32px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%', minHeight: 44 },
   navBtnActive: { background: 'rgba(27,58,92,0.06)' },
   navBtnHover: { background: 'rgba(27,58,92,0.04)' },
-  navNum: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', letterSpacing: '0.02em', opacity: 0.6, width: 26, flexShrink: 0 },
   navLabel: { fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: '#555', letterSpacing: '0.04em' },
-
 };
 
 /* ─── Shared breadcrumb nav for inner pages ────────────────────────────── */
@@ -148,9 +145,10 @@ const StickyNav = ({ title }) => (
     {title}
   </div>
 );
-Object.assign(window, { StickyNav });
 
 /* ─── Home / Hero content ───────────────────────────────────────────────── */
+
+/* ✏️  EDIT YOUR CONTENT HERE — Skills */
 const SKILLS = [
   { group: 'Hardware', items: [
     { name: 'Oscilloscope',     level: 'Proficient'    },
@@ -181,39 +179,6 @@ const LEVEL_COLOR = {
   Beginner:     { bg: 'transparent',         border: 'rgba(17,17,17,0.18)', text: '#555'    },
 };
 
-const PcbGraphic = () => (
-  <svg viewBox="0 0 220 420" fill="none" xmlns="http://www.w3.org/2000/svg"
-    style={{ position:'absolute', right: 0, top: 60, width: 220, height: 420, opacity: 0.055, pointerEvents:'none', userSelect:'none' }}>
-    {/* Horizontal traces */}
-    {[40,80,120,160,200,240,280,320,360].map(y => (
-      <line key={y} x1="10" y1={y} x2="210" y2={y} stroke="#1B3A5C" strokeWidth="1.5"/>
-    ))}
-    {/* Vertical traces */}
-    {[30,70,110,150,190].map(x => (
-      <line key={x} x1={x} y1="10" x2={x} y2="410" stroke="#1B3A5C" strokeWidth="1.5"/>
-    ))}
-    {/* Pads */}
-    {[[30,40],[70,80],[110,120],[150,160],[190,200],[30,200],[190,120],[110,280],[70,320],[150,360]].map(([x,y],i) => (
-      <rect key={i} x={x-7} y={y-5} width={14} height={10} fill="#1B3A5C"/>
-    ))}
-    {/* Vias */}
-    {[[30,160],[110,40],[190,280],[70,240],[150,80],[30,320],[190,360]].map(([x,y],i) => (
-      <g key={i}>
-        <circle cx={x} cy={y} r={6} fill="none" stroke="#1B3A5C" strokeWidth="1.5"/>
-        <circle cx={x} cy={y} r={2.5} fill="#1B3A5C"/>
-      </g>
-    ))}
-    {/* IC outline */}
-    <rect x="60" y="170" width="100" height="60" stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
-    {[180,195,210].map((y,i) => (
-      <line key={i} x1="55" y1={y} x2="60" y2={y} stroke="#1B3A5C" strokeWidth="1.5"/>
-    ))}
-    {[180,195,210].map((y,i) => (
-      <line key={i} x1="160" y1={y} x2="165" y2={y} stroke="#1B3A5C" strokeWidth="1.5"/>
-    ))}
-  </svg>
-);
-
 const HomeFull = ({ onNavigate }) => {
   const [skillFilter, setSkillFilter] = React.useState('All');
   const levels = ['All','Proficient','Intermediate','Beginner'];
@@ -223,12 +188,10 @@ const HomeFull = ({ onNavigate }) => {
 
     {/* Subtle right-side gradient accent */}
     <div style={{position:'fixed', right:0, top:0, width:320, height:'100vh', pointerEvents:'none', zIndex:0,
-      background:'linear-gradient(to left, oklch(0.88 0.03 240 / 0.18) 0%, transparent 100%)'}} />
+      background:'linear-gradient(to left, rgba(200,215,235,0.18) 0%, transparent 100%)'}} />
 
     {/* Hero */}
-
     <Reveal>
-    {/* Hero */}
     <div style={hf.hero}>
       <h1 style={hf.h1}>Hey — I'm Matias!</h1>
       <p style={hf.bio}>
@@ -491,7 +454,6 @@ const di = {
   page: { flex: 1 },
   inner: { padding: '40px 56px 96px', maxWidth: 900 },
   h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 400, color: '#111', marginBottom: 32 },
-  /* project grid */
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px,1fr))', gap: 20 },
   card: { border: '1px solid rgba(17,17,17,0.12)', borderTop: '3px solid #1B3A5C', background: '#fff', cursor: 'pointer', transition: 'box-shadow 0.15s, transform 0.15s', overflow: 'hidden' },
   cardHover: { boxShadow: '0 4px 20px rgba(27,58,92,0.10)', transform: 'translateY(-2px)' },
@@ -503,14 +465,6 @@ const di = {
   cardTitle: { fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111', lineHeight: 1.3 },
   cardDate: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#888', letterSpacing: '0.02em', whiteSpace: 'nowrap', flexShrink: 0 },
   cardDesc: { fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 14, color: '#555', lineHeight: 1.5 },
-  /* leadership cards — removed, now uses same grid */
-  lCards: { display: 'flex', flexDirection: 'column', gap: 16 },
-  lCard: { border: '1px solid rgba(17,17,17,0.12)', borderLeft: '3px solid #1B3A5C', padding: '20px 24px', background: '#fff', cursor: 'pointer', transition: 'box-shadow 0.15s' },
-  lCardHover: { boxShadow: '0 4px 20px rgba(27,58,92,0.10)' },
-  lCardHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, marginBottom: 8 },
-  lCardTitle: { fontFamily: "'EB Garamond',serif", fontSize: 18, color: '#111' },
-  lCardDate: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#888', letterSpacing: '0.02em', whiteSpace: 'nowrap', flexShrink: 0 },
-  lCardDesc: { fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 15, color: '#555', margin: 0 },
 };
 
 /* ─── Detail page — desktop ─────────────────────────────────────────────── */
@@ -594,6 +548,8 @@ const dd = {
 };
 
 /* ─── Experience desktop ────────────────────────────────────────────────── */
+
+/* ✏️  EDIT YOUR CONTENT HERE — Experience */
 const EXPERIENCE_DATA = [
   {
     id: 'lockheed-rf',
@@ -624,7 +580,6 @@ const EXPERIENCE_DATA = [
   },
 ];
 
-/* ─── Experience card component ─────────────────────────────────────────── */
 const ExperiencePage = () => (
   <div style={exp.page}>
     <StickyNav title="Experience" />
@@ -676,6 +631,7 @@ const exp = {
   skillChip: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#1B3A5C', border: '1px solid rgba(27,58,92,0.35)', padding: '2px 8px', background: 'rgba(27,58,92,0.04)', letterSpacing: '0.02em' },
 };
 
+/* ✏️  EDIT YOUR CONTENT HERE — Projects */
 const PROJECTS_DATA = [
   { id: 'buck-converter',  title: 'Buck Converter Design',               date: 'Jan 2024', thumb: null, desc: 'Switching power supply for embedded audio amplifier; PCB layout in KiCad.',         specs: [['Date','Jan 2024'],['Tools','KiCad, LTSpice'],['Type','Power Electronics'],['Status','Completed']] },
   { id: 'antenna-sim',    title: 'Phased Array Antenna Simulation',       date: 'Sep 2023', thumb: null, desc: 'Beamforming model and far-field pattern analysis in MATLAB.',                       specs: [['Date','Sep 2023'],['Tools','MATLAB'],['Type','RF / Antenna'],['Status','Completed']] },
@@ -684,21 +640,23 @@ const PROJECTS_DATA = [
   { id: 'ltspice-filter', title: 'Active Filter Network Analysis',         date: 'Nov 2023', thumb: null, desc: 'Butterworth low-pass filter simulation and component sensitivity in LTSpice.',       specs: [['Date','Nov 2023'],['Tools','LTSpice'],['Type','Filter Design'],['Status','Completed']] },
 ];
 
+/* ✏️  EDIT YOUR CONTENT HERE — Leadership */
 const LEADERSHIP_DATA = [
   { id: 'ieee-president',     title: 'IEEE UCF President',         date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',           desc: 'Led 13-officer board; coordinated 30+ events with AMD, Northrop Grumman, and others' },
   { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',     date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',       desc: 'Implemented BOM-based budget approval; delivered technical presentations to 100+ students' },
   { id: 'ieee-hkn',           title: 'IEEE Eta Kappa Nu (HKN)',    date: '2024 – Present',       thumb: 'assets/photos/hkn-1.jpg',                 desc: 'Member of the IEEE honor society for electrical and computer engineering; top academic tier' },
   { id: 'ieee-service',       title: 'IEEE UCF Service Committee', date: 'Feb 2024 – Apr 2024',  thumb: 'assets/photos/service-committee-1.jpg',  desc: 'FIRST Robotics, beach cleanups, E-Week school workshops' },
-  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',   date: 'Mar 2023 – Apr 2025',  thumb: null,                                            desc: 'Two-year servant leadership program with Hope Helps, SERV, First Robotics' },
+  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',   date: 'Mar 2023 – Apr 2025',  thumb: null,                                     desc: 'Two-year servant leadership program with Hope Helps, SERV, First Robotics' },
 ];
 
+/* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
 const PHOTO_MAP = {
   'ieee-president':      [{ src: 'assets/photos/president-1.jpg', caption: 'IEEE UCF general meeting, Spring 2025.' },{ src: 'assets/photos/president-2.jpg', caption: 'Officer board photo, Apr 2025.' },{ src: 'assets/photos/president-3.jpg', caption: 'Region 3 Exemplary Student Branch Award.' }],
   'ieee-project-chair':  [{ src: 'assets/photos/project-chair-1.jpg', caption: 'Technical workshop, Fall 2024.' },{ src: 'assets/photos/project-chair-2.jpg', caption: 'Project review session, Mar 2025.' }],
+  'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN induction ceremony.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN chapter members.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'IEEE Eta Kappa Nu at UCF.' }],
   'ieee-service':        [{ src: 'assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop.' },{ src: 'assets/photos/service-committee-2.jpg', caption: 'FIRST Robotics, Feb 2024.' },{ src: 'assets/photos/service-committee-3.jpg', caption: 'Beach cleanup event.' },{ src: 'assets/photos/service-committee-4.jpg', caption: 'STEM demonstration.' }],
   'circuit-comp':        [{ src: 'assets/photos/circuit-design-competition-1.jpg', caption: 'Competition setup, Mar 2024.' },{ src: 'assets/photos/circuit-design-competition-2.jpg', caption: 'Circuit under test.' },{ src: 'assets/photos/circuit-design-competition-3.jpg', caption: '2nd place award.' }],
   'lockheed':            [{ src: 'assets/photos/solidworks-cert.jpg', caption: 'SolidWorks CSWA certificate.' },{ src: 'assets/photos/exemplary-student-branch.jpg', caption: 'Region 3 Exemplary Student Branch Award.' }],
-  'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN induction ceremony.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN chapter members.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'IEEE Eta Kappa Nu at UCF.' }],
 };
 
 /* ─── Resume page ───────────────────────────────────────────────────────── */
@@ -716,40 +674,6 @@ const ResumePage = () => (
       style={{flex:1, width:'100%', border:'none', display:'block'}}
       title="Matias Guillen Resume"
     ></iframe>
-  </div>
-);
-
-/* ─── About (desktop) ───────────────────────────────────────────────────── */
-const AboutDesktop = () => (
-  <div style={{flex:1}}>
-    <StickyNav title="About" />
-    <div style={{padding:'40px 56px 96px', maxWidth:860}}>
-      <div style={{marginBottom:36}}>
-        <h1 style={{fontFamily:"'EB Garamond',serif",fontSize:'clamp(1.6rem,3vw,2.2rem)',fontWeight:400,color:'#111',margin:0}}>About</h1>
-      </div>
-      <div style={{display:'grid',gridTemplateColumns:'180px 1fr',gap:48,alignItems:'start',marginBottom:40}}>
-        <div style={{display:'flex',flexDirection:'column',gap:12}}>
-          {/* Profile photo placeholder */}
-          <div style={{width:'100%',aspectRatio:'3/4',background:'rgba(27,58,92,0.05)',border:'1px dashed rgba(27,58,92,0.22)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:10,borderRadius:2}}>
-            <svg width="40" height="52" viewBox="0 0 40 52" fill="none"><circle cx="20" cy="14" r="9" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2"/><path d="M2 50c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2"/></svg>
-            <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:8.5,color:'#1B3A5C',letterSpacing:'0.06em',opacity:0.55,textAlign:'center',lineHeight:1.4}}>drop photo<br/>of yourself</span>
-          </div>
-        </div>
-        <div>
-          <p style={{fontFamily:"'EB Garamond',serif",fontSize:17,lineHeight:1.7,color:'#111',marginBottom:20,textWrap:'pretty'}}>
-            Most of us grew up idolizing a hero who could make the impossible seem like a simple weekend project. Back in kindergarten, I built a cardboard "Iron Man" suit and an arc reactor out of a flashlight. It was a spark of my growing imagination.
-          </p>
-          <p style={{fontFamily:"'EB Garamond',serif",fontSize:17,lineHeight:1.7,color:'#111',textWrap:'pretty'}}>
-            My time with IEEE UCF has challenged and defined my leadership. As President, I see the organization as a vital bridge between the classroom and hands-on activity. I may have outgrown the cardboard suit, but I have never outgrown my drive to build, break, and improve.
-          </p>
-        </div>
-      </div>
-      <dl style={{display:'grid',gridTemplateColumns:'max-content 1fr',gap:'5px 40px',padding:'20px 0',borderTop:'1px solid rgba(17,17,17,0.12)',borderBottom:'1px solid rgba(17,17,17,0.12)',fontFamily:"'JetBrains Mono',monospace",fontSize:12,letterSpacing:'0.02em'}}>
-        {[['Degree','B.S. Electrical Engineering, UCF (2023–2027)'],['Specialization','RF & Electronics, Power Electronics'],['Tools','KiCad, LTSpice, MATLAB, SolidWorks, C'],['Certifications','CSWA (SolidWorks), CPT 4.0, Autodesk Inventor'],['Honors','2nd Place Circuit Design Competition, Region 3 Exemplary Student Branch']].map(([k,v]) => (
-          <React.Fragment key={k}><dt style={{color:'#555'}}>{k}</dt><dd style={{color:'#111',fontWeight:500}}>{v}</dd></React.Fragment>
-        ))}
-      </dl>
-    </div>
   </div>
 );
 
@@ -801,7 +725,6 @@ const App = () => {
       case 'projects':   content = <ProjectsIndex onSelect={p => openDetail(p,'project')} />; break;
       case 'leadership': content = <LeadershipIndex onSelect={l => openDetail(l,'leadership')} />; break;
       case 'experience': content = <ExperiencePage />; break;
-      case 'about':      content = <HomeFull onNavigate={navigate} />; break;
       case 'resume':     content = <ResumePage />; break;
       case 'contact':    content = <ContactDesktop />; break;
       default:           content = <HomeFull onNavigate={navigate} />;
