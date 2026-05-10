@@ -218,47 +218,77 @@ const LEVEL_COLOR = {
   Beginner:     { bg: 'transparent',         border: 'rgba(17,17,17,0.18)', text: '#555'    },
 };
 
+const ABOUT_PHOTOS = [
+  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen' },
+  null,
+  null,
+  null,
+];
+
 const AboutPhoto = () => {
+  const [index, setIndex] = React.useState(0);
   const [open, setOpen] = React.useState(false);
+  const current = ABOUT_PHOTOS[index];
+
   React.useEffect(() => {
     if (!open) return;
     const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
+
+  const prev = () => setIndex(i => (i - 1 + ABOUT_PHOTOS.length) % ABOUT_PHOTOS.length);
+  const next = () => setIndex(i => (i + 1) % ABOUT_PHOTOS.length);
+
   return (
     <>
-      <div
-        role="button"
-        tabIndex={0}
-        aria-label="View photo fullscreen"
-        onClick={() => setOpen(true)}
-        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setOpen(true)}
-        style={{ marginTop: 24, cursor: 'zoom-in', display: 'inline-block', borderRadius: 12, overflow: 'hidden', lineHeight: 0, border: '1px solid rgba(17,17,17,0.1)' }}
-      >
-        <img
-          src="assets/about-photo.jpg"
-          alt="Matias Guillen"
-          decoding="async"
-          style={{ display: 'block', width: '100%', maxWidth: 480, height: 'auto' }}
-        />
+      <div style={{ marginTop: 24, maxWidth: 480 }}>
+        {/* Photo frame */}
+        <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(17,17,17,0.1)', lineHeight: 0, background: 'rgba(27,58,92,0.04)' }}>
+          {current ? (
+            <img
+              src={current.src}
+              alt={current.alt}
+              decoding="async"
+              onClick={() => setOpen(true)}
+              style={{ display: 'block', width: '100%', height: 'auto', cursor: 'zoom-in' }}
+            />
+          ) : (
+            <div style={{ width: '100%', aspectRatio: '4/3', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, border: '2px dashed rgba(27,58,92,0.2)', borderRadius: 12 }}>
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#1B3A5C" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.35"/><line x1="16" y1="10" x2="16" y2="22" stroke="#1B3A5C" strokeWidth="1.5" opacity="0.35"/><line x1="10" y1="16" x2="22" y2="16" stroke="#1B3A5C" strokeWidth="1.5" opacity="0.35"/></svg>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', opacity: 0.4, letterSpacing: '0.04em' }}>photo coming soon</span>
+            </div>
+          )}
+
+          {/* Prev / Next arrows */}
+          <button onClick={prev} aria-label="Previous photo"
+            style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.85)', border: '1px solid rgba(17,17,17,0.12)', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="9,2 5,7 9,12" stroke="#1B3A5C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+          <button onClick={next} aria-label="Next photo"
+            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.85)', border: '1px solid rgba(17,17,17,0.12)', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="5,2 9,7 5,12" stroke="#1B3A5C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+        </div>
+
+        {/* Dot indicators */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10 }}>
+          {ABOUT_PHOTOS.map((_, i) => (
+            <button key={i} onClick={() => setIndex(i)} aria-label={`Photo ${i + 1}`}
+              style={{ width: i === index ? 16 : 6, height: 6, borderRadius: 3, background: i === index ? '#1B3A5C' : 'rgba(27,58,92,0.25)', border: 'none', cursor: 'pointer', padding: 0, transition: 'width 0.2s, background 0.2s' }} />
+          ))}
+        </div>
       </div>
-      {open && (
+
+      {open && current && (
         <div
           onClick={() => setOpen(false)}
           style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, cursor: 'zoom-out', padding: 16 }}
         >
-          <button
-            onClick={() => setOpen(false)}
-            aria-label="Close photo"
-            style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', color: '#fff', fontSize: 28, cursor: 'pointer', lineHeight: 1, opacity: 0.8 }}
-          >×</button>
-          <img
-            src="assets/about-photo.jpg"
-            alt="Matias Guillen"
-            decoding="async"
-            style={{ maxWidth: '92vw', maxHeight: '92vh', objectFit: 'contain', borderRadius: 4, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}
-          />
+          <button onClick={() => setOpen(false)} aria-label="Close photo"
+            style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', color: '#fff', fontSize: 28, cursor: 'pointer', lineHeight: 1, opacity: 0.8 }}>×</button>
+          <img src={current.src} alt={current.alt} decoding="async"
+            style={{ maxWidth: '92vw', maxHeight: '92vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }} />
         </div>
       )}
     </>
