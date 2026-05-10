@@ -79,7 +79,7 @@ const Sidebar = ({ activePage, onNavigate }) => (
       <img src="assets/profileimage1.png" alt="Matias Guillen" style={sb.profileImg} />
       <div style={sb.nameRow}><span style={sb.name}>Matias Guillen</span></div>
       <div style={sb.wave} aria-hidden="true">
-        <svg viewBox="0 0 240 18" style={sb.waveSvg} fill="none" preserveAspectRatio="none">
+        <svg viewBox="0 0 240 20" style={sb.waveSvg} fill="none" preserveAspectRatio="none">
           <path d="M0 17 Q7.5 1 15 17 L30 17 Q37.5 1 45 17 L60 17 Q67.5 1 75 17 L90 17 Q97.5 1 105 17 L120 17 Q127.5 1 135 17 L150 17 Q157.5 1 165 17 L180 17 Q187.5 1 195 17 L210 17 Q217.5 1 225 17 L240 17"
             stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
         </svg>
@@ -122,8 +122,8 @@ const MobileHeader = ({ activePage, onNavigate }) => {
             <div style={mh.drawerProfile}>
               <img src="assets/profileimage1.png" alt="Matias Guillen" style={mh.drawerAvatar} />
               <span style={mh.drawerName}>Matias Guillen</span>
-              <div style={{overflowX:'hidden', overflowY:'visible', width:64, height:12, opacity:0.4}} aria-hidden="true">
-                <svg viewBox="0 0 240 18" style={{animation:'sineDrift 3.2s linear infinite', width:'200%', height:'100%'}} fill="none" preserveAspectRatio="none">
+              <div style={{overflow:'hidden', width:64, height:16, opacity:0.4}} aria-hidden="true">
+                <svg viewBox="0 0 240 20" style={{animation:'sineDrift 3.2s linear infinite', width:'200%', height:'100%'}} fill="none" preserveAspectRatio="none">
                   <path d="M0 17 Q7.5 1 15 17 L30 17 Q37.5 1 45 17 L60 17 Q67.5 1 75 17 L90 17 Q97.5 1 105 17 L120 17 Q127.5 1 135 17 L150 17 Q157.5 1 165 17 L180 17 Q187.5 1 195 17 L210 17 Q217.5 1 225 17 L240 17" stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
                 </svg>
               </div>
@@ -158,7 +158,7 @@ const sb = {
   nameRow: { marginBottom: 10 },
   profileImg: { width: 96, height: 96, objectFit: 'cover', display: 'block', margin: '0 auto 14px', borderRadius: '50%' },
   name: { fontFamily: "'EB Garamond',serif", fontSize: 22, fontWeight: 400, color: '#111', lineHeight: 1.1, display: 'block', letterSpacing: '-0.01em', textAlign: 'center' },
-  wave: { display: 'block', overflowX: 'hidden', overflowY: 'visible', width: 72, height: 14, opacity: 0.4, marginBottom: 10 },
+  wave: { display: 'block', overflow: 'hidden', width: 72, height: 16, opacity: 0.4, marginBottom: 10 },
   waveSvg: { animation: 'sineDrift 3.2s linear infinite', width: '200%', height: '100%' },
   subtitle: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', letterSpacing: '0.02em', lineHeight: 1.6, marginTop: 2, textAlign: 'center' },
   dividerFull: { borderTop: '1px solid rgba(17,17,17,0.12)', margin: '0 0' },
@@ -234,7 +234,7 @@ const AboutPhoto = () => {
         aria-label="View photo fullscreen"
         onClick={() => setOpen(true)}
         onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setOpen(true)}
-        style={{ marginTop: 24, cursor: 'zoom-in', display: 'inline-block', borderRadius: 4, overflow: 'hidden', lineHeight: 0, border: '1px solid rgba(17,17,17,0.1)' }}
+        style={{ marginTop: 24, cursor: 'zoom-in', display: 'inline-block', borderRadius: 12, overflow: 'hidden', lineHeight: 0, border: '1px solid rgba(17,17,17,0.1)' }}
       >
         <img
           src="assets/about-photo.jpg"
