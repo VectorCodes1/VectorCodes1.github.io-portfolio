@@ -84,7 +84,7 @@ const Sidebar = ({ activePage, onNavigate }) => (
             stroke="#1B3A5C" strokeWidth="1.5" fill="none"/>
         </svg>
       </div>
-      <div style={sb.subtitle}>Hey — I'm Matias!</div>
+      <div style={sb.subtitle}>Electrical Engineering Undergraduate @ UCF</div>
     </div>
     <div style={sb.dividerFull}></div>
     <nav style={sb.nav}>
@@ -490,7 +490,6 @@ const ICONS = {
 /* ─── Projects index — cards with thumbnail ────────────────────────────── */
 const ProjectsIndex = ({ onSelect }) => {
   const [hovered, setHovered] = React.useState(null);
-  const [certHovered, setCertHovered] = React.useState(null);
   const isMobile = useIsMobile();
   return (
     <div style={di.page}>
@@ -535,106 +534,10 @@ const ProjectsIndex = ({ onSelect }) => {
           ))}
         </div>
 
-        {/* Certifications */}
-        <div style={{ marginTop: 56 }}>
-          <h2 style={{ fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', fontWeight: 400, color: '#111', marginBottom: 24 }}>Certifications</h2>
-          <div>
-            {CERTIFICATIONS_DATA.map((cert, i) => (
-              <Reveal key={cert.id} delay={i * 60}>
-              <div>
-                <div style={{ borderTop: '1px solid rgba(17,17,17,0.12)', position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: -3, left: 0, width: 5, height: 5, background: '#1B3A5C', borderRadius: '50%' }} />
-                </div>
-                <div
-                  style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '14px 0', transition: 'background 0.1s', ...(certHovered === i ? { background: 'rgba(27,58,92,0.04)', margin: '0 -20px', padding: '14px 20px' } : {}) }}
-                  onMouseEnter={() => setCertHovered(i)}
-                  onMouseLeave={() => setCertHovered(null)}
-                >
-                  <div style={{ flexShrink: 0, width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(27,58,92,0.06)', borderRadius: 8, border: '1px solid rgba(27,58,92,0.12)' }}>
-                    {CERT_ICON[cert.icon]}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111' }}>{cert.title}</div>
-                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#555', letterSpacing: '0.02em', marginTop: 2 }}>{cert.org}</div>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#555', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>{cert.date}</span>
-                    {cert.pdfLink && (
-                      <a href={cert.pdfLink} target="_blank" rel="noopener noreferrer"
-                        style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, color: '#1B3A5C', letterSpacing: '0.04em', border: '1px solid rgba(27,58,92,0.35)', padding: '3px 8px', textDecoration: 'none', whiteSpace: 'nowrap' }}
-                        onClick={e => e.stopPropagation()}>
-                        ↓ pdf
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-              </Reveal>
-            ))}
-            <div style={{ borderTop: '1px solid rgba(17,17,17,0.12)', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: -3, left: 0, width: 5, height: 5, background: '#1B3A5C', borderRadius: '50%' }} />
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
 };
-
-const CERT_ICON = {
-  solidworks: (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="14" r="6" stroke="#1B3A5C" strokeWidth="1.5"/>
-      <circle cx="14" cy="14" r="12" stroke="#1B3A5C" strokeWidth="1" strokeDasharray="3 2" opacity="0.5"/>
-      <line x1="14" y1="2" x2="14" y2="6" stroke="#1B3A5C" strokeWidth="1.5"/>
-      <line x1="14" y1="22" x2="14" y2="26" stroke="#1B3A5C" strokeWidth="1.5"/>
-      <line x1="2" y1="14" x2="6" y2="14" stroke="#1B3A5C" strokeWidth="1.5"/>
-      <line x1="22" y1="14" x2="26" y2="14" stroke="#1B3A5C" strokeWidth="1.5"/>
-    </svg>
-  ),
-  autodesk: (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <path d="M14 3L25 9.5V18.5L14 25L3 18.5V9.5L14 3Z" stroke="#1B3A5C" strokeWidth="1.5"/>
-      <path d="M14 3V25M3 9.5L25 9.5" stroke="#1B3A5C" strokeWidth="0.8" opacity="0.4"/>
-    </svg>
-  ),
-  cpt: (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <rect x="3" y="13" width="22" height="12" rx="1" stroke="#1B3A5C" strokeWidth="1.5"/>
-      <path d="M3 13L8 7H20L25 13" stroke="#1B3A5C" strokeWidth="1.5" strokeLinejoin="round"/>
-      <rect x="11" y="17" width="6" height="8" stroke="#1B3A5C" strokeWidth="1"/>
-      <circle cx="8" cy="18" r="1.5" fill="#1B3A5C" opacity="0.5"/>
-      <circle cx="20" cy="18" r="1.5" fill="#1B3A5C" opacity="0.5"/>
-    </svg>
-  ),
-};
-
-const CERTIFICATIONS_DATA = [
-  {
-    id: 'cswa',
-    title: 'CSWA — Certified SolidWorks Associate',
-    org: 'Dassault Systèmes',
-    date: 'Issued 2024',
-    pdfLink: 'assets/cswa-cert.pdf',
-    icon: 'solidworks',
-  },
-  {
-    id: 'autodesk-fusion',
-    title: 'Autodesk Fusion Certified User',
-    org: 'Autodesk',
-    date: 'Issued 2024',
-    pdfLink: null,
-    icon: 'autodesk',
-  },
-  {
-    id: 'cpt',
-    title: 'Certified Production Technician (CPT) 4.0',
-    org: 'Manufacturing Skill Standards Council (MSSC)',
-    date: 'Issued Mar 2023 · Expires Mar 2028',
-    pdfLink: null,
-    icon: 'cpt',
-  },
-];
 
 /* ─── Leadership index — same grid as Projects ──────────────────────────── */
 const LeadershipIndex = ({ onSelect }) => {
