@@ -218,6 +218,53 @@ const LEVEL_COLOR = {
   Beginner:     { bg: 'transparent',         border: 'rgba(17,17,17,0.18)', text: '#555'    },
 };
 
+const AboutPhoto = () => {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+  return (
+    <>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label="View photo fullscreen"
+        onClick={() => setOpen(true)}
+        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setOpen(true)}
+        style={{ marginTop: 24, cursor: 'zoom-in', display: 'inline-block', borderRadius: 4, overflow: 'hidden', lineHeight: 0, border: '1px solid rgba(17,17,17,0.1)' }}
+      >
+        <img
+          src="assets/about-photo.jpg"
+          alt="Matias Guillen"
+          decoding="async"
+          style={{ display: 'block', width: '100%', maxWidth: 480, height: 'auto' }}
+        />
+      </div>
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, cursor: 'zoom-out', padding: 16 }}
+        >
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close photo"
+            style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', color: '#fff', fontSize: 28, cursor: 'pointer', lineHeight: 1, opacity: 0.8 }}
+          >×</button>
+          <img
+            src="assets/about-photo.jpg"
+            alt="Matias Guillen"
+            decoding="async"
+            style={{ maxWidth: '92vw', maxHeight: '92vh', objectFit: 'contain', borderRadius: 4, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}
+          />
+        </div>
+      )}
+    </>
+  );
+};
+
 const HomeFull = ({ onNavigate }) => {
   const [skillFilter, setSkillFilter] = React.useState('All');
   const isMobile = useIsMobile();
@@ -259,6 +306,7 @@ const HomeFull = ({ onNavigate }) => {
           organization as a vital bridge between the classroom and hands-on activity. I may have
           outgrown the cardboard suit, but I have never outgrown my drive to build, break, and improve.
         </p>
+        <AboutPhoto />
       </div>
     </div>
     </Reveal>
