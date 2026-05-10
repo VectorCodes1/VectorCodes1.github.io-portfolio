@@ -189,26 +189,28 @@ const StickyNav = ({ title }) => {
 
 /* ✏️  EDIT YOUR CONTENT HERE — Skills */
 const SKILLS = [
-  { group: 'Hardware', items: [
-    { name: 'Oscilloscope',     level: 'Proficient'    },
-    { name: 'SolidWorks',       level: 'Proficient'    },
-    { name: 'KiCad',            level: 'Intermediate'  },
-    { name: 'LTSpice',          level: 'Intermediate'  },
-    { name: 'FDM / 3D Print',   level: 'Intermediate'  },
+  { group: 'Hardware & Tools', items: [
+    { name: 'Oscilloscope / Lab Equipment', level: 'Proficient'   },
+    { name: 'SolidWorks',                   level: 'Proficient'   },
+    { name: 'Autodesk Fusion',              level: 'Proficient'   },
+    { name: 'KiCad',                        level: 'Intermediate' },
+    { name: 'LTSpice',                      level: 'Intermediate' },
+    { name: 'FDM / 3D Printing',            level: 'Intermediate' },
+    { name: 'Soldering',                    level: 'Proficient'   },
   ]},
   { group: 'Software', items: [
-    { name: 'MATLAB',            level: 'Intermediate'  },
-    { name: 'C',                 level: 'Intermediate'  },
-    { name: 'Python',            level: 'Beginner'      },
-    { name: 'Autodesk Inventor', level: 'Beginner'      },
+    { name: 'MATLAB',                       level: 'Intermediate' },
+    { name: 'C / Embedded C',              level: 'Intermediate' },
+    { name: 'Python',                       level: 'Beginner'     },
+    { name: 'LabVIEW',                      level: 'Beginner'     },
   ]},
-  { group: 'Focus', items: [
-    { name: 'Signal Analysis',   level: 'Proficient'    },
-    { name: 'Test Engineering',  level: 'Proficient'    },
-    { name: 'RF Systems',        level: 'Intermediate'  },
-    { name: 'Power Electronics', level: 'Intermediate'  },
-    { name: 'PCB Design',        level: 'Intermediate'  },
-    { name: 'Antenna Design',    level: 'Beginner'      },
+  { group: 'Focus Areas', items: [
+    { name: 'Test Engineering',             level: 'Proficient'   },
+    { name: 'RF & Signal Analysis',         level: 'Proficient'   },
+    { name: 'Embedded Systems',             level: 'Intermediate' },
+    { name: 'Power Electronics',            level: 'Intermediate' },
+    { name: 'PCB Design',                   level: 'Intermediate' },
+    { name: 'Control Systems',              level: 'Beginner'     },
   ]},
 ];
 
@@ -219,16 +221,17 @@ const LEVEL_COLOR = {
 };
 
 const ABOUT_PHOTOS = [
-  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen' },
-  null,
-  null,
-  null,
+  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen', caption: 'Riding a dune buggy in the Mojave Desert for the first time.' },
+  { src: null, caption: '' },
+  { src: null, caption: '' },
+  { src: null, caption: '' },
 ];
 
 const AboutPhoto = () => {
   const [index, setIndex] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const current = ABOUT_PHOTOS[index];
+  const hasImage = current && current.src;
 
   React.useEffect(() => {
     if (!open) return;
@@ -245,7 +248,7 @@ const AboutPhoto = () => {
       <div style={{ marginTop: 24, maxWidth: 480 }}>
         {/* Photo frame */}
         <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(17,17,17,0.1)', lineHeight: 0, background: 'rgba(27,58,92,0.04)' }}>
-          {current ? (
+          {hasImage ? (
             <img
               src={current.src}
               alt={current.alt}
@@ -278,17 +281,23 @@ const AboutPhoto = () => {
               style={{ width: i === index ? 16 : 6, height: 6, borderRadius: 3, background: i === index ? '#1B3A5C' : 'rgba(27,58,92,0.25)', border: 'none', cursor: 'pointer', padding: 0, transition: 'width 0.2s, background 0.2s' }} />
           ))}
         </div>
+
+        {/* Caption */}
+        {current && current.caption ? (
+          <p style={{ fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 14, color: '#666', marginTop: 8, textAlign: 'center', lineHeight: 1.5 }}>{current.caption}</p>
+        ) : null}
       </div>
 
-      {open && current && (
-        <div
-          onClick={() => setOpen(false)}
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, cursor: 'zoom-out', padding: 16 }}
-        >
+      {open && hasImage && (
+        <div onClick={() => setOpen(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, cursor: 'zoom-out', padding: 16 }}>
           <button onClick={() => setOpen(false)} aria-label="Close photo"
             style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', color: '#fff', fontSize: 28, cursor: 'pointer', lineHeight: 1, opacity: 0.8 }}>×</button>
-          <img src={current.src} alt={current.alt} decoding="async"
-            style={{ maxWidth: '92vw', maxHeight: '92vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <img src={current.src} alt={current.alt} decoding="async"
+              style={{ maxWidth: '92vw', maxHeight: '82vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }} />
+            {current.caption && <p style={{ fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 15, color: 'rgba(255,255,255,0.75)', textAlign: 'center', maxWidth: 480 }}>{current.caption}</p>}
+          </div>
         </div>
       )}
     </>
@@ -354,8 +363,8 @@ const HomeFull = ({ onNavigate }) => {
         <dt style={hf.eduKey}>School</dt><dd style={hf.eduVal}>University of Central Florida</dd>
         <dt style={hf.eduKey}>Degree</dt><dd style={hf.eduVal}>B.S. Electrical Engineering</dd>
         <dt style={hf.eduKey}>Graduation</dt><dd style={hf.eduVal}>May 2027</dd>
-        <dt style={hf.eduKey}>GPA</dt><dd style={hf.eduVal}>3.8</dd>
-        <dt style={hf.eduKey}>Coursework</dt><dd style={hf.eduVal}>Circuits I &amp; II · Electromagnetics · Signal Processing · Digital Logic · Power Electronics · Microelectronics · Control Systems · RF Circuit Design</dd>
+        <dt style={hf.eduKey}>GPA</dt><dd style={hf.eduVal}>3.4</dd>
+        <dt style={hf.eduKey}>Coursework</dt><dd style={hf.eduVal}>Electronics I &amp; II · Electromagnetic Fields · Linear Control Systems · Real Time Systems · Embedded Systems</dd>
       </dl>
     </div>
     </Reveal>
@@ -529,9 +538,65 @@ const ProjectsIndex = ({ onSelect }) => {
   );
 };
 
+const CERT_ICON = {
+  solidworks: (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="6" stroke="#1B3A5C" strokeWidth="1.5"/>
+      <circle cx="14" cy="14" r="12" stroke="#1B3A5C" strokeWidth="1" strokeDasharray="3 2" opacity="0.5"/>
+      <line x1="14" y1="2" x2="14" y2="6" stroke="#1B3A5C" strokeWidth="1.5"/>
+      <line x1="14" y1="22" x2="14" y2="26" stroke="#1B3A5C" strokeWidth="1.5"/>
+      <line x1="2" y1="14" x2="6" y2="14" stroke="#1B3A5C" strokeWidth="1.5"/>
+      <line x1="22" y1="14" x2="26" y2="14" stroke="#1B3A5C" strokeWidth="1.5"/>
+    </svg>
+  ),
+  autodesk: (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <path d="M14 3L25 9.5V18.5L14 25L3 18.5V9.5L14 3Z" stroke="#1B3A5C" strokeWidth="1.5"/>
+      <path d="M14 3V25M3 9.5L25 9.5" stroke="#1B3A5C" strokeWidth="0.8" opacity="0.4"/>
+    </svg>
+  ),
+  cpt: (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect x="3" y="13" width="22" height="12" rx="1" stroke="#1B3A5C" strokeWidth="1.5"/>
+      <path d="M3 13L8 7H20L25 13" stroke="#1B3A5C" strokeWidth="1.5" strokeLinejoin="round"/>
+      <rect x="11" y="17" width="6" height="8" stroke="#1B3A5C" strokeWidth="1"/>
+      <circle cx="8" cy="18" r="1.5" fill="#1B3A5C" opacity="0.5"/>
+      <circle cx="20" cy="18" r="1.5" fill="#1B3A5C" opacity="0.5"/>
+    </svg>
+  ),
+};
+
+const CERTIFICATIONS_DATA = [
+  {
+    id: 'cswa',
+    title: 'CSWA — Certified SolidWorks Associate',
+    org: 'Dassault Systèmes',
+    date: 'Issued 2024',
+    pdfLink: 'assets/cswa-cert.pdf',
+    icon: 'solidworks',
+  },
+  {
+    id: 'autodesk-fusion',
+    title: 'Autodesk Fusion Certified User',
+    org: 'Autodesk',
+    date: 'Issued 2024',
+    pdfLink: null,
+    icon: 'autodesk',
+  },
+  {
+    id: 'cpt',
+    title: 'Certified Production Technician (CPT) 4.0',
+    org: 'Manufacturing Skill Standards Council (MSSC)',
+    date: 'Issued Mar 2023 · Expires Mar 2028',
+    pdfLink: null,
+    icon: 'cpt',
+  },
+];
+
 /* ─── Leadership index — same grid as Projects ──────────────────────────── */
 const LeadershipIndex = ({ onSelect }) => {
   const [hovered, setHovered] = React.useState(null);
+  const [certHovered, setCertHovered] = React.useState(null);
   const isMobile = useIsMobile();
   return (
     <div style={di.page}>
@@ -572,6 +637,48 @@ const LeadershipIndex = ({ onSelect }) => {
             </div>
             </Reveal>
           ))}
+        </div>
+
+        {/* Certifications */}
+        <div style={{ marginTop: 56 }}>
+          <h2 style={{ fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', fontWeight: 400, color: '#111', marginBottom: 24 }}>Certifications</h2>
+          <div>
+            {CERTIFICATIONS_DATA.map((cert, i) => (
+              <Reveal key={cert.id} delay={i * 60}>
+              <div>
+                <div style={{ borderTop: '1px solid rgba(17,17,17,0.12)', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: -3, left: 0, width: 5, height: 5, background: '#1B3A5C', borderRadius: '50%' }} />
+                </div>
+                <div
+                  style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '14px 0', transition: 'background 0.1s', ...(certHovered === i ? { background: 'rgba(27,58,92,0.04)', margin: '0 -20px', padding: '14px 20px' } : {}) }}
+                  onMouseEnter={() => setCertHovered(i)}
+                  onMouseLeave={() => setCertHovered(null)}
+                >
+                  <div style={{ flexShrink: 0, width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(27,58,92,0.06)', borderRadius: 8, border: '1px solid rgba(27,58,92,0.12)' }}>
+                    {CERT_ICON[cert.icon]}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111' }}>{cert.title}</div>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#555', letterSpacing: '0.02em', marginTop: 2 }}>{cert.org}</div>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
+                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#555', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>{cert.date}</span>
+                    {cert.pdfLink && (
+                      <a href={cert.pdfLink} target="_blank" rel="noopener noreferrer"
+                        style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, color: '#1B3A5C', letterSpacing: '0.04em', border: '1px solid rgba(27,58,92,0.35)', padding: '3px 8px', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                        onClick={e => e.stopPropagation()}>
+                        ↓ pdf
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+              </Reveal>
+            ))}
+            <div style={{ borderTop: '1px solid rgba(17,17,17,0.12)', position: 'relative' }}>
+              <div style={{ position: 'absolute', top: -3, left: 0, width: 5, height: 5, background: '#1B3A5C', borderRadius: '50%' }} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -774,20 +881,19 @@ const exp = {
 
 /* ✏️  EDIT YOUR CONTENT HERE — Projects */
 const PROJECTS_DATA = [
-  { id: 'buck-converter',  title: 'Buck Converter Design',               date: 'Jan 2024', thumb: null, desc: 'Switching power supply for embedded audio amplifier; PCB layout in KiCad.',         specs: [['Date','Jan 2024'],['Tools','KiCad, LTSpice'],['Type','Power Electronics'],['Status','Completed']] },
-  { id: 'antenna-sim',    title: 'Phased Array Antenna Simulation',       date: 'Sep 2023', thumb: null, desc: 'Beamforming model and far-field pattern analysis in MATLAB.',                       specs: [['Date','Sep 2023'],['Tools','MATLAB'],['Type','RF / Antenna'],['Status','Completed']] },
-  { id: 'rf-fixture',     title: 'RF Test Fixture Fabrication',           date: 'Apr 2024', thumb: null, desc: 'SolidWorks-designed FDM fixture improving RF signal path integrity at Lockheed.',   specs: [['Date','Apr 2024'],['Tools','SolidWorks, FDM'],['Type','RF Test Equipment'],['Status','Completed']] },
-  { id: 'circuit-comp',   title: '2nd Place — Circuit Design Competition', date: 'Mar 2024', thumb: 'assets/photos/circuit-design-competition-1.jpg', desc: 'Analog signal conditioning circuit; UCF student competition.', specs: [['Date','Mar 2024'],['Award','2nd Place'],['Type','Analog Design'],['Status','Completed']] },
-  { id: 'ltspice-filter', title: 'Active Filter Network Analysis',         date: 'Nov 2023', thumb: null, desc: 'Butterworth low-pass filter simulation and component sensitivity in LTSpice.',       specs: [['Date','Nov 2023'],['Tools','LTSpice'],['Type','Filter Design'],['Status','Completed']] },
+  { id: 'southeastcon-2024', title: 'IEEE SoutheastCon 2024 Hardware Competition', date: 'Sep 2023 – Apr 2024', thumb: null, desc: 'Designed and built hardware entry for the IEEE Region 3 SoutheastCon 2024 Hardware Competition.', specs: [['Date','Sep 2023 – Apr 2024'],['Event','IEEE SoutheastCon 2024'],['Type','Hardware Design'],['Status','Completed']] },
+  { id: 'internal-project-comp', title: 'Internal Project Competition', date: 'Apr 2024 – Apr 2025', thumb: null, desc: 'IEEE UCF internal technical project competition spanning multiple engineering disciplines.', specs: [['Date','Apr 2024 – Apr 2025'],['Org','IEEE UCF'],['Type','Internal Competition'],['Status','Completed']] },
+  { id: 'senior-design', title: 'Senior Design — Space Systems', date: 'Aug 2025 – Present', thumb: null, desc: 'Senior capstone project focused on space systems engineering and design.', specs: [['Date','Aug 2025 – Present'],['Type','Senior Design'],['Status','In Progress']] },
+  { id: 'placeholder-project', title: 'Coming Soon', date: '', thumb: null, desc: 'New project in progress — check back soon.', specs: [] },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Leadership */
 const LEADERSHIP_DATA = [
-  { id: 'ieee-president',     title: 'IEEE UCF President',         date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',           desc: 'Led 13-officer board; coordinated 30+ events with AMD, Northrop Grumman, and others' },
-  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',     date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',       desc: 'Implemented BOM-based budget approval; delivered technical presentations to 100+ students' },
-  { id: 'ieee-hkn',           title: 'IEEE Eta Kappa Nu (HKN)',    date: '2024 – Present',       thumb: 'assets/photos/hkn-1.jpg',                 desc: 'Member of the IEEE honor society for electrical and computer engineering; top academic tier' },
-  { id: 'ieee-service',       title: 'IEEE UCF Service Committee', date: 'Feb 2024 – Apr 2024',  thumb: 'assets/photos/service-committee-1.jpg',  desc: 'FIRST Robotics, beach cleanups, E-Week school workshops' },
-  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',   date: 'Mar 2023 – Apr 2025',  thumb: null,                                     desc: 'Two-year servant leadership program with Hope Helps, SERV, First Robotics' },
+  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Led 13-officer board; coordinated 30+ events with AMD, Northrop Grumman, and others' },
+  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Implemented BOM-based budget approval; delivered technical presentations to 100+ students' },
+  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: '2024 – Present',      thumb: 'assets/photos/hkn-1.jpg',                desc: 'Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering' },
+  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'FIRST Robotics, beach cleanups, E-Week school workshops' },
+  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: null,                                    desc: 'Two-year servant leadership program with Hope Helps, SERV, First Robotics' },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
