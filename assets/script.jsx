@@ -419,7 +419,7 @@ const hf = {
   page: { padding: '64px 56px 96px', maxWidth: 820 },
   hero: { marginBottom: 48 },
   h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(2.8rem,4vw,4rem)', fontWeight: 400, color: '#111', lineHeight: 1.05, marginBottom: 24, letterSpacing: '-0.01em' },
-  bio: { fontFamily: "'EB Garamond',serif", fontSize: 19, lineHeight: 1.65, color: '#111', maxWidth: 580, marginBottom: 0, textWrap: 'pretty' },
+  bio: { fontFamily: "'EB Garamond',serif", fontSize: 19, fontWeight: 600, lineHeight: 1.65, color: '#111', maxWidth: 580, marginBottom: 0, textWrap: 'pretty' },
   dividerWrap: { position: 'relative', margin: '44px 0' },
   divNode: { position: 'absolute', top: -3, left: 0, width: 5, height: 5, background: '#1B3A5C', borderRadius: '50%' },
   divLine: { borderTop: '1px solid rgba(17,17,17,0.12)' },
@@ -484,7 +484,6 @@ const ProjectsIndex = ({ onSelect }) => {
     <div style={di.page}>
       <StickyNav title="Projects" />
       <div style={{...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
-        <h1 style={di.h1}>Projects</h1>
         <div style={{...di.grid, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px,1fr))'}}>
           {PROJECTS_DATA.map((item, i) => (
             <Reveal key={item.id} delay={i * 80}>
@@ -536,7 +535,6 @@ const LeadershipIndex = ({ onSelect }) => {
     <div style={di.page}>
       <StickyNav title="Leadership" />
       <div style={{...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
-        <h1 style={di.h1}>Leadership</h1>
         <div style={{...di.grid, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px,1fr))'}}>
           {LEADERSHIP_DATA.map((item, i) => (
             <Reveal key={item.id} delay={i * 80}>
@@ -724,7 +722,6 @@ const ExperiencePage = () => {
   <div style={exp.page}>
     <StickyNav title="Experience" />
     <div style={{...exp.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
-      <h1 style={exp.h1}>Experience</h1>
       <div style={exp.cards}>
         {EXPERIENCE_DATA.map((item, i) => (
           <Reveal key={item.id} delay={i * 100}>
@@ -805,8 +802,7 @@ const ResumePage = () => {
   return (
   <div style={{flex:1, display:'flex', flexDirection:'column', minHeight: isMobile ? 'calc(100vh - 56px)' : '100vh'}}>
     <StickyNav title="Resume" />
-    <div style={{padding: isMobile ? '16px 20px' : '24px 56px 16px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(17,17,17,0.12)'}}>
-      <h1 style={{fontFamily:"'EB Garamond',serif", fontSize:'clamp(1.4rem,2.5vw,1.9rem)', fontWeight:400, color:'#111', margin:0}}>Resume</h1>
+    <div style={{padding: isMobile ? '16px 20px' : '24px 56px 16px', display:'flex', alignItems:'center', justifyContent:'flex-end', borderBottom:'1px solid rgba(17,17,17,0.12)'}}>
       <a href="assets/Profile.pdf" download style={{fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:'#1B3A5C', letterSpacing:'0.02em', border:'1px solid rgba(27,58,92,0.35)', padding:'8px 14px', textDecoration:'none', whiteSpace:'nowrap'}}>↓ download pdf</a>
     </div>
     <iframe
@@ -828,9 +824,6 @@ const ContactDesktop = () => {
   <div style={{flex:1}}>
     <StickyNav title="Contact" />
     <div style={{padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth:680}}>
-      <div style={{marginBottom:36}}>
-        <h1 style={{fontFamily:"'EB Garamond',serif",fontSize:'clamp(1.6rem,3vw,2.2rem)',fontWeight:400,color:'#111',margin:0}}>Contact</h1>
-      </div>
       <p style={{fontFamily:"'EB Garamond',serif",fontSize:17,lineHeight:1.7,color:'#111',marginBottom:40,textWrap:'pretty'}}>
         I'm always happy to connect with others interested in RF electronics, antenna design, power systems, or any other engineering field.
       </p>
