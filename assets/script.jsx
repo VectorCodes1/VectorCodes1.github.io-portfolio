@@ -200,13 +200,13 @@ const SKILLS = [
   ]},
   { group: 'Software', items: [
     { name: 'MATLAB',                       level: 'Intermediate' },
+    { name: 'Simulink',                     level: 'Intermediate' },
     { name: 'C / Embedded C',              level: 'Intermediate' },
     { name: 'Python',                       level: 'Beginner'     },
-    { name: 'LabVIEW',                      level: 'Beginner'     },
+    { name: 'Linux',                        level: 'Beginner'     },
   ]},
   { group: 'Focus Areas', items: [
-    { name: 'Test Engineering',             level: 'Proficient'   },
-    { name: 'RF & Signal Analysis',         level: 'Proficient'   },
+    { name: 'RF & Signal Analysis',         level: 'Intermediate' },
     { name: 'Embedded Systems',             level: 'Intermediate' },
     { name: 'Power Electronics',            level: 'Intermediate' },
     { name: 'PCB Design',                   level: 'Intermediate' },
@@ -321,9 +321,10 @@ const HomeFull = ({ onNavigate }) => {
     <div style={hf.hero}>
       <h1 style={hf.h1}>Hey — I'm Matias!</h1>
       <p style={hf.bio}>
-        Undergraduate specializing in RF &amp; power electronics — designing test fixtures at
-        Lockheed Martin, building circuits in the lab, and leading IEEE UCF as President.
-        I still believe the best way to understand a circuit is to build it.
+        Electrical Engineering student specializing in RF &amp; antenna systems and hardware
+        development. From antenna test and development, to embedded hardware setup, to production
+        and manufacturing insight, I have real, practical experience across multiple domains — and
+        I'm always looking for ways to ask more questions and learn more about our world.
       </p>
     </div>
     </Reveal>
@@ -336,14 +337,12 @@ const HomeFull = ({ onNavigate }) => {
       <div style={hf.aboutText}>
         <span style={hf.sectionLabel}>About</span>
         <p style={hf.aboutBio}>
-          Most of us grew up idolizing a hero who could make the impossible seem like a simple
-          weekend project. Back in kindergarten, I built a cardboard "Iron Man" suit and an arc
-          reactor out of a flashlight — a spark of my growing imagination.
-        </p>
-        <p style={{...hf.aboutBio, marginTop: 16}}>
-          My time with IEEE UCF has challenged and defined my leadership. As President, I see the
-          organization as a vital bridge between the classroom and hands-on activity. I may have
-          outgrown the cardboard suit, but I have never outgrown my drive to build, break, and improve.
+          Florida native who enjoys the outdoors and traveling. I'm a theme park enthusiast and love
+          going to the parks with my mom. I enjoy a good game of golf and try to play with my dad
+          whenever I get the chance. Apart from that, I'm pretty involved with school and active on
+          campus in clubs such as IEEE @ UCF and the IEEE HKN honor society. I'm an avid technology
+          enthusiast and love reading up on new technologies and developments in the world. Below are
+          some images of what I do in my free time.
         </p>
         <AboutPhoto />
       </div>
@@ -364,7 +363,7 @@ const HomeFull = ({ onNavigate }) => {
         <dt style={hf.eduKey}>Degree</dt><dd style={hf.eduVal}>B.S. Electrical Engineering</dd>
         <dt style={hf.eduKey}>Graduation</dt><dd style={hf.eduVal}>May 2027</dd>
         <dt style={hf.eduKey}>GPA</dt><dd style={hf.eduVal}>3.4</dd>
-        <dt style={hf.eduKey}>Coursework</dt><dd style={hf.eduVal}>Electronics I &amp; II · Electromagnetic Fields · Linear Control Systems · Real Time Systems · Embedded Systems</dd>
+        <dt style={hf.eduKey}>Coursework</dt><dd style={hf.eduVal}>Electronics I &amp; II · Electromagnetic Fields · Linear Control Systems · Real Time Systems · Embedded Systems · Semiconductor Devices</dd>
       </dl>
     </div>
     </Reveal>
@@ -413,14 +412,6 @@ const HomeFull = ({ onNavigate }) => {
         ))}
       </div>
     </div>
-    </Reveal>
-
-    <div style={hf.dividerWrap}><div style={hf.divNode}></div><div style={hf.divLine}></div></div>
-
-    <Reveal delay={80}>
-    <p style={hf.closingQuote}>
-      "I may have outgrown the cardboard suit, but I have never outgrown my drive to build, break, and improve."
-    </p>
     </Reveal>
   </div>
   );
