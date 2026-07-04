@@ -319,12 +319,10 @@ const HomeFull = ({ onNavigate }) => {
     {/* Hero */}
     <Reveal>
     <div style={hf.hero}>
-      <h1 style={hf.h1}>Hey — I'm Matias!</h1>
       <p style={hf.bio}>
-        Electrical Engineering student specializing in RF &amp; antenna systems and hardware
-        development. From antenna test and development, to embedded hardware setup, to production
-        and manufacturing insight, I have real, practical experience across multiple domains — and
-        I'm always looking for ways to ask more questions and learn more about our world.
+        Electrical engineering student specializing in RF &amp; antenna systems. From production
+        test and development to embedded hardware setup, I have real, practical experience across
+        multiple domains.
       </p>
     </div>
     </Reveal>
