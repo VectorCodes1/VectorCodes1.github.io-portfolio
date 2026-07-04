@@ -221,10 +221,11 @@ const LEVEL_COLOR = {
 };
 
 const ABOUT_PHOTOS = [
-  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen', caption: 'Riding a dune buggy in the Mojave Desert for the first time.' },
-  { src: null, caption: '' },
-  { src: null, caption: '' },
-  { src: null, caption: '' },
+  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen', caption: 'Riding a dune buggy in Utah, near the Grand Canyon, for the first time.' },
+  { src: 'assets/battleshipnj.jpeg', alt: 'Matias Guillen', caption: 'Visiting Battleship NJ on a rainy day.' },
+  { src: 'assets/naturewalk.nj.jpeg', alt: 'Matias Guillen', caption: 'Enjoying a nature walk.' },
+  { src: 'assets/ieeesmdworkshop.jpeg', alt: 'Matias Guillen', caption: 'Helping out with an SMD workshop.' },
+  { src: 'assets/minigolf.jpeg', alt: 'Matias Guillen', caption: 'Doing mini golf with friends.' },
 ];
 
 const AboutPhoto = () => {
