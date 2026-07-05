@@ -46,6 +46,7 @@ const NAV_ITEMS = [
   { label: 'Projects',    page: 'projects'   },
   { label: 'Skills',      page: 'skills'     },
   { label: 'Leadership',  page: 'leadership' },
+  { label: 'Awards',      page: 'awards'     },
   { label: 'Resume',      page: 'resume'     },
   { label: 'Contact',     page: 'contact'    },
 ];
@@ -353,30 +354,6 @@ const HomeFull = ({ onNavigate }) => {
       </div>
     </div>
     </Reveal>
-
-    <div style={hf.dividerWrap}><div style={hf.divNode}></div><div style={hf.divLine}></div></div>
-
-    {/* Awards & Recognition */}
-    <Reveal delay={60}>
-    <div>
-      <span style={hf.sectionLabel}>Awards &amp; Recognition</span>
-      <div style={{display:'flex', flexWrap:'wrap', gap:16}}>
-        {AWARDS_DATA.map(award => (
-          <div key={award.id} style={{
-            flex: isMobile ? '1 1 100%' : '1 1 200px', minWidth: 180,
-            border:'2px dashed rgba(27,58,92,0.2)', borderRadius:8, padding:'24px 16px',
-            display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center',
-          }}>
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-              <circle cx="14" cy="10" r="7" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4"/>
-              <path d="M9 16L7 25L14 21L21 25L19 16" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4" strokeLinejoin="round"/>
-            </svg>
-            <span style={{fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:'#1B3A5C', opacity:0.45, letterSpacing:'0.04em'}}>award coming soon</span>
-          </div>
-        ))}
-      </div>
-    </div>
-    </Reveal>
   </div>
   );
 };
@@ -432,84 +409,134 @@ const ICONS = {
   ),
 };
 
-/* ─── Skills page — circuit-board style interactive diagram ─────────────── */
-const SKILL_GROUP_ABBR = { 'Hardware & Tools': 'HW / TOOLS', 'Software': 'SOFTWARE', 'Focus Areas': 'FOCUS' };
+/* ─── Skills page — one "giant IC" circuit diagram, sectioned by category ── */
+const LEVEL_RANK = { Proficient: 0, Intermediate: 1, Beginner: 2 };
+const sortByLevel = items => [...items].sort((a, b) => LEVEL_RANK[a.level] - LEVEL_RANK[b.level]);
+
 const SKILLS_MAX_LABEL = Math.max(...SKILLS.flatMap(g => g.items.map(i => i.name.length)));
-const SKILLS_CARD_WIDTH = Math.round(190 + SKILLS_MAX_LABEL * 6.4);
+const SK_CX = 240;
+const SK_SPINE_X = SK_CX + 66;
+const SK_NODE_X = SK_SPINE_X + 40;
+const SK_LABEL_X = SK_NODE_X + 20;
+const SK_WIDTH = Math.round(SK_LABEL_X + SKILLS_MAX_LABEL * 6.4 + 14);
+const SK_ROOT_W = 300, SK_ROOT_H = 48, SK_ROOT_Y = 16;
+const SK_SECTION_CHIP_W = 190, SK_SECTION_CHIP_H = 30;
+const SK_NODE_SPACING = 32, SK_TIER_GAP = 16, SK_SECTION_GAP = 42, SK_LEAD_IN = 34, SK_FIRST_ITEM_OFFSET = 30;
 
-const SkillCircuit = ({ group, items, active, setActive }) => {
-  const nodeSpacing = 40;
-  const topPad = 54;
-  const bottomPad = 20;
-  const chipX = 18, chipY = 16, chipW = 84, chipH = 28;
-  const spineX = chipX + chipW + 34;
-  const nodeX = spineX + 36;
-  const labelX = nodeX + 20;
-  const busY = chipY + chipH / 2;
-  const firstNodeY = topPad;
-  const lastNodeY = firstNodeY + Math.max(items.length - 1, 0) * nodeSpacing;
-  const height = topPad + Math.max(items.length, 1) * nodeSpacing - (items.length ? nodeSpacing - bottomPad : -bottomPad);
+function buildSkillsLayout(groups) {
+  const rootBottom = SK_ROOT_Y + SK_ROOT_H;
+  let cursorY = rootBottom + SK_LEAD_IN;
+  const sections = [];
 
-  if (!items.length) return null;
+  groups.forEach(g => {
+    const items = sortByLevel(g.items);
+    const chipY = cursorY;
+    const chipX = SK_CX - SK_SECTION_CHIP_W / 2;
+    const leadY = chipY + SK_SECTION_CHIP_H / 2;
+
+    const positions = [];
+    let y = leadY + SK_FIRST_ITEM_OFFSET;
+    let prevLevel = null;
+    items.forEach(item => {
+      if (prevLevel !== null && item.level !== prevLevel) y += SK_TIER_GAP;
+      positions.push({ item, y, isNewTier: item.level !== prevLevel });
+      y += SK_NODE_SPACING;
+      prevLevel = item.level;
+    });
+    const lastY = positions.length ? positions[positions.length - 1].y : leadY;
+    const sectionBottom = Math.max(chipY + SK_SECTION_CHIP_H, lastY + 10);
+
+    sections.push({ group: g.group, chipX, chipY, leadY, positions });
+    cursorY = sectionBottom + SK_SECTION_GAP;
+  });
+
+  const lastSection = sections[sections.length - 1];
+  const trunkBottom = lastSection ? lastSection.chipY + SK_SECTION_CHIP_H / 2 : rootBottom;
+  const totalHeight = sections.length ? cursorY - SK_SECTION_GAP + 24 : rootBottom + 24;
+
+  return { sections, rootBottom, trunkBottom, totalHeight };
+}
+
+const SkillsDiagram = ({ groups, active, setActive }) => {
+  const { sections, rootBottom, trunkBottom, totalHeight } = buildSkillsLayout(groups);
+
+  if (!sections.length) {
+    return (
+      <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: '#666', padding: '24px 0', textAlign: 'center' }}>
+        No skills match this filter.
+      </p>
+    );
+  }
 
   return (
-    <div style={{ border: '1px solid rgba(17,17,17,0.12)', borderRadius: 6, background: '#fff', padding: '6px 6px 14px' }}>
-      <svg viewBox={`0 0 ${SKILLS_CARD_WIDTH} ${height}`} width="100%" style={{ display: 'block', height: 'auto' }}>
-        {/* chip */}
-        <rect x={chipX} y={chipY} width={chipW} height={chipH} rx={3} fill="#fff" stroke="#1B3A5C" strokeWidth="1.4" />
-        <text x={chipX + chipW / 2} y={chipY + chipH / 2 + 3.5} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize="8.5" fontWeight="600" fill="#1B3A5C">
-          {SKILL_GROUP_ABBR[group] || group.toUpperCase()}
-        </text>
-        {[0, 1, 2].map(i => (
-          <line key={i} x1={chipX - 7} y1={chipY + 6 + i * 8} x2={chipX} y2={chipY + 6 + i * 8} stroke="#1B3A5C" strokeWidth="1.2" opacity="0.5" />
+    <div style={{ border: '1px solid rgba(17,17,17,0.12)', borderRadius: 8, background: '#fff', padding: '20px 14px', maxWidth: SK_WIDTH + 28, margin: '0 auto', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+      <svg viewBox={`0 0 ${SK_WIDTH} ${totalHeight}`} width={SK_WIDTH} height={totalHeight} style={{ display: 'block', minWidth: SK_WIDTH }}>
+        {/* root chip */}
+        <rect x={SK_CX - SK_ROOT_W / 2} y={SK_ROOT_Y} width={SK_ROOT_W} height={SK_ROOT_H} rx={4} fill="#fff" stroke="#1B3A5C" strokeWidth="1.8" />
+        <circle cx={SK_CX - SK_ROOT_W / 2 + 13} cy={SK_ROOT_Y + 13} r={2.6} fill="#1B3A5C" opacity="0.6" />
+        <text x={SK_CX} y={SK_ROOT_Y + SK_ROOT_H / 2 - 3} textAnchor="middle" fontFamily="'EB Garamond',serif" fontSize="18" fontWeight="600" fill="#111">SKILLS</text>
+        <text x={SK_CX} y={SK_ROOT_Y + SK_ROOT_H / 2 + 13} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize="7.5" letterSpacing="0.08em" fill="#1B3A5C" opacity="0.55">MATIAS GUILLEN</text>
+
+        {/* trunk running down through every section chip */}
+        <line x1={SK_CX} y1={rootBottom} x2={SK_CX} y2={trunkBottom} stroke="rgba(27,58,92,0.35)" strokeWidth="1.6" />
+
+        {sections.map(section => (
+          <g key={section.group}>
+            <rect x={section.chipX} y={section.chipY} width={SK_SECTION_CHIP_W} height={SK_SECTION_CHIP_H} rx={4} fill="rgba(27,58,92,0.05)" stroke="#1B3A5C" strokeWidth="1.4" />
+            <text x={SK_CX} y={section.leadY + 3.5} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize="9.5" fontWeight="700" letterSpacing="0.03em" fill="#1B3A5C">
+              {section.group.toUpperCase()}
+            </text>
+
+            {/* lead from chip's right edge to the item spine */}
+            <line x1={section.chipX + SK_SECTION_CHIP_W} y1={section.leadY} x2={SK_SPINE_X} y2={section.leadY} stroke="rgba(27,58,92,0.35)" strokeWidth="1.4" />
+            {section.positions.length > 0 && (
+              <line
+                x1={SK_SPINE_X} y1={Math.min(section.leadY, section.positions[0].y)}
+                x2={SK_SPINE_X} y2={section.positions[section.positions.length - 1].y}
+                stroke="rgba(27,58,92,0.35)" strokeWidth="1.4"
+              />
+            )}
+
+            {section.positions.map(({ item, y, isNewTier }) => {
+              const key = `${section.group}:${item.name}`;
+              const isActive = active === key;
+              const c = LEVEL_COLOR[item.level];
+              return (
+                <g key={item.name}>
+                  {isNewTier && (
+                    <text x={SK_SPINE_X + 6} y={y - 10} fontFamily="'JetBrains Mono',monospace" fontSize="7.5" fontWeight="600" letterSpacing="0.08em" fill={c.text} opacity="0.8">
+                      {item.level.toUpperCase()}
+                    </text>
+                  )}
+                  <g
+                    onMouseEnter={() => setActive(key)}
+                    onMouseLeave={() => setActive(a => a === key ? null : a)}
+                    onClick={() => setActive(a => a === key ? null : key)}
+                    onFocus={() => setActive(key)}
+                    onBlur={() => setActive(a => a === key ? null : a)}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`${item.name} — ${item.level}`}
+                    style={{ cursor: 'pointer', outline: 'none' }}
+                  >
+                    <line x1={SK_SPINE_X} y1={y} x2={SK_NODE_X} y2={y} stroke={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} strokeWidth={isActive ? 2.2 : 1.4} />
+                    <circle cx={SK_SPINE_X} cy={y} r={2} fill={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} />
+                    <rect x={SK_NODE_X} y={y - 6} width={12} height={12} rx={2} fill={isActive ? c.border : c.bg} stroke={c.border} strokeWidth={isActive ? 1.8 : 1.2} />
+                    {isActive && (
+                      <circle cx={SK_NODE_X + 6} cy={y} r={9} fill="none" stroke={c.border} strokeWidth="1" opacity="0.5">
+                        <animate attributeName="r" values="9;14;9" dur="1.2s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.5;0;0.5" dur="1.2s" repeatCount="indefinite" />
+                      </circle>
+                    )}
+                    <text x={SK_LABEL_X} y={y + 3.5} fontFamily="'JetBrains Mono',monospace" fontSize="11" fontWeight={isActive ? 600 : 400} fill={isActive ? '#111' : '#333'}>
+                      {item.name}
+                    </text>
+                  </g>
+                </g>
+              );
+            })}
+          </g>
         ))}
-
-        {/* lead from chip to spine */}
-        <line x1={chipX + chipW} y1={busY} x2={spineX} y2={busY} stroke="rgba(27,58,92,0.35)" strokeWidth="1.4" />
-        {/* vertical spine connecting the chip lead down/up to the node rows */}
-        <line
-          x1={spineX} y1={Math.min(busY, firstNodeY)}
-          x2={spineX} y2={Math.max(busY, lastNodeY)}
-          stroke="rgba(27,58,92,0.35)" strokeWidth="1.4"
-        />
-
-        {items.map((item, i) => {
-          const y = firstNodeY + i * nodeSpacing;
-          const key = `${group}:${item.name}`;
-          const isActive = active === key;
-          const c = LEVEL_COLOR[item.level];
-          return (
-            <g key={item.name}
-              onMouseEnter={() => setActive(key)}
-              onMouseLeave={() => setActive(a => a === key ? null : a)}
-              onClick={() => setActive(a => a === key ? null : key)}
-              onFocus={() => setActive(key)}
-              onBlur={() => setActive(a => a === key ? null : a)}
-              tabIndex={0}
-              role="button"
-              aria-label={`${item.name} — ${item.level}`}
-              style={{ cursor: 'pointer', outline: 'none' }}
-            >
-              <line x1={spineX} y1={y} x2={nodeX} y2={y} stroke={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} strokeWidth={isActive ? 2.2 : 1.4} />
-              <circle cx={spineX} cy={y} r={2} fill={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} />
-              <rect x={nodeX} y={y - 6} width={12} height={12} rx={2} fill={isActive ? c.border : c.bg} stroke={c.border} strokeWidth={isActive ? 1.8 : 1.2} />
-              {isActive && (
-                <circle cx={nodeX + 6} cy={y} r={9} fill="none" stroke={c.border} strokeWidth="1" opacity="0.5">
-                  <animate attributeName="r" values="9;14;9" dur="1.2s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.5;0;0.5" dur="1.2s" repeatCount="indefinite" />
-                </circle>
-              )}
-              <text x={labelX} y={y + 3.5} fontFamily="'JetBrains Mono',monospace" fontSize="10.5" fontWeight={isActive ? 600 : 400} fill={isActive ? '#111' : '#555'}>
-                {item.name}
-              </text>
-              {isActive && (
-                <text x={labelX} y={y + 15} fontFamily="'JetBrains Mono',monospace" fontSize="8.5" fill={c.text} opacity="0.85">
-                  {item.level}
-                </text>
-              )}
-            </g>
-          );
-        })}
       </svg>
     </div>
   );
@@ -521,11 +548,15 @@ const SkillsPage = () => {
   const isMobile = useIsMobile();
   const levels = ['All', 'Proficient', 'Intermediate', 'Beginner'];
 
+  const groups = SKILLS
+    .map(g => ({ group: g.group, items: g.items.filter(s => skillFilter === 'All' || s.level === skillFilter) }))
+    .filter(g => g.items.length > 0);
+
   return (
     <div style={di.page}>
       <StickyNav title="Skills" />
       <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px' }}>
-        <div style={hf.filterRow}>
+        <div style={{ ...hf.filterRow, justifyContent: 'center', marginBottom: 28 }}>
           {levels.map(l => (
             <button key={l} onClick={() => setSkillFilter(l)}
               style={{ ...hf.filterBtn, ...(skillFilter === l ? hf.filterBtnActive : {}) }}>
@@ -533,19 +564,10 @@ const SkillsPage = () => {
             </button>
           ))}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24, marginTop: 24, alignItems: 'start' }}>
-          {SKILLS.map(({ group, items }) => (
-            <Reveal key={group} delay={40}>
-              <SkillCircuit
-                group={group}
-                items={items.filter(s => skillFilter === 'All' || s.level === skillFilter)}
-                active={active}
-                setActive={setActive}
-              />
-            </Reveal>
-          ))}
-        </div>
-        <div style={hf.levelLegend}>
+        <Reveal>
+          <SkillsDiagram groups={groups} active={active} setActive={setActive} />
+        </Reveal>
+        <div style={{ ...hf.levelLegend, justifyContent: 'center' }}>
           {Object.entries(LEVEL_COLOR).map(([lvl, c]) => (
             <span key={lvl} style={hf.legendItem}>
               <span style={{ ...hf.legendDot, background: lvl === 'Beginner' ? 'rgba(17,17,17,0.2)' : c.border }}></span>
@@ -653,6 +675,33 @@ const LeadershipIndex = ({ onSelect }) => {
           ))}
         </div>
 
+      </div>
+    </div>
+  );
+};
+
+/* ─── Awards & Recognition page ─────────────────────────────────────────── */
+const AwardsPage = () => {
+  const isMobile = useIsMobile();
+  return (
+    <div style={di.page}>
+      <StickyNav title="Awards" />
+      <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+          {AWARDS_DATA.map(award => (
+            <div key={award.id} style={{
+              flex: isMobile ? '1 1 100%' : '1 1 200px', minWidth: 180,
+              border: '2px dashed rgba(27,58,92,0.2)', borderRadius: 8, padding: '32px 16px',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, textAlign: 'center',
+            }}>
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <circle cx="14" cy="10" r="7" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4" />
+                <path d="M9 16L7 25L14 21L21 25L19 16" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4" strokeLinejoin="round" />
+              </svg>
+              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', opacity: 0.45, letterSpacing: '0.04em' }}>award coming soon</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -948,6 +997,7 @@ const App = () => {
       case 'projects':   content = <ProjectsIndex onSelect={p => openDetail(p,'project')} />; break;
       case 'skills':     content = <SkillsPage />; break;
       case 'leadership': content = <LeadershipIndex onSelect={l => openDetail(l,'leadership')} />; break;
+      case 'awards':     content = <AwardsPage />; break;
       case 'experience': content = <ExperiencePage />; break;
       case 'resume':     content = <ResumePage />; break;
       case 'contact':    content = <ContactDesktop />; break;
