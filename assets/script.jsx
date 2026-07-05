@@ -657,9 +657,11 @@ const DesktopDetail = ({ item, type, onBack }) => {
                 </React.Fragment>
               ))}
             </dl>
-            {item.bullets
-              ? <ul style={dd.bullets}>{item.bullets.map((b, i) => <li key={i} style={dd.bullet}>{b}</li>)}</ul>
-              : <p style={dd.body}>{item.desc}</p>
+            {item.summary
+              ? <p style={dd.body}>{item.summary}</p>
+              : item.bullets
+                ? <ul style={dd.bullets}>{item.bullets.map((b, i) => <li key={i} style={dd.bullet}>{b}</li>)}</ul>
+                : <p style={dd.body}>{item.desc}</p>
             }
             {item.skills && (
               <div style={dd.skillRow}>
@@ -734,32 +736,23 @@ const dd = {
 const EXPERIENCE_DATA = [
   {
     id: 'lockheed-rf',
-    title: 'RF/Antenna Electrical Engineering Intern',
+    title: 'Electrical Engineering Antenna and RF Intern',
     date: 'May 2026 – Present',
-    thumb: null,
-    desc: 'Supporting RF and antenna system design and testing at Lockheed Martin.',
-    bullets: [
-      'Supporting RF and antenna system design and testing at Lockheed Martin.',
-      'Conducting antenna pattern measurements and RF signal characterization.',
-      'Collaborating with senior engineers on hardware validation test plans.',
-    ],
-    skills: ['RF Systems','Antenna Design','Signal Analysis','LTSpice'],
-    specs: [['Role','RF/Antenna EE Intern'],['Employer','Lockheed Martin'],['Period','May 2026 – Present'],['Focus','RF Systems, Antenna Design']],
+    thumb: 'assets/photos/phased-array-radar.gif',
+    desc: 'Programming and RF test validation for a Linux-based safety system and S-band phased array antenna calibration at Lockheed Martin RMS.',
+    summary: 'Programmed a Linux-based real-time RF safety system in C to acquire and transmit serial ADAM I/O data, validating a bit-exact match against the legacy FPGA it replaced using oscilloscopes and RF test equipment. Configured peripheral modules through TI SysConfig to emulate FPGA behavior on a TI board, reproducing peak and average RF power detector outputs in agreement with calibration data. Also developed test plans and review documentation for near-field calibration of S-band phased array antennas, tracing requirements in DOORS to keep test coverage aligned with system specifications across software and hardware.',
+    skills: ['RF & Signal Analysis','C / Embedded C','Embedded Systems','Test Engineering Documentation','DOORS','Oscilloscope / Lab Equipment','Linux'],
+    specs: [['Role','EE Antenna and RF Intern'],['Employer','Lockheed Martin (RMS)'],['Location','Moorestown, NJ'],['Period','May 2026 – Present']],
   },
   {
     id: 'lockheed',
-    title: 'CWEP — Test Engineering',
+    title: 'Production Test Engineering – CWEP',
     date: 'Apr 2024 – Apr 2026',
-    thumb: null,
-    desc: 'Component-level failure analysis and root-cause investigations on sensor hardware at Lockheed Martin.',
-    bullets: [
-      'Component-level failure analysis and root-cause investigations on sensor hardware.',
-      'Designed and fabricated custom RF test fixtures using SolidWorks and FDM to improve signal integrity.',
-      'Managed calibration schedules across a large inventory of test assets.',
-      'Mentored incoming CWEPs on lab procedures and documentation standards.',
-    ],
-    skills: ['SolidWorks','FDM / 3D Print','KiCad','LTSpice','Test Engineering','RF Systems'],
-    specs: [['Role','CWEP – Test Engineering'],['Employer','Lockheed Martin'],['Period','Apr 2024 – Apr 2026'],['Focus','RF Signal Integrity, Sensor HW']],
+    thumb: 'assets/photos/production-test-ic.jpg',
+    desc: 'Failure analysis, custom test fixture design, and documentation/calibration management for production RF hardware test at Lockheed Martin MFC.',
+    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas — including SITC and MEC — supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements.',
+    skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering'],
+    specs: [['Role','Production Test Engineering – CWEP'],['Employer','Lockheed Martin (MFC)'],['Location','Orlando, FL'],['Period','Apr 2024 – Apr 2026']],
   },
 ];
 
@@ -787,7 +780,8 @@ const PHOTO_MAP = {
   'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN induction ceremony.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN chapter members.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'IEEE Eta Kappa Nu at UCF.' }],
   'ieee-service':        [{ src: 'assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop.' },{ src: 'assets/photos/service-committee-2.jpg', caption: 'FIRST Robotics, Feb 2024.' },{ src: 'assets/photos/service-committee-3.jpg', caption: 'Beach cleanup event.' },{ src: 'assets/photos/service-committee-4.jpg', caption: 'STEM demonstration.' }],
   'circuit-comp':        [{ src: 'assets/photos/circuit-design-competition-1.jpg', caption: 'Competition setup, Mar 2024.' },{ src: 'assets/photos/circuit-design-competition-2.jpg', caption: 'Circuit under test.' },{ src: 'assets/photos/circuit-design-competition-3.jpg', caption: '2nd place award.' }],
-  'lockheed':            [{ src: 'assets/photos/solidworks-cert.jpg', caption: 'SolidWorks CSWA certificate.' },{ src: 'assets/photos/exemplary-student-branch.jpg', caption: 'Region 3 Exemplary Student Branch Award.' }],
+  'lockheed-rf':         [{ src: 'assets/photos/phased-array-radar.gif', caption: 'S-band phased array beam steering.' }],
+  'lockheed':            [{ src: 'assets/photos/production-test-ic.jpg', caption: 'Decapsulated IC under test.' }],
 };
 
 /* ─── Resume page ───────────────────────────────────────────────────────── */
