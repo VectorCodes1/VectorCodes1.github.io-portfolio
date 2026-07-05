@@ -44,6 +44,7 @@ const useIsMobile = () => {
 const NAV_ITEMS = [
   { label: 'Experience',  page: 'experience' },
   { label: 'Projects',    page: 'projects'   },
+  { label: 'Skills',      page: 'skills'     },
   { label: 'Leadership',  page: 'leadership' },
   { label: 'Resume',      page: 'resume'     },
   { label: 'Contact',     page: 'contact'    },
@@ -221,7 +222,7 @@ const LEVEL_COLOR = {
 };
 
 const ABOUT_PHOTOS = [
-  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen', caption: 'Riding a dune buggy in Utah, near the Grand Canyon, for the first time.' },
+  { src: 'assets/about-photo.jpg', alt: 'Matias Guillen', caption: 'Riding a dune buggy in Utah, near Zion national park, for the first time.' },
   { src: 'assets/battleshipnj.jpeg', alt: 'Matias Guillen', caption: 'Visiting Battleship NJ on a rainy day.' },
   { src: 'assets/naturewalk.nj.jpeg', alt: 'Matias Guillen', caption: 'Enjoying a nature walk.' },
   { src: 'assets/ieeesmdworkshop.jpeg', alt: 'Matias Guillen', caption: 'Helping out with an SMD workshop.' },
@@ -305,10 +306,14 @@ const AboutPhoto = () => {
   );
 };
 
+const AWARDS_DATA = [
+  { id: 'award-placeholder-1' },
+  { id: 'award-placeholder-2' },
+  { id: 'award-placeholder-3' },
+];
+
 const HomeFull = ({ onNavigate }) => {
-  const [skillFilter, setSkillFilter] = React.useState('All');
   const isMobile = useIsMobile();
-  const levels = ['All','Proficient','Intermediate','Beginner'];
 
   return (
   <div style={{...hf.page, padding: isMobile ? '32px 20px 64px' : '64px 56px 96px', position:'relative'}}>
@@ -320,10 +325,11 @@ const HomeFull = ({ onNavigate }) => {
     {/* Hero */}
     <Reveal>
     <div style={hf.hero}>
+      <h1 style={hf.welcome}>Welcome to my Portfolio!</h1>
       <p style={hf.bio}>
-        Electrical engineering student specializing in RF &amp; antenna systems. From production
-        test and development to embedded hardware setup, I have real, practical experience across
-        multiple domains.
+        Electrical engineering student @ University of Central Florida specializing in RF &amp;
+        antenna systems. From production test and development to embedded hardware setup, I have
+        real, practical experience across multiple domains.
       </p>
     </div>
     </Reveal>
@@ -350,64 +356,23 @@ const HomeFull = ({ onNavigate }) => {
 
     <div style={hf.dividerWrap}><div style={hf.divNode}></div><div style={hf.divLine}></div></div>
 
-    {/* Education */}
+    {/* Awards & Recognition */}
     <Reveal delay={60}>
-    <div style={hf.eduBlock}>
-      <div style={{display:'flex', alignItems:'center', gap:10, marginBottom:16}}>
-        <img src="assets/university_of_central_florida_logo.jpg" alt="UCF" style={{width:22, height:22, objectFit:'contain', opacity:0.85, borderRadius:2}} />
-        <span style={{...hf.sectionLabel, marginBottom:0}}>Education</span>
-      </div>
-      <dl style={hf.eduDl}>
-        <dt style={hf.eduKey}>School</dt><dd style={hf.eduVal}>University of Central Florida</dd>
-        <dt style={hf.eduKey}>Degree</dt><dd style={hf.eduVal}>B.S. Electrical Engineering</dd>
-        <dt style={hf.eduKey}>Graduation</dt><dd style={hf.eduVal}>May 2027</dd>
-        <dt style={hf.eduKey}>GPA</dt><dd style={hf.eduVal}>3.4</dd>
-        <dt style={hf.eduKey}>Coursework</dt><dd style={hf.eduVal}>Electronics I &amp; II · Electromagnetic Fields · Linear Control Systems · Real Time Systems · Embedded Systems · Semiconductor Devices</dd>
-      </dl>
-    </div>
-    </Reveal>
-
-    <div style={hf.dividerWrap}><div style={hf.divNode}></div><div style={hf.divLine}></div></div>
-
-    {/* Skills with proficiency filter */}
-    <Reveal delay={60}>
-    <div style={hf.skillsBlock}>
-      <div style={hf.skillsHeader}>
-        <span style={hf.sectionLabel}>Skills</span>
-        <div style={hf.filterRow}>
-          {levels.map(l => (
-            <button key={l} onClick={() => setSkillFilter(l)}
-              style={{...hf.filterBtn, ...(skillFilter===l ? hf.filterBtnActive : {})}}>
-              {l}
-            </button>
-          ))}
-        </div>
-      </div>
-      {SKILLS.map(({ group, items }) => {
-        const visible = items.filter(s => skillFilter==='All' || s.level===skillFilter);
-        if (!visible.length) return null;
-        return (
-          <div key={group} style={hf.skillGroup}>
-            <span style={hf.skillGroupLabel}>{group}</span>
-            <div style={hf.skillTags}>
-              {visible.map(s => {
-                const c = LEVEL_COLOR[s.level];
-                return (
-                  <span key={s.name} style={{...hf.skillTag, background:c.bg, borderColor:c.border, color:c.text}}>
-                    {s.name}
-                  </span>
-                );
-              })}
-            </div>
+    <div>
+      <span style={hf.sectionLabel}>Awards &amp; Recognition</span>
+      <div style={{display:'flex', flexWrap:'wrap', gap:16}}>
+        {AWARDS_DATA.map(award => (
+          <div key={award.id} style={{
+            flex: isMobile ? '1 1 100%' : '1 1 200px', minWidth: 180,
+            border:'2px dashed rgba(27,58,92,0.2)', borderRadius:8, padding:'24px 16px',
+            display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center',
+          }}>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <circle cx="14" cy="10" r="7" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4"/>
+              <path d="M9 16L7 25L14 21L21 25L19 16" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4" strokeLinejoin="round"/>
+            </svg>
+            <span style={{fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:'#1B3A5C', opacity:0.45, letterSpacing:'0.04em'}}>award coming soon</span>
           </div>
-        );
-      })}
-      <div style={hf.levelLegend}>
-        {Object.entries(LEVEL_COLOR).map(([lvl, c]) => (
-          <span key={lvl} style={hf.legendItem}>
-            <span style={{...hf.legendDot, background: lvl==='Beginner'?'rgba(17,17,17,0.2)':c.border}}></span>
-            {lvl}
-          </span>
         ))}
       </div>
     </div>
@@ -420,6 +385,7 @@ const hf = {
   page: { padding: '64px 56px 96px', maxWidth: 820 },
   hero: { marginBottom: 48 },
   h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(2.8rem,4vw,4rem)', fontWeight: 400, color: '#111', lineHeight: 1.05, marginBottom: 24, letterSpacing: '-0.01em' },
+  welcome: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(2rem,3.2vw,2.6rem)', fontWeight: 500, color: '#111', lineHeight: 1.15, marginBottom: 16, letterSpacing: '-0.01em' },
   bio: { fontFamily: "'EB Garamond',serif", fontSize: 19, fontWeight: 600, lineHeight: 1.65, color: '#111', maxWidth: 580, marginBottom: 0, textWrap: 'pretty' },
   dividerWrap: { position: 'relative', margin: '44px 0' },
   divNode: { position: 'absolute', top: -3, left: 0, width: 5, height: 5, background: '#1B3A5C', borderRadius: '50%' },
@@ -428,23 +394,12 @@ const hf = {
   aboutRow: {},
   aboutText: { maxWidth: 600 },
   aboutBio: { fontFamily: "'EB Garamond',serif", fontSize: 18, lineHeight: 1.7, color: '#555', textWrap: 'pretty' },
-  eduBlock: {},
-  eduDl: { display: 'grid', gridTemplateColumns: 'max-content 1fr', gap: '7px 40px', fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '0.02em' },
-  eduKey: { color: '#555', fontWeight: 400, whiteSpace: 'nowrap' },
-  eduVal: { color: '#111', fontWeight: 500, lineHeight: 1.5 },
-  skillsBlock: {},
-  skillsHeader: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 12 },
   filterRow: { display: 'flex', gap: 6 },
   filterBtn: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, letterSpacing: '0.04em', color: '#555', background: 'none', border: '1px solid rgba(17,17,17,0.18)', padding: '3px 10px', cursor: 'pointer' },
   filterBtnActive: { color: '#1B3A5C', borderColor: 'rgba(27,58,92,0.55)', background: 'rgba(27,58,92,0.06)' },
-  skillGroup: { display: 'flex', alignItems: 'baseline', gap: 20, marginBottom: 12 },
-  skillGroupLabel: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#555', letterSpacing: '0.06em', textTransform: 'uppercase', width: 64, flexShrink: 0 },
-  skillTags: { display: 'flex', flexWrap: 'wrap', gap: 6 },
-  skillTag: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: '0.02em', border: '1px solid', padding: '3px 8px', transition: 'opacity 0.15s' },
   levelLegend: { display: 'flex', gap: 20, marginTop: 16 },
   legendItem: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#666', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 5 },
   legendDot: { width: 6, height: 6, borderRadius: '50%', display: 'inline-block' },
-  closingQuote: { fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 17, color: '#666', lineHeight: 1.6, maxWidth: 540, textWrap: 'pretty' },
 };
 
 /* ─── Index page icons ──────────────────────────────────────────────────── */
@@ -475,6 +430,132 @@ const ICONS = {
       <line x1="7" y1="8" x2="11.5" y2="9.5" stroke="#1B3A5C" strokeWidth="1.2"/>
     </svg>
   ),
+};
+
+/* ─── Skills page — circuit-board style interactive diagram ─────────────── */
+const SKILL_GROUP_ABBR = { 'Hardware & Tools': 'HW / TOOLS', 'Software': 'SOFTWARE', 'Focus Areas': 'FOCUS' };
+const SKILLS_MAX_LABEL = Math.max(...SKILLS.flatMap(g => g.items.map(i => i.name.length)));
+const SKILLS_CARD_WIDTH = Math.round(190 + SKILLS_MAX_LABEL * 6.4);
+
+const SkillCircuit = ({ group, items, active, setActive }) => {
+  const nodeSpacing = 40;
+  const topPad = 54;
+  const bottomPad = 20;
+  const chipX = 18, chipY = 16, chipW = 84, chipH = 28;
+  const spineX = chipX + chipW + 34;
+  const nodeX = spineX + 36;
+  const labelX = nodeX + 20;
+  const busY = chipY + chipH / 2;
+  const firstNodeY = topPad;
+  const lastNodeY = firstNodeY + Math.max(items.length - 1, 0) * nodeSpacing;
+  const height = topPad + Math.max(items.length, 1) * nodeSpacing - (items.length ? nodeSpacing - bottomPad : -bottomPad);
+
+  if (!items.length) return null;
+
+  return (
+    <div style={{ border: '1px solid rgba(17,17,17,0.12)', borderRadius: 6, background: '#fff', padding: '6px 6px 14px' }}>
+      <svg viewBox={`0 0 ${SKILLS_CARD_WIDTH} ${height}`} width="100%" style={{ display: 'block', height: 'auto' }}>
+        {/* chip */}
+        <rect x={chipX} y={chipY} width={chipW} height={chipH} rx={3} fill="#fff" stroke="#1B3A5C" strokeWidth="1.4" />
+        <text x={chipX + chipW / 2} y={chipY + chipH / 2 + 3.5} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize="8.5" fontWeight="600" fill="#1B3A5C">
+          {SKILL_GROUP_ABBR[group] || group.toUpperCase()}
+        </text>
+        {[0, 1, 2].map(i => (
+          <line key={i} x1={chipX - 7} y1={chipY + 6 + i * 8} x2={chipX} y2={chipY + 6 + i * 8} stroke="#1B3A5C" strokeWidth="1.2" opacity="0.5" />
+        ))}
+
+        {/* lead from chip to spine */}
+        <line x1={chipX + chipW} y1={busY} x2={spineX} y2={busY} stroke="rgba(27,58,92,0.35)" strokeWidth="1.4" />
+        {/* vertical spine connecting the chip lead down/up to the node rows */}
+        <line
+          x1={spineX} y1={Math.min(busY, firstNodeY)}
+          x2={spineX} y2={Math.max(busY, lastNodeY)}
+          stroke="rgba(27,58,92,0.35)" strokeWidth="1.4"
+        />
+
+        {items.map((item, i) => {
+          const y = firstNodeY + i * nodeSpacing;
+          const key = `${group}:${item.name}`;
+          const isActive = active === key;
+          const c = LEVEL_COLOR[item.level];
+          return (
+            <g key={item.name}
+              onMouseEnter={() => setActive(key)}
+              onMouseLeave={() => setActive(a => a === key ? null : a)}
+              onClick={() => setActive(a => a === key ? null : key)}
+              onFocus={() => setActive(key)}
+              onBlur={() => setActive(a => a === key ? null : a)}
+              tabIndex={0}
+              role="button"
+              aria-label={`${item.name} — ${item.level}`}
+              style={{ cursor: 'pointer', outline: 'none' }}
+            >
+              <line x1={spineX} y1={y} x2={nodeX} y2={y} stroke={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} strokeWidth={isActive ? 2.2 : 1.4} />
+              <circle cx={spineX} cy={y} r={2} fill={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} />
+              <rect x={nodeX} y={y - 6} width={12} height={12} rx={2} fill={isActive ? c.border : c.bg} stroke={c.border} strokeWidth={isActive ? 1.8 : 1.2} />
+              {isActive && (
+                <circle cx={nodeX + 6} cy={y} r={9} fill="none" stroke={c.border} strokeWidth="1" opacity="0.5">
+                  <animate attributeName="r" values="9;14;9" dur="1.2s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.5;0;0.5" dur="1.2s" repeatCount="indefinite" />
+                </circle>
+              )}
+              <text x={labelX} y={y + 3.5} fontFamily="'JetBrains Mono',monospace" fontSize="10.5" fontWeight={isActive ? 600 : 400} fill={isActive ? '#111' : '#555'}>
+                {item.name}
+              </text>
+              {isActive && (
+                <text x={labelX} y={y + 15} fontFamily="'JetBrains Mono',monospace" fontSize="8.5" fill={c.text} opacity="0.85">
+                  {item.level}
+                </text>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
+
+const SkillsPage = () => {
+  const [skillFilter, setSkillFilter] = React.useState('All');
+  const [active, setActive] = React.useState(null);
+  const isMobile = useIsMobile();
+  const levels = ['All', 'Proficient', 'Intermediate', 'Beginner'];
+
+  return (
+    <div style={di.page}>
+      <StickyNav title="Skills" />
+      <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px' }}>
+        <div style={hf.filterRow}>
+          {levels.map(l => (
+            <button key={l} onClick={() => setSkillFilter(l)}
+              style={{ ...hf.filterBtn, ...(skillFilter === l ? hf.filterBtnActive : {}) }}>
+              {l}
+            </button>
+          ))}
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24, marginTop: 24, alignItems: 'start' }}>
+          {SKILLS.map(({ group, items }) => (
+            <Reveal key={group} delay={40}>
+              <SkillCircuit
+                group={group}
+                items={items.filter(s => skillFilter === 'All' || s.level === skillFilter)}
+                active={active}
+                setActive={setActive}
+              />
+            </Reveal>
+          ))}
+        </div>
+        <div style={hf.levelLegend}>
+          {Object.entries(LEVEL_COLOR).map(([lvl, c]) => (
+            <span key={lvl} style={hf.legendItem}>
+              <span style={{ ...hf.legendDot, background: lvl === 'Beginner' ? 'rgba(17,17,17,0.2)' : c.border }}></span>
+              {lvl}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 /* ─── Projects index — cards with thumbnail ────────────────────────────── */
@@ -865,6 +946,7 @@ const App = () => {
     switch(page) {
       case 'home':       content = <HomeFull onNavigate={navigate} />; break;
       case 'projects':   content = <ProjectsIndex onSelect={p => openDetail(p,'project')} />; break;
+      case 'skills':     content = <SkillsPage />; break;
       case 'leadership': content = <LeadershipIndex onSelect={l => openDetail(l,'leadership')} />; break;
       case 'experience': content = <ExperiencePage />; break;
       case 'resume':     content = <ResumePage />; break;
