@@ -45,7 +45,6 @@ const NAV_ITEMS = [
   { label: 'Experience',  page: 'experience' },
   { label: 'Projects',    page: 'projects'   },
   { label: 'Skills',      page: 'skills'     },
-  { label: 'Leadership',  page: 'leadership' },
   { label: 'Awards',      page: 'awards'     },
   { label: 'Resume',      page: 'resume'     },
   { label: 'Contact',     page: 'contact'    },
@@ -409,172 +408,44 @@ const ICONS = {
   ),
 };
 
-/* ─── Skills page — one "giant IC" circuit diagram, sectioned by category ── */
-const LEVEL_RANK = { Proficient: 0, Intermediate: 1, Beginner: 2 };
-const sortByLevel = items => [...items].sort((a, b) => LEVEL_RANK[a.level] - LEVEL_RANK[b.level]);
-
-const SKILLS_MAX_LABEL = Math.max(...SKILLS.flatMap(g => g.items.map(i => i.name.length)));
-const SK_CX = 240;
-const SK_SPINE_X = SK_CX + 66;
-const SK_NODE_X = SK_SPINE_X + 40;
-const SK_LABEL_X = SK_NODE_X + 20;
-const SK_WIDTH = Math.round(SK_LABEL_X + SKILLS_MAX_LABEL * 6.4 + 14);
-const SK_ROOT_W = 300, SK_ROOT_H = 48, SK_ROOT_Y = 16;
-const SK_SECTION_CHIP_W = 190, SK_SECTION_CHIP_H = 30;
-const SK_NODE_SPACING = 32, SK_TIER_GAP = 16, SK_SECTION_GAP = 42, SK_LEAD_IN = 34, SK_FIRST_ITEM_OFFSET = 30;
-
-function buildSkillsLayout(groups) {
-  const rootBottom = SK_ROOT_Y + SK_ROOT_H;
-  let cursorY = rootBottom + SK_LEAD_IN;
-  const sections = [];
-
-  groups.forEach(g => {
-    const items = sortByLevel(g.items);
-    const chipY = cursorY;
-    const chipX = SK_CX - SK_SECTION_CHIP_W / 2;
-    const leadY = chipY + SK_SECTION_CHIP_H / 2;
-
-    const positions = [];
-    let y = leadY + SK_FIRST_ITEM_OFFSET;
-    let prevLevel = null;
-    items.forEach(item => {
-      if (prevLevel !== null && item.level !== prevLevel) y += SK_TIER_GAP;
-      positions.push({ item, y, isNewTier: item.level !== prevLevel });
-      y += SK_NODE_SPACING;
-      prevLevel = item.level;
-    });
-    const lastY = positions.length ? positions[positions.length - 1].y : leadY;
-    const sectionBottom = Math.max(chipY + SK_SECTION_CHIP_H, lastY + 10);
-
-    sections.push({ group: g.group, chipX, chipY, leadY, positions });
-    cursorY = sectionBottom + SK_SECTION_GAP;
-  });
-
-  const lastSection = sections[sections.length - 1];
-  const trunkBottom = lastSection ? lastSection.chipY + SK_SECTION_CHIP_H / 2 : rootBottom;
-  const totalHeight = sections.length ? cursorY - SK_SECTION_GAP + 24 : rootBottom + 24;
-
-  return { sections, rootBottom, trunkBottom, totalHeight };
-}
-
-const SkillsDiagram = ({ groups, active, setActive }) => {
-  const { sections, rootBottom, trunkBottom, totalHeight } = buildSkillsLayout(groups);
-
-  if (!sections.length) {
-    return (
-      <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: '#666', padding: '24px 0', textAlign: 'center' }}>
-        No skills match this filter.
-      </p>
-    );
-  }
-
-  return (
-    <div style={{ border: '1px solid rgba(17,17,17,0.12)', borderRadius: 8, background: '#fff', padding: '20px 14px', maxWidth: SK_WIDTH + 28, margin: '0 auto', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-      <svg viewBox={`0 0 ${SK_WIDTH} ${totalHeight}`} width={SK_WIDTH} height={totalHeight} style={{ display: 'block', minWidth: SK_WIDTH }}>
-        {/* root chip */}
-        <rect x={SK_CX - SK_ROOT_W / 2} y={SK_ROOT_Y} width={SK_ROOT_W} height={SK_ROOT_H} rx={4} fill="#fff" stroke="#1B3A5C" strokeWidth="1.8" />
-        <circle cx={SK_CX - SK_ROOT_W / 2 + 13} cy={SK_ROOT_Y + 13} r={2.6} fill="#1B3A5C" opacity="0.6" />
-        <text x={SK_CX} y={SK_ROOT_Y + SK_ROOT_H / 2 - 3} textAnchor="middle" fontFamily="'EB Garamond',serif" fontSize="18" fontWeight="600" fill="#111">SKILLS</text>
-        <text x={SK_CX} y={SK_ROOT_Y + SK_ROOT_H / 2 + 13} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize="7.5" letterSpacing="0.08em" fill="#1B3A5C" opacity="0.55">MATIAS GUILLEN</text>
-
-        {/* trunk running down through every section chip */}
-        <line x1={SK_CX} y1={rootBottom} x2={SK_CX} y2={trunkBottom} stroke="rgba(27,58,92,0.35)" strokeWidth="1.6" />
-
-        {sections.map(section => (
-          <g key={section.group}>
-            <rect x={section.chipX} y={section.chipY} width={SK_SECTION_CHIP_W} height={SK_SECTION_CHIP_H} rx={4} fill="rgba(27,58,92,0.05)" stroke="#1B3A5C" strokeWidth="1.4" />
-            <text x={SK_CX} y={section.leadY + 3.5} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize="9.5" fontWeight="700" letterSpacing="0.03em" fill="#1B3A5C">
-              {section.group.toUpperCase()}
-            </text>
-
-            {/* lead from chip's right edge to the item spine */}
-            <line x1={section.chipX + SK_SECTION_CHIP_W} y1={section.leadY} x2={SK_SPINE_X} y2={section.leadY} stroke="rgba(27,58,92,0.35)" strokeWidth="1.4" />
-            {section.positions.length > 0 && (
-              <line
-                x1={SK_SPINE_X} y1={Math.min(section.leadY, section.positions[0].y)}
-                x2={SK_SPINE_X} y2={section.positions[section.positions.length - 1].y}
-                stroke="rgba(27,58,92,0.35)" strokeWidth="1.4"
-              />
-            )}
-
-            {section.positions.map(({ item, y, isNewTier }) => {
-              const key = `${section.group}:${item.name}`;
-              const isActive = active === key;
-              const c = LEVEL_COLOR[item.level];
-              return (
-                <g key={item.name}>
-                  {isNewTier && (
-                    <text x={SK_SPINE_X + 6} y={y - 10} fontFamily="'JetBrains Mono',monospace" fontSize="7.5" fontWeight="600" letterSpacing="0.08em" fill={c.text} opacity="0.8">
-                      {item.level.toUpperCase()}
-                    </text>
-                  )}
-                  <g
-                    onMouseEnter={() => setActive(key)}
-                    onMouseLeave={() => setActive(a => a === key ? null : a)}
-                    onClick={() => setActive(a => a === key ? null : key)}
-                    onFocus={() => setActive(key)}
-                    onBlur={() => setActive(a => a === key ? null : a)}
-                    tabIndex={0}
-                    role="button"
-                    aria-label={`${item.name} — ${item.level}`}
-                    style={{ cursor: 'pointer', outline: 'none' }}
-                  >
-                    <line x1={SK_SPINE_X} y1={y} x2={SK_NODE_X} y2={y} stroke={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} strokeWidth={isActive ? 2.2 : 1.4} />
-                    <circle cx={SK_SPINE_X} cy={y} r={2} fill={isActive ? '#1B3A5C' : 'rgba(27,58,92,0.35)'} />
-                    <rect x={SK_NODE_X} y={y - 6} width={12} height={12} rx={2} fill={isActive ? c.border : c.bg} stroke={c.border} strokeWidth={isActive ? 1.8 : 1.2} />
-                    {isActive && (
-                      <circle cx={SK_NODE_X + 6} cy={y} r={9} fill="none" stroke={c.border} strokeWidth="1" opacity="0.5">
-                        <animate attributeName="r" values="9;14;9" dur="1.2s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.5;0;0.5" dur="1.2s" repeatCount="indefinite" />
-                      </circle>
-                    )}
-                    <text x={SK_LABEL_X} y={y + 3.5} fontFamily="'JetBrains Mono',monospace" fontSize="11" fontWeight={isActive ? 600 : 400} fill={isActive ? '#111' : '#333'}>
-                      {item.name}
-                    </text>
-                  </g>
-                </g>
-              );
-            })}
-          </g>
-        ))}
-      </svg>
-    </div>
-  );
-};
+/* ─── Skills page — spacious list, grouped by proficiency level ─────────── */
+const SKILL_LEVELS = ['Proficient', 'Intermediate', 'Beginner'];
 
 const SkillsPage = () => {
-  const [skillFilter, setSkillFilter] = React.useState('All');
-  const [active, setActive] = React.useState(null);
   const isMobile = useIsMobile();
-  const levels = ['All', 'Proficient', 'Intermediate', 'Beginner'];
 
-  const groups = SKILLS
-    .map(g => ({ group: g.group, items: g.items.filter(s => skillFilter === 'All' || s.level === skillFilter) }))
-    .filter(g => g.items.length > 0);
+  const byLevel = { Proficient: [], Intermediate: [], Beginner: [] };
+  SKILLS.forEach(g => {
+    g.items.forEach(item => byLevel[item.level].push({ ...item, group: g.group }));
+  });
 
   return (
     <div style={di.page}>
       <StickyNav title="Skills" />
-      <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px' }}>
-        <div style={{ ...hf.filterRow, justifyContent: 'center', marginBottom: 28 }}>
-          {levels.map(l => (
-            <button key={l} onClick={() => setSkillFilter(l)}
-              style={{ ...hf.filterBtn, ...(skillFilter === l ? hf.filterBtnActive : {}) }}>
-              {l}
-            </button>
-          ))}
-        </div>
-        <Reveal>
-          <SkillsDiagram groups={groups} active={active} setActive={setActive} />
-        </Reveal>
-        <div style={{ ...hf.levelLegend, justifyContent: 'center' }}>
-          {Object.entries(LEVEL_COLOR).map(([lvl, c]) => (
-            <span key={lvl} style={hf.legendItem}>
-              <span style={{ ...hf.legendDot, background: lvl === 'Beginner' ? 'rgba(17,17,17,0.2)' : c.border }}></span>
-              {lvl}
-            </span>
-          ))}
-        </div>
+      <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth: 780 }}>
+        {SKILL_LEVELS.map((level, li) => {
+          const items = byLevel[level];
+          if (!items.length) return null;
+          const c = LEVEL_COLOR[level];
+          return (
+            <Reveal key={level} delay={li * 60}>
+            <div style={{ marginBottom: 44 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+                <span style={{ width: 10, height: 10, borderRadius: '50%', background: level === 'Beginner' ? 'rgba(17,17,17,0.25)' : c.border, flexShrink: 0 }}></span>
+                <h2 style={{ fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.3rem,2.5vw,1.7rem)', fontWeight: 500, color: '#111', margin: 0 }}>{level}</h2>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(220px,1fr))', gap: 14 }}>
+                {items.map(item => (
+                  <div key={item.group + item.name} style={{ border: '1px solid rgba(17,17,17,0.12)', borderLeft: `3px solid ${c.border}`, padding: '16px 18px', background: '#fff' }}>
+                    <div style={{ fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111' }}>{item.name}</div>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#666', letterSpacing: '0.04em', marginTop: 5, textTransform: 'uppercase' }}>{item.group}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            </Reveal>
+          );
+        })}
       </div>
     </div>
   );
@@ -632,34 +503,54 @@ const ProjectsIndex = ({ onSelect }) => {
 };
 
 /* ─── Leadership index — same grid as Projects ──────────────────────────── */
-const LeadershipIndex = ({ onSelect }) => {
+const WORK_PLACEHOLDER_ICON = (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <rect x="4" y="12" width="24" height="15" rx="1" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+    <path d="M12 12V9a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+    <line x1="4" y1="19" x2="28" y2="19" stroke="#1B3A5C" strokeWidth="0.8"/>
+  </svg>
+);
+const LEADERSHIP_PLACEHOLDER_ICON = (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <circle cx="16" cy="11" r="5" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+    <path d="M5 30c0-6.075 4.925-11 11-11s11 4.925 11 11" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+  </svg>
+);
+
+/* ─── Experience & Leadership — combined index with sub-tabs ────────────── */
+const ExperienceLeadershipPage = ({ subTab, onSubTabChange, onSelect }) => {
   const [hovered, setHovered] = React.useState(null);
   const isMobile = useIsMobile();
+  const isWork = subTab === 'work';
+  const items = isWork ? EXPERIENCE_DATA : LEADERSHIP_DATA;
+  const type = isWork ? 'experience' : 'leadership';
+
   return (
     <div style={di.page}>
-      <StickyNav title="Leadership" />
+      <StickyNav title="Experience" />
       <div style={{...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
+        <div style={{...hf.filterRow, marginBottom: 28}}>
+          <button onClick={() => onSubTabChange('work')} style={{...hf.filterBtn, ...(isWork ? hf.filterBtnActive : {})}}>Work Experience</button>
+          <button onClick={() => onSubTabChange('leadership')} style={{...hf.filterBtn, ...(!isWork ? hf.filterBtnActive : {})}}>Leadership Experience</button>
+        </div>
         <div style={{...di.grid, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px,1fr))'}}>
-          {LEADERSHIP_DATA.map((item, i) => (
+          {items.map((item, i) => (
             <Reveal key={item.id} delay={i * 80}>
             <div
               role="button"
               tabIndex={0}
-              aria-label={`Open leadership role: ${item.title}`}
-              style={{...di.card, ...(hovered===i ? di.cardHover : {})}}
-              onMouseEnter={() => setHovered(i)}
+              aria-label={`Open ${isWork ? 'experience' : 'leadership role'}: ${item.title}`}
+              style={{...di.card, ...(hovered===item.id ? di.cardHover : {})}}
+              onMouseEnter={() => setHovered(item.id)}
               onMouseLeave={() => setHovered(null)}
-              onClick={() => onSelect(item)}
-              onKeyDown={e => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); onSelect(item); } }}
+              onClick={() => onSelect(item, type)}
+              onKeyDown={e => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); onSelect(item, type); } }}
             >
               <div style={di.cardThumb}>
                 {item.thumb
                   ? <img src={item.thumb} alt={item.title} style={di.thumbImg} />
                   : <div style={di.thumbPlaceholder} aria-hidden="true">
-                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <circle cx="16" cy="11" r="5" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
-                        <path d="M5 30c0-6.075 4.925-11 11-11s11 4.925 11 11" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
-                      </svg>
+                      {isWork ? WORK_PLACEHOLDER_ICON : LEADERSHIP_PLACEHOLDER_ICON}
                     </div>
                 }
               </div>
@@ -748,7 +639,7 @@ const DesktopDetail = ({ item, type, onBack }) => {
       )}
       <StickyNav title={item.id} />
       <div style={{...dd.inner, padding: isMobile ? '24px 20px 64px' : '32px 56px 96px'}}>
-        <button onClick={onBack} style={dd.backBtn}>← back to {type === 'project' ? 'Projects' : type === 'leadership' ? 'Leadership' : 'Experience'}</button>
+        <button onClick={onBack} style={dd.backBtn}>← back to {type === 'project' ? 'Projects' : 'Experience'}</button>
 
         <div style={dd.titleBlock}>
           <span style={dd.sectionNum}>{type === 'project' ? 'Project' : type === 'leadership' ? 'Leadership' : 'Experience'}</span>
@@ -766,20 +657,37 @@ const DesktopDetail = ({ item, type, onBack }) => {
                 </React.Fragment>
               ))}
             </dl>
-            <p style={dd.body}>{item.desc}</p>
+            {item.bullets
+              ? <ul style={dd.bullets}>{item.bullets.map((b, i) => <li key={i} style={dd.bullet}>{b}</li>)}</ul>
+              : <p style={dd.body}>{item.desc}</p>
+            }
+            {item.skills && (
+              <div style={dd.skillRow}>
+                {item.skills.map(s => <span key={s} style={dd.skillChip}>{s}</span>)}
+              </div>
+            )}
           </div>
 
-          {/* Right: photo gallery */}
-          {photos.length > 0 && (
-            <div style={dd.gallery}>
-              {photos.map((p, i) => (
+          {/* Right: photo gallery (or placeholder when none uploaded yet) */}
+          <div style={dd.gallery}>
+            {photos.length > 0 ? (
+              photos.map((p, i) => (
                 <figure key={i} style={dd.figure}>
                   <img src={p.src} alt={p.caption} loading="lazy" decoding="async" style={dd.img} onClick={() => setZoom(p.src)} />
                   <figcaption style={dd.caption}>Fig. {i+1} — {p.caption}</figcaption>
                 </figure>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <div style={dd.photoPlaceholder} aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="6" width="24" height="20" rx="1" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+                  <circle cx="11" cy="13" r="2.5" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+                  <path d="M4 22l7-6 5 4 5-5 7 7" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2"/>
+                </svg>
+                <span style={dd.photoPlaceholderText}>photo coming soon</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -808,10 +716,16 @@ const dd = {
   specKey: { color: '#555' },
   specVal: { color: '#111', fontWeight: 500 },
   body: { fontFamily: "'EB Garamond',serif", fontSize: 17, lineHeight: 1.7, color: '#111', textWrap: 'pretty' },
+  bullets: { paddingLeft: 18, margin: 0 },
+  bullet: { fontFamily: "'EB Garamond',serif", fontSize: 16, lineHeight: 1.65, color: '#444', marginBottom: 6 },
+  skillRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16 },
+  skillChip: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#1B3A5C', border: '1px solid rgba(27,58,92,0.35)', padding: '2px 8px', background: 'rgba(27,58,92,0.04)', letterSpacing: '0.02em' },
   gallery: { display: 'flex', flexDirection: 'column', gap: 32, alignItems: 'center' },
   figure: { width: '100%', maxWidth: 480, margin: '0 auto' },
   img: { width: '100%', display: 'block', cursor: 'zoom-in' },
   caption: { fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 13, color: '#555', marginTop: 6, textAlign: 'center' },
+  photoPlaceholder: { width: '100%', maxWidth: 480, aspectRatio: '4/3', border: '2px dashed rgba(27,58,92,0.2)', borderRadius: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, margin: '0 auto' },
+  photoPlaceholderText: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', opacity: 0.45, letterSpacing: '0.04em' },
 };
 
 /* ─── Experience desktop ────────────────────────────────────────────────── */
@@ -821,22 +735,23 @@ const EXPERIENCE_DATA = [
   {
     id: 'lockheed-rf',
     title: 'RF/Antenna Electrical Engineering Intern',
-    org: 'Lockheed Martin',
     date: 'May 2026 – Present',
-    logo: 'assets/lockheed_martin_logo.jpg',
+    thumb: null,
+    desc: 'Supporting RF and antenna system design and testing at Lockheed Martin.',
     bullets: [
       'Supporting RF and antenna system design and testing at Lockheed Martin.',
       'Conducting antenna pattern measurements and RF signal characterization.',
       'Collaborating with senior engineers on hardware validation test plans.',
     ],
     skills: ['RF Systems','Antenna Design','Signal Analysis','LTSpice'],
+    specs: [['Role','RF/Antenna EE Intern'],['Employer','Lockheed Martin'],['Period','May 2026 – Present'],['Focus','RF Systems, Antenna Design']],
   },
   {
     id: 'lockheed',
     title: 'CWEP — Test Engineering',
-    org: 'Lockheed Martin',
     date: 'Apr 2024 – Apr 2026',
-    logo: 'assets/lockheed_martin_logo.jpg',
+    thumb: null,
+    desc: 'Component-level failure analysis and root-cause investigations on sensor hardware at Lockheed Martin.',
     bullets: [
       'Component-level failure analysis and root-cause investigations on sensor hardware.',
       'Designed and fabricated custom RF test fixtures using SolidWorks and FDM to improve signal integrity.',
@@ -844,61 +759,9 @@ const EXPERIENCE_DATA = [
       'Mentored incoming CWEPs on lab procedures and documentation standards.',
     ],
     skills: ['SolidWorks','FDM / 3D Print','KiCad','LTSpice','Test Engineering','RF Systems'],
+    specs: [['Role','CWEP – Test Engineering'],['Employer','Lockheed Martin'],['Period','Apr 2024 – Apr 2026'],['Focus','RF Signal Integrity, Sensor HW']],
   },
 ];
-
-const ExperiencePage = () => {
-  const isMobile = useIsMobile();
-  return (
-  <div style={exp.page}>
-    <StickyNav title="Experience" />
-    <div style={{...exp.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px'}}>
-      <div style={exp.cards}>
-        {EXPERIENCE_DATA.map((item, i) => (
-          <Reveal key={item.id} delay={i * 100}>
-          <div style={exp.card}>
-            <div style={exp.cardHeader}>
-              <div style={exp.cardLeft}>
-                {item.logo && <img src={item.logo} alt={item.org} style={exp.logo} />}
-                <div>
-                  <div style={exp.cardTitle}>{item.title}</div>
-                  <div style={exp.cardOrg}>{item.org}</div>
-                </div>
-              </div>
-              <span style={exp.cardDate}>{item.date}</span>
-            </div>
-            <ul style={exp.bullets}>
-              {item.bullets.map((b,i) => <li key={i} style={exp.bullet}>{b}</li>)}
-            </ul>
-            <div style={exp.skillRow}>
-              {item.skills.map(s => <span key={s} style={exp.skillChip}>{s}</span>)}
-            </div>
-          </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  </div>
-  );
-};
-
-const exp = {
-  page: { flex: 1 },
-  inner: { padding: '40px 56px 96px', maxWidth: 860 },
-  h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 400, color: '#111', marginBottom: 36 },
-  cards: { display: 'flex', flexDirection: 'column', gap: 20 },
-  card: { border: '1px solid rgba(17,17,17,0.12)', borderLeft: '3px solid #1B3A5C', padding: '24px 28px', background: '#fff', borderRadius: 0 },
-  cardHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, gap: 16 },
-  cardLeft: { display: 'flex', alignItems: 'center', gap: 14 },
-  logo: { width: 36, height: 36, objectFit: 'contain', flexShrink: 0, borderRadius: 2, border: '1px solid rgba(17,17,17,0.08)' },
-  cardTitle: { fontFamily: "'EB Garamond',serif", fontSize: 19, fontWeight: 500, color: '#111', lineHeight: 1.2 },
-  cardOrg: { fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: '#1B3A5C', letterSpacing: '0.04em', marginTop: 4 },
-  cardDate: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#666', letterSpacing: '0.02em', whiteSpace: 'nowrap', flexShrink: 0 },
-  bullets: { paddingLeft: 18, marginBottom: 16 },
-  bullet: { fontFamily: "'EB Garamond',serif", fontSize: 16, lineHeight: 1.65, color: '#444', marginBottom: 6 },
-  skillRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 },
-  skillChip: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#1B3A5C', border: '1px solid rgba(27,58,92,0.35)', padding: '2px 8px', background: 'rgba(27,58,92,0.04)', letterSpacing: '0.02em' },
-};
 
 /* ✏️  EDIT YOUR CONTENT HERE — Projects */
 const PROJECTS_DATA = [
@@ -978,6 +841,7 @@ const App = () => {
   const [page, setPage] = React.useState('home');
   const [detail, setDetail] = React.useState(null);
   const [detailType, setDetailType] = React.useState(null);
+  const [expSubTab, setExpSubTab] = React.useState('work');
   const mainRef = React.useRef(null);
   const isMobile = useIsMobile();
 
@@ -985,6 +849,7 @@ const App = () => {
   const openDetail = (item, type) => {
     item.photos = PHOTO_MAP[item.id] || [];
     setDetail(item); setDetailType(type);
+    setExpSubTab(type === 'leadership' ? 'leadership' : 'work');
     if(mainRef.current) mainRef.current.scrollTop=0;
   };
 
@@ -996,16 +861,15 @@ const App = () => {
       case 'home':       content = <HomeFull onNavigate={navigate} />; break;
       case 'projects':   content = <ProjectsIndex onSelect={p => openDetail(p,'project')} />; break;
       case 'skills':     content = <SkillsPage />; break;
-      case 'leadership': content = <LeadershipIndex onSelect={l => openDetail(l,'leadership')} />; break;
+      case 'experience': content = <ExperienceLeadershipPage subTab={expSubTab} onSubTabChange={setExpSubTab} onSelect={openDetail} />; break;
       case 'awards':     content = <AwardsPage />; break;
-      case 'experience': content = <ExperiencePage />; break;
       case 'resume':     content = <ResumePage />; break;
       case 'contact':    content = <ContactDesktop />; break;
       default:           content = <HomeFull onNavigate={navigate} />;
     }
   }
 
-  const activePage = detail ? (detailType === 'project' ? 'projects' : detailType === 'leadership' ? 'leadership' : 'experience') : page;
+  const activePage = detail ? (detailType === 'project' ? 'projects' : 'experience') : page;
 
   if (isMobile) {
     return (
