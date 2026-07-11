@@ -193,12 +193,12 @@ const SKILLS = [
   { group: 'Hardware & Tools', items: [
     { name: 'Oscilloscope / Lab Equipment', level: 'Proficient'   },
     { name: 'SolidWorks',                   level: 'Proficient'   },
-    { name: 'Autodesk Fusion',              level: 'Proficient'   },
+    { name: 'Autodesk Fusion',              level: 'Intermediate' },
+    { name: 'Soldering',                    level: 'Intermediate' },
     { name: 'KiCad',                        level: 'Intermediate' },
     { name: 'LTSpice',                      level: 'Intermediate' },
-    { name: 'FDM / 3D Printing',            level: 'Intermediate' },
-    { name: 'Soldering',                    level: 'Proficient'   },
-    { name: 'Logic Analyzer',               level: 'Intermediate' },
+    { name: 'FDM / 3D Printing',            level: 'Proficient'   },
+    { name: 'Logic Analyzer',               level: 'Beginner'     },
     { name: 'Synthesized Signal Generator', level: 'Intermediate' },
     { name: 'Circuit Design Analysis',      level: 'Intermediate' },
     { name: 'Calibration',                  level: 'Intermediate' },
@@ -207,21 +207,23 @@ const SKILLS = [
     { name: 'MATLAB',                       level: 'Intermediate' },
     { name: 'Simulink',                     level: 'Intermediate' },
     { name: 'C / Embedded C',              level: 'Intermediate' },
+    { name: 'Windchill',                    level: 'Intermediate' },
+    { name: 'SAP',                          level: 'Beginner'     },
     { name: 'Python',                       level: 'Beginner'     },
     { name: 'Linux',                        level: 'Beginner'     },
-    { name: 'Windchill',                    level: 'Intermediate' },
-    { name: 'SAP',                          level: 'Intermediate' },
   ]},
   { group: 'Focus Areas', items: [
     { name: 'RF & Signal Analysis',         level: 'Intermediate' },
     { name: 'Embedded Systems',             level: 'Intermediate' },
-    { name: 'Power Electronics',            level: 'Intermediate' },
+    { name: 'Power Electronics',            level: 'Beginner'     },
     { name: 'PCB Design',                   level: 'Intermediate' },
-    { name: 'Control Systems',              level: 'Beginner'     },
     { name: 'Test Engineering Documentation', level: 'Intermediate' },
-    { name: 'DOORS',                        level: 'Intermediate' },
+    { name: 'DOORS',                        level: 'Beginner'     },
+    { name: 'Control Systems',              level: 'Beginner'     },
   ]},
 ];
+
+const INTERPERSONAL_SKILLS = ['Public Speaking', 'Project Management', 'Team Management', 'Event Planning', 'Marketing'];
 
 const LEVEL_COLOR = {
   Proficient:   { bg: 'rgba(27,58,92,0.10)', border: 'rgba(27,58,92,0.55)', text: '#1B3A5C' },
@@ -452,6 +454,13 @@ const SkillsPage = () => {
     <div style={di.page}>
       <StickyNav title="Skills" />
       <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth: 780 }}>
+
+        <Reveal>
+        <div style={{ marginBottom: 8 }}>
+          <span style={hf.sectionLabel}>Technical Skills</span>
+        </div>
+        </Reveal>
+
         {SKILL_LEVELS.map((level, li) => {
           const items = byLevel[level];
           if (!items.length) return null;
@@ -475,6 +484,22 @@ const SkillsPage = () => {
             </Reveal>
           );
         })}
+
+        <div style={hf.dividerWrap}><div style={hf.divNode}></div><div style={hf.divLine}></div></div>
+
+        <Reveal delay={60}>
+        <div style={{ marginTop: 44 }}>
+          <span style={hf.sectionLabel}>Interpersonal Skills</span>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(220px,1fr))', gap: 14, marginTop: 20 }}>
+            {INTERPERSONAL_SKILLS.map(name => (
+              <div key={name} style={{ border: '1px solid rgba(17,17,17,0.12)', borderLeft: '3px solid #1B3A5C', padding: '16px 18px', background: '#fff' }}>
+                <div style={{ fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111' }}>{name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        </Reveal>
+
       </div>
     </div>
   );
@@ -808,27 +833,29 @@ const EXPERIENCE_DATA = [
     thumb: 'assets/photos/production-test-ic.jpg',
     desc: 'Failure analysis, custom test fixture design, and documentation/calibration management for production RF hardware test at Lockheed Martin MFC.',
     summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements, supporting test centers for SITC and MEC.',
-    skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering','Calibration','SAP'],
+    skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering','Calibration','SAP','FDM / 3D Printing'],
     specs: [['Role','Production Test Engineering – CWEP'],['Employer','Lockheed Martin MFC – College Work Experience Program (CWEP)'],['Location','Orlando, FL'],['Period','Apr 2024 – Apr 2026']],
   },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Projects */
 const PROJECTS_DATA = [
-  { id: 'senior-design', title: 'Senior Design - Cabin Environmental Safety Monitor', date: 'Apr 2026 – Present', thumb: null, desc: 'Starting development on my senior design capstone project, a cabin environmental safety monitoring system. Currently determining system requirements and initial sensor architectures and components to be utilized on the PCB in order to satisfy design conditions.', specs: [['Date','Apr 2026 – Present'],['Type','Senior Design'],['Status','In Progress']] },
-  { id: 'junior-pcb-project', title: 'Junior Design PCB Project', date: 'Jan 2026 – May 2026', thumb: 'assets/photos/junior-pcb-mainboard-final.jpg', desc: 'During the spring 2026 semester, I had the opportunity to work on a PCB design project for an ultrasonic measuring board. In this project, I got hands-on experience using Fusion 360 to develop and test a prototype board. I also gained exposure to manufacturing and placing components on the board using SMD soldering techniques.', specs: [['Date','Jan 2026 – May 2026'],['Type','PCB Design'],['Status','Completed']] },
-  { id: 'internal-project-comp', title: 'Internal Project Competition', date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/internal-project-kicad-workshop-ending.jpg', desc: 'As part of being involved as Project Chair, I also led an entire beginner-friendly project, teaching beginners important knowledge and skills across various aspects of engineering design so they could develop their own projects and compete for a prize at the IEEE UCF end-of-year banquet.', specs: [['Date','Apr 2024 – Apr 2025'],['Org','IEEE UCF'],['Type','Internal Competition'],['Status','Completed']] },
-  { id: 'southeastcon-2024', title: 'IEEE SoutheastCon 2024 Hardware Competition', date: 'Sep 2023 – Apr 2024', thumb: 'assets/photos/southeastcon-power-system-design.png', desc: 'Designed and built hardware entry for the IEEE Region 3 SoutheastCon 2024 Hardware Competition.', specs: [['Date','Sep 2023 – Apr 2024'],['Event','IEEE SoutheastCon 2024'],['Type','Hardware Design'],['Status','Completed']] },
+  { id: 'senior-design', title: 'Senior Design - Cabin Environmental Safety Monitor', date: 'Apr 2026 – Present', thumb: null, desc: 'Starting development on my senior design capstone project, a cabin environmental safety monitoring system. Currently determining system requirements and initial sensor architectures and components to be utilized on the PCB in order to satisfy design conditions.', skills: ['PCB Design','Embedded Systems','Test Engineering Documentation'], specs: [['Date','Apr 2026 – Present'],['Type','Senior Design'],['Status','In Progress']] },
+  { id: 'junior-pcb-project', title: 'Junior Design PCB Project', date: 'Jan 2026 – May 2026', thumb: 'assets/photos/junior-pcb-mainboard-final.jpg', desc: 'During the spring 2026 semester, I had the opportunity to work on a PCB design project for an ultrasonic measuring board. In this project, I got hands-on experience using Fusion 360 to develop and test a prototype board. I also gained exposure to manufacturing and placing components on the board using SMD soldering techniques.', skills: ['PCB Design','Embedded Systems','Autodesk Fusion','Oscilloscope / Lab Equipment','Soldering'], specs: [['Date','Jan 2026 – May 2026'],['Type','PCB Design'],['Status','Completed']] },
+  { id: 'internal-project-comp', title: 'Internal Project Competition', date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/internal-project-kicad-workshop-ending.jpg', desc: 'As part of being involved as Project Chair, I also led an entire beginner-friendly project, teaching beginners important knowledge and skills across various aspects of engineering design so they could develop their own projects and compete for a prize at the IEEE UCF end-of-year banquet.', skills: ['PCB Design','Embedded Systems','KiCad','FDM / 3D Printing','Power Electronics'], specs: [['Date','Apr 2024 – Apr 2025'],['Org','IEEE UCF'],['Type','Internal Competition'],['Status','Completed']] },
+  { id: 'southeastcon-2024', title: 'IEEE SoutheastCon 2024 Hardware Competition', date: 'Sep 2023 – Apr 2024', thumb: 'assets/photos/southeastcon-power-system-design.png', desc: 'Designed and built hardware entry for the IEEE Region 3 SoutheastCon 2024 Hardware Competition.', skills: ['Power Electronics','Autodesk Fusion','SolidWorks'], specs: [['Date','Sep 2023 – Apr 2024'],['Event','IEEE SoutheastCon 2024'],['Type','Hardware Design'],['Status','Completed']] },
   { id: 'placeholder-project', title: 'Coming Soon', date: '', thumb: null, desc: 'New project in progress. Check back soon.', specs: [] },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Leadership */
+const LEADERSHIP_SOFT_SKILLS = ['Public Speaking','Project Management','Team Management','Event Planning','Marketing'];
+
 const LEADERSHIP_DATA = [
-  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2025 – Present',  thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. Previously, I served as a chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.' },
-  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.' },
-  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads. This included my own project, the Internal Project Competition, which taught valuable electrical engineering skills to freshman and sophomore students.' },
-  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'During my freshman year, I got involved with IEEE through community service initiatives. Some of the pictures you see are from a few of the events and workshops I helped host that year, spanning FIRST Robotics events, beach cleanups, and E-Week events.' },
-  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: 'assets/photos/lead-scholars-logo.jpg',  desc: 'Two-year leadership program I was involved in during my freshman and sophomore year. I helped organizations like Hope Chest Thrift Store, SERV, and First Robotics during my involvement, while also learning about various leadership principles and strategies.', link: { url: 'https://stars.library.ucf.edu/hip-2024fall/50/', label: 'View one of my servant leadership projects' }, specs: [['Role','UCF LEAD Scholars Member'],['Organization','UCF LEAD Scholars Academy'],['Period','Mar 2023 – Apr 2025']] },
+  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2026 – Present',  thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. I served as chapter officer from Apr 2025 to Apr 2026, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads. This included my own project, the Internal Project Competition, which taught valuable electrical engineering skills to freshman and sophomore students.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'During my freshman year, I got involved with IEEE through community service initiatives. Some of the pictures you see are from a few of the events and workshops I helped host that year, spanning FIRST Robotics events, beach cleanups, and E-Week events.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: 'assets/photos/lead-scholars-logo.jpg',  desc: 'Two-year leadership program I was involved in during my freshman and sophomore year. I helped organizations like Hope Chest Thrift Store, SERV, and First Robotics during my involvement, while also learning about various leadership principles and strategies.', link: { url: 'https://stars.library.ucf.edu/hip-2024fall/50/', label: 'View one of my servant leadership projects' }, skills: LEADERSHIP_SOFT_SKILLS, specs: [['Role','UCF LEAD Scholars Member'],['Organization','UCF LEAD Scholars Academy'],['Period','Mar 2023 – Apr 2025']] },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
