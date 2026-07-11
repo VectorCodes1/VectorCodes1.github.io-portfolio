@@ -345,9 +345,9 @@ const HomeFull = ({ onNavigate }) => {
           Florida native who enjoys the outdoors and traveling. I'm a theme park enthusiast and love
           going to the parks with my mom. I enjoy a good game of golf and try to play with my dad
           whenever I get the chance. Apart from that, I'm pretty involved with school and active on
-          campus in clubs such as IEEE @ UCF and the IEEE HKN honor society. I'm an avid technology
-          enthusiast and love reading up on new technologies and developments in the world. Below are
-          some images of what I do in my free time.
+          campus in clubs such as IEEE @ UCF and the IEEE HKN honor society. I'm also an avid reader of
+          new technologies and developments in the world. Below are some images of what I do in my
+          free time.
         </p>
         <AboutPhoto />
       </div>
@@ -739,18 +739,18 @@ const EXPERIENCE_DATA = [
     thumb: 'assets/photos/phased-array-radar.gif',
     desc: 'Programming and RF test validation for a Linux-based safety system and S-band phased array antenna calibration at Lockheed Martin RMS.',
     summary: 'Programmed a Linux-based real-time RF safety system in C to acquire and transmit serial ADAM I/O data, validating a bit-exact match against the legacy FPGA it replaced using oscilloscopes and RF test equipment. Configured peripheral modules through TI SysConfig to emulate FPGA behavior on a TI board, reproducing peak and average RF power detector outputs in agreement with calibration data. Also developed test plans and review documentation for near-field calibration of S-band phased array antennas, tracing requirements in DOORS to keep test coverage aligned with system specifications across software and hardware.',
-    skills: ['RF & Signal Analysis','C / Embedded C','Embedded Systems','Test Engineering Documentation','DOORS','Oscilloscope / Lab Equipment','Linux'],
+    skills: ['RF & Signal Analysis','C / Embedded C','Embedded Systems','Test Engineering Documentation','DOORS','Oscilloscope / Lab Equipment','Linux','Logic Analyzer','Synthesized Signal Generator'],
     specs: [['Role','EE Antenna and RF Intern'],['Employer','Lockheed Martin (RMS)'],['Location','Moorestown, NJ'],['Period','May 2026 – Aug 2026']],
   },
   {
-    id: 'lockheed',
+    id: 'cwep',
     title: 'Production Test Engineering – CWEP',
     date: 'Apr 2024 – Apr 2026',
     thumb: 'assets/photos/production-test-ic.jpg',
     desc: 'Failure analysis, custom test fixture design, and documentation/calibration management for production RF hardware test at Lockheed Martin MFC.',
-    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas — including SITC and MEC — supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements.',
+    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements — supporting test centers for SITC and MEC.',
     skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering','Calibration','SAP'],
-    specs: [['Role','Production Test Engineering – CWEP'],['Employer','Lockheed Martin (MFC)'],['Location','Orlando, FL'],['Period','Apr 2024 – Apr 2026']],
+    specs: [['Role','Production Test Engineering – CWEP'],['Employer','Lockheed Martin MFC – College Work Experience Program (CWEP)'],['Location','Orlando, FL'],['Period','Apr 2024 – Apr 2026']],
   },
 ];
 
@@ -764,22 +764,22 @@ const PROJECTS_DATA = [
 
 /* ✏️  EDIT YOUR CONTENT HERE — Leadership */
 const LEADERSHIP_DATA = [
-  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Led 13-officer board; coordinated 30+ events with AMD, Northrop Grumman, and others' },
-  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Implemented BOM-based budget approval; delivered technical presentations to 100+ students' },
-  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: '2024 – Present',      thumb: 'assets/photos/hkn-1.jpg',                desc: 'Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering' },
+  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: '2025 – Present',      thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. Previously, I served as a chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure — providing growth and sustainability for the chapter.' },
+  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.' },
+  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads — including my own project, the Internal Project Competition — teaching valuable electrical engineering skills to freshman and sophomore students.' },
   { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'FIRST Robotics, beach cleanups, E-Week school workshops' },
   { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: null,                                    desc: 'Two-year servant leadership program with Hope Helps, SERV, First Robotics' },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
 const PHOTO_MAP = {
-  'ieee-president':      [{ src: 'assets/photos/president-1.jpg', caption: 'IEEE UCF general meeting, Spring 2025.' },{ src: 'assets/photos/president-2.jpg', caption: 'Officer board photo, Apr 2025.' },{ src: 'assets/photos/president-3.jpg', caption: 'Region 3 Exemplary Student Branch Award.' }],
-  'ieee-project-chair':  [{ src: 'assets/photos/project-chair-1.jpg', caption: 'Technical workshop, Fall 2024.' },{ src: 'assets/photos/project-chair-2.jpg', caption: 'Project review session, Mar 2025.' }],
-  'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN induction ceremony.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN chapter members.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'IEEE Eta Kappa Nu at UCF.' }],
+  'ieee-president':      [{ src: 'assets/photos/president-1.jpg', caption: 'IEEE UCF recruiting event, spring 2026.' },{ src: 'assets/photos/president-2.jpg', caption: 'Spring general body meeting 1 with AMD panel.' },{ src: 'assets/photos/president-3.jpg', caption: 'IEEE x ACM family feud event, (I had the honor to dress up as Steve Harvey).' }],
+  'ieee-project-chair':  [{ src: 'assets/photos/project-chair-1.jpg', caption: 'KiCad Workshop, Fall 2024.' },{ src: 'assets/photos/project-chair-2.jpg', caption: 'KiCad Workshop, Fall 2024.' }],
+  'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN Induction Ceremony – Spring 2026.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN Induction Committee – Spring 2026.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'Me with HKN logo at Induction Ceremony.' }],
   'ieee-service':        [{ src: 'assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop.' },{ src: 'assets/photos/service-committee-2.jpg', caption: 'FIRST Robotics, Feb 2024.' },{ src: 'assets/photos/service-committee-3.jpg', caption: 'Beach cleanup event.' },{ src: 'assets/photos/service-committee-4.jpg', caption: 'STEM demonstration.' }],
   'circuit-comp':        [{ src: 'assets/photos/circuit-design-competition-1.jpg', caption: 'Competition setup, Mar 2024.' },{ src: 'assets/photos/circuit-design-competition-2.jpg', caption: 'Circuit under test.' },{ src: 'assets/photos/circuit-design-competition-3.jpg', caption: '2nd place award.' }],
   'lockheed-rf':         [{ src: 'assets/photos/phased-array-radar.gif', caption: 'Phased Array Radar' }],
-  'lockheed':            [{ src: 'assets/photos/production-test-ic.jpg', caption: 'Wirebond IC' }],
+  'cwep':                [{ src: 'assets/photos/production-test-ic.jpg', caption: 'Wirebond IC' }],
 };
 
 /* ─── Resume page ───────────────────────────────────────────────────────── */
