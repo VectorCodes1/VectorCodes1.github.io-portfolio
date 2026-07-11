@@ -667,6 +667,11 @@ const DesktopDetail = ({ item, type, onBack }) => {
                 {item.skills.map(s => <span key={s} style={dd.skillChip}>{s}</span>)}
               </div>
             )}
+            {item.link && (
+              <p style={dd.linkRow}>
+                <a href={item.link.url} target="_blank" rel="noopener noreferrer" style={dd.link}>{item.link.label} →</a>
+              </p>
+            )}
           </div>
 
           {/* Right: photo gallery (or placeholder when none uploaded yet) */}
@@ -720,6 +725,8 @@ const dd = {
   bullet: { fontFamily: "'EB Garamond',serif", fontSize: 16, lineHeight: 1.65, color: '#444', marginBottom: 6 },
   skillRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16 },
   skillChip: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#1B3A5C', border: '1px solid rgba(27,58,92,0.35)', padding: '2px 8px', background: 'rgba(27,58,92,0.04)', letterSpacing: '0.02em' },
+  linkRow: { marginTop: 20 },
+  link: { fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: '#1B3A5C', letterSpacing: '0.02em', textDecoration: 'underline' },
   gallery: { display: 'flex', flexDirection: 'column', gap: 32, alignItems: 'center' },
   figure: { width: '100%', maxWidth: 480, margin: '0 auto' },
   img: { width: '100%', display: 'block', cursor: 'zoom-in' },
@@ -748,7 +755,7 @@ const EXPERIENCE_DATA = [
     date: 'Apr 2024 – Apr 2026',
     thumb: 'assets/photos/production-test-ic.jpg',
     desc: 'Failure analysis, custom test fixture design, and documentation/calibration management for production RF hardware test at Lockheed Martin MFC.',
-    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements — supporting test centers for SITC and MEC.',
+    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements, supporting test centers for SITC and MEC.',
     skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering','Calibration','SAP'],
     specs: [['Role','Production Test Engineering – CWEP'],['Employer','Lockheed Martin MFC – College Work Experience Program (CWEP)'],['Location','Orlando, FL'],['Period','Apr 2024 – Apr 2026']],
   },
@@ -756,19 +763,19 @@ const EXPERIENCE_DATA = [
 
 /* ✏️  EDIT YOUR CONTENT HERE — Projects */
 const PROJECTS_DATA = [
-  { id: 'southeastcon-2024', title: 'IEEE SoutheastCon 2024 Hardware Competition', date: 'Sep 2023 – Apr 2024', thumb: null, desc: 'Designed and built hardware entry for the IEEE Region 3 SoutheastCon 2024 Hardware Competition.', specs: [['Date','Sep 2023 – Apr 2024'],['Event','IEEE SoutheastCon 2024'],['Type','Hardware Design'],['Status','Completed']] },
-  { id: 'internal-project-comp', title: 'Internal Project Competition', date: 'Apr 2024 – Apr 2025', thumb: null, desc: 'IEEE UCF internal technical project competition spanning multiple engineering disciplines.', specs: [['Date','Apr 2024 – Apr 2025'],['Org','IEEE UCF'],['Type','Internal Competition'],['Status','Completed']] },
-  { id: 'senior-design', title: 'Senior Design — Space Systems', date: 'Aug 2025 – Present', thumb: null, desc: 'Senior capstone project focused on space systems engineering and design.', specs: [['Date','Aug 2025 – Present'],['Type','Senior Design'],['Status','In Progress']] },
-  { id: 'placeholder-project', title: 'Coming Soon', date: '', thumb: null, desc: 'New project in progress — check back soon.', specs: [] },
+  { id: 'internal-project-comp', title: 'Internal Project Competition', date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/internal-project-kicad-workshop-ending.jpg', desc: 'IEEE UCF internal technical project competition spanning multiple engineering disciplines.', specs: [['Date','Apr 2024 – Apr 2025'],['Org','IEEE UCF'],['Type','Internal Competition'],['Status','Completed']] },
+  { id: 'senior-design', title: 'Senior Design - Cabin Environmental Safety Monitor', date: 'Aug 2025 – Present', thumb: null, desc: 'Senior capstone project designing a cabin environmental safety monitor system.', specs: [['Date','Aug 2025 – Present'],['Type','Senior Design'],['Status','In Progress']] },
+  { id: 'southeastcon-2024', title: 'IEEE SoutheastCon 2024 Hardware Competition', date: 'Sep 2023 – Apr 2024', thumb: 'assets/photos/southeastcon-power-system-design.png', desc: 'Designed and built hardware entry for the IEEE Region 3 SoutheastCon 2024 Hardware Competition.', specs: [['Date','Sep 2023 – Apr 2024'],['Event','IEEE SoutheastCon 2024'],['Type','Hardware Design'],['Status','Completed']] },
+  { id: 'placeholder-project', title: 'Coming Soon', date: '', thumb: null, desc: 'New project in progress. Check back soon.', specs: [] },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Leadership */
 const LEADERSHIP_DATA = [
-  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: '2025 – Present',      thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. Previously, I served as a chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure — providing growth and sustainability for the chapter.' },
+  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2025 – Present',  thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. Previously, I served as a chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.' },
   { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.' },
-  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads — including my own project, the Internal Project Competition — teaching valuable electrical engineering skills to freshman and sophomore students.' },
-  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'FIRST Robotics, beach cleanups, E-Week school workshops' },
-  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: null,                                    desc: 'Two-year servant leadership program with Hope Helps, SERV, First Robotics' },
+  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads. This included my own project, the Internal Project Competition, which taught valuable electrical engineering skills to freshman and sophomore students.' },
+  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'During my freshman year, I got involved with IEEE through community service initiatives. Some of the pictures you see are from a few of the events and workshops I helped host that year, spanning FIRST Robotics events, beach cleanups, and E-Week events.' },
+  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: 'assets/photos/lead-scholars-logo.jpg',  desc: 'Two-year leadership program I was involved in during my freshman and sophomore year. I helped organizations like Hope Chest Thrift Store, SERV, and First Robotics during my involvement, while also learning about various leadership principles and strategies.', link: { url: 'https://stars.library.ucf.edu/hip-2024fall/50/', label: 'View one of my servant leadership projects' }, specs: [['Role','UCF LEAD Scholars Member'],['Organization','UCF LEAD Scholars Academy'],['Period','Mar 2023 – Apr 2025']] },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
@@ -776,10 +783,13 @@ const PHOTO_MAP = {
   'ieee-president':      [{ src: 'assets/photos/president-1.jpg', caption: 'IEEE UCF recruiting event, spring 2026.' },{ src: 'assets/photos/president-2.jpg', caption: 'Spring general body meeting 1 with AMD panel.' },{ src: 'assets/photos/president-3.jpg', caption: 'IEEE x ACM family feud event, (I had the honor to dress up as Steve Harvey).' }],
   'ieee-project-chair':  [{ src: 'assets/photos/project-chair-1.jpg', caption: 'KiCad Workshop, Fall 2024.' },{ src: 'assets/photos/project-chair-2.jpg', caption: 'KiCad Workshop, Fall 2024.' }],
   'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN Induction Ceremony – Spring 2026.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN Induction Committee – Spring 2026.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'Me with HKN logo at Induction Ceremony.' }],
-  'ieee-service':        [{ src: 'assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop.' },{ src: 'assets/photos/service-committee-2.jpg', caption: 'FIRST Robotics, Feb 2024.' },{ src: 'assets/photos/service-committee-3.jpg', caption: 'Beach cleanup event.' },{ src: 'assets/photos/service-committee-4.jpg', caption: 'STEM demonstration.' }],
+  'ieee-service':        [{ src: 'assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop.' },{ src: 'assets/photos/service-committee-2.jpg', caption: 'Beach Cleanup Day, Apr 2024.' },{ src: 'assets/photos/service-committee-3.jpg', caption: 'FIRST Robotics Event, Feb 2024.' },{ src: 'assets/photos/service-committee-4.jpg', caption: 'E-Week 2024 Static Electricity Workshop, Feb 2024.' }],
   'circuit-comp':        [{ src: 'assets/photos/circuit-design-competition-1.jpg', caption: 'Competition setup, Mar 2024.' },{ src: 'assets/photos/circuit-design-competition-2.jpg', caption: 'Circuit under test.' },{ src: 'assets/photos/circuit-design-competition-3.jpg', caption: '2nd place award.' }],
+  'internal-project-comp': [{ src: 'assets/photos/internal-project-kicad-workshop.jpg', caption: 'KiCad Workshop' },{ src: 'assets/photos/internal-project-tinkercad-workshop.jpg', caption: 'TinkerCAD Workshop' },{ src: 'assets/photos/internal-project-kicad-workshop-ending.jpg', caption: 'KiCad Workshop Wrap-Up' },{ src: 'assets/photos/internal-project-microcontroller-workshop.jpg', caption: 'Microcontroller Workshop' }],
+  'southeastcon-2024':   [{ src: 'assets/photos/southeastcon-power-system-design.png', caption: 'Power System Design' },{ src: 'assets/photos/southeastcon-fusion360-chassis.jpg', caption: 'Fusion 360 Chassis Model' },{ src: 'assets/photos/southeastcon-physical-chassis.jpg', caption: 'Physical Chassis Model' },{ src: 'assets/photos/southeastcon-buck-converter-power-model.jpg', caption: 'Buck Converter and Power System Model' },{ src: 'assets/photos/southeastcon-final-robot-moving.jpg', caption: 'Final Robot Moving' },{ src: 'assets/photos/southeastcon-later-stage-construction-1.jpg', caption: 'Later-Stage Robot Construction' },{ src: 'assets/photos/southeastcon-later-stage-construction-2.jpg', caption: 'Later-Stage Robot Construction' }],
   'lockheed-rf':         [{ src: 'assets/photos/phased-array-radar.gif', caption: 'Phased Array Radar' }],
   'cwep':                [{ src: 'assets/photos/production-test-ic.jpg', caption: 'Wirebond IC' }],
+  'lead-scholars':       [{ src: 'assets/photos/lead-scholars-logo.jpg', caption: 'Lead Scholars Logo' }],
 };
 
 /* ─── Resume page ───────────────────────────────────────────────────────── */
