@@ -198,6 +198,10 @@ const SKILLS = [
     { name: 'LTSpice',                      level: 'Intermediate' },
     { name: 'FDM / 3D Printing',            level: 'Intermediate' },
     { name: 'Soldering',                    level: 'Proficient'   },
+    { name: 'Logic Analyzer',               level: 'Intermediate' },
+    { name: 'Synthesized Signal Generator', level: 'Intermediate' },
+    { name: 'Circuit Design Analysis',      level: 'Intermediate' },
+    { name: 'Calibration',                  level: 'Intermediate' },
   ]},
   { group: 'Software', items: [
     { name: 'MATLAB',                       level: 'Intermediate' },
@@ -205,6 +209,8 @@ const SKILLS = [
     { name: 'C / Embedded C',              level: 'Intermediate' },
     { name: 'Python',                       level: 'Beginner'     },
     { name: 'Linux',                        level: 'Beginner'     },
+    { name: 'Windchill',                    level: 'Intermediate' },
+    { name: 'SAP',                          level: 'Intermediate' },
   ]},
   { group: 'Focus Areas', items: [
     { name: 'RF & Signal Analysis',         level: 'Intermediate' },
@@ -212,6 +218,8 @@ const SKILLS = [
     { name: 'Power Electronics',            level: 'Intermediate' },
     { name: 'PCB Design',                   level: 'Intermediate' },
     { name: 'Control Systems',              level: 'Beginner'     },
+    { name: 'Test Engineering Documentation', level: 'Intermediate' },
+    { name: 'DOORS',                        level: 'Intermediate' },
   ]},
 ];
 
@@ -307,9 +315,30 @@ const AboutPhoto = () => {
 };
 
 const AWARDS_DATA = [
-  { id: 'award-placeholder-1' },
-  { id: 'award-placeholder-2' },
-  { id: 'award-placeholder-3' },
+  {
+    id: 'circuit-design-2nd-place',
+    title: '2nd Place in Student Circuit Design Competition',
+    date: 'Mar 2026',
+    thumb: 'assets/photos/award-circuit-2nd-place.jpg',
+    desc: "I served as the competition and documentation lead for a team that placed 2nd out of 39 schools located in the IEEE Region 3 area. My role involved the design and development of a circuit system and embedded device for an automated water safety system, while also overseeing the project's technical documentation.",
+    specs: [['Issued by','IEEE Region 3 - Student Activity Awards'],['Date','Mar 2026'],['Associated with','IEEE UCF']],
+  },
+  {
+    id: 'exemplary-student-branch',
+    title: 'Region 3 Exemplary Student Branch Award',
+    date: 'Mar 2026',
+    thumb: 'assets/photos/award-exemplary-branch.jpg',
+    desc: "Under my leadership, alongside several other officers, the UCF branch has significantly expanded student involvement by hosting technical workshops, projects, professional development, and social events that integrated both industry and academic perspectives. This award represents the work of the dedicated officer team and members who made 2025's growth possible.",
+    specs: [['Issued by','IEEE Region 3 Awards'],['Date','Mar 2026'],['Associated with','IEEE UCF']],
+  },
+  {
+    id: 'university-club-scholarship',
+    title: 'University Club of Orlando Scholarship',
+    date: 'Apr 2024',
+    thumb: 'assets/photos/lead-scholars-logo.jpg',
+    desc: 'Received $5,600 in scholarship awards as a result of exemplary community service and academic excellence.',
+    specs: [['Issued by','UCF LEAD Scholars Academy'],['Date','Apr 2024'],['Associated with','UCF LEAD Scholars Academy']],
+  },
 ];
 
 const HomeFull = ({ onNavigate }) => {
@@ -572,25 +601,48 @@ const ExperienceLeadershipPage = ({ subTab, onSubTabChange, onSelect }) => {
 };
 
 /* ─── Awards & Recognition page ─────────────────────────────────────────── */
-const AwardsPage = () => {
+const AWARD_PLACEHOLDER_ICON = (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <circle cx="16" cy="11" r="8" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2" />
+    <path d="M10 18L7 29L16 24L25 29L22 18" stroke="#1B3A5C" strokeWidth="1.2" strokeDasharray="3 2" strokeLinejoin="round" />
+  </svg>
+);
+
+const AwardsPage = ({ onSelect }) => {
+  const [hovered, setHovered] = React.useState(null);
   const isMobile = useIsMobile();
   return (
     <div style={di.page}>
       <StickyNav title="Awards" />
       <div style={{ ...di.inner, padding: isMobile ? '28px 20px 64px' : '40px 56px 96px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-          {AWARDS_DATA.map(award => (
-            <div key={award.id} style={{
-              flex: isMobile ? '1 1 100%' : '1 1 200px', minWidth: 180,
-              border: '2px dashed rgba(27,58,92,0.2)', borderRadius: 8, padding: '32px 16px',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, textAlign: 'center',
-            }}>
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <circle cx="14" cy="10" r="7" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4" />
-                <path d="M9 16L7 25L14 21L21 25L19 16" stroke="#1B3A5C" strokeWidth="1.4" strokeDasharray="3 2" opacity="0.4" strokeLinejoin="round" />
-              </svg>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', opacity: 0.45, letterSpacing: '0.04em' }}>award coming soon</span>
+        <div style={{ ...di.grid, gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px,1fr))' }}>
+          {AWARDS_DATA.map((item, i) => (
+            <Reveal key={item.id} delay={i * 80}>
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label={`Open award: ${item.title}`}
+              style={{ ...di.card, ...(hovered === item.id ? di.cardHover : {}) }}
+              onMouseEnter={() => setHovered(item.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => onSelect(item, 'award')}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(item, 'award'); } }}
+            >
+              <div style={di.cardThumb}>
+                {item.thumb
+                  ? <img src={item.thumb} alt={item.title} style={di.thumbImg} />
+                  : <div style={di.thumbPlaceholder} aria-hidden="true">{AWARD_PLACEHOLDER_ICON}</div>
+                }
+              </div>
+              <div style={di.cardBody}>
+                <div style={di.cardTop}>
+                  <span style={di.cardTitle}>{item.title}</span>
+                  <span style={di.cardDate}>{item.date}</span>
+                </div>
+                <p style={di.cardDesc}>{item.desc}</p>
+              </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -639,7 +691,7 @@ const DesktopDetail = ({ item, type, onBack }) => {
       )}
       <StickyNav title={item.id} />
       <div style={{...dd.inner, padding: isMobile ? '24px 20px 64px' : '32px 56px 96px'}}>
-        <button onClick={onBack} style={dd.backBtn}>← back to {type === 'project' ? 'Projects' : 'Experience'}</button>
+        <button onClick={onBack} style={dd.backBtn}>← back to {type === 'project' ? 'Projects' : type === 'award' ? 'Awards' : 'Experience'}</button>
 
         <div style={dd.titleBlock}>
           <h1 style={dd.h1}>{item.title}</h1>
@@ -792,6 +844,9 @@ const PHOTO_MAP = {
   'lockheed-rf':         [{ src: 'assets/photos/phased-array-radar.gif', caption: 'Phased Array Radar' }],
   'cwep':                [{ src: 'assets/photos/production-test-ic.jpg', caption: 'Wirebond IC' }],
   'lead-scholars':       [{ src: 'assets/photos/lead-scholars-logo.jpg', caption: 'Lead Scholars Logo' }],
+  'circuit-design-2nd-place': [{ src: 'assets/photos/award-circuit-2nd-place.jpg', caption: '2nd Place Award Photo' },{ src: 'assets/photos/award-circuit-team.jpg', caption: 'Circuit Design Team Photo' },{ src: 'assets/photos/award-circuit-final-design.jpg', caption: 'Final Circuit Design' }],
+  'exemplary-student-branch': [{ src: 'assets/photos/award-exemplary-branch.jpg', caption: 'Exemplary Student Branch Photo' },{ src: 'assets/photos/award-southeastcon-group.jpg', caption: 'SoutheastCon Group Photo' },{ src: 'assets/photos/award-suboh-advisor.jpg', caption: 'Suboh Advisor Photo' }],
+  'university-club-scholarship': [{ src: 'assets/photos/lead-scholars-logo.jpg', caption: 'Lead Scholars Logo' }],
 };
 
 /* ─── Resume page ───────────────────────────────────────────────────────── */
@@ -823,7 +878,7 @@ const ContactDesktop = () => {
     <StickyNav title="Contact" />
     <div style={{padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth:680}}>
       <p style={{fontFamily:"'EB Garamond',serif",fontSize:17,lineHeight:1.7,color:'#111',marginBottom:40,textWrap:'pretty'}}>
-        I'm always happy to connect with others interested in RF electronics, antenna design, power systems, or any other engineering field.
+        I'm always happy to connect with others! Please contact me through these mediums!
       </p>
       {[['email','mattg.guillen@gmail.com','mailto:mattg.guillen@gmail.com'],['phone','(407) 907-5123','tel:4079075123'],['linkedin','linkedin.com/in/matias-guillen','https://linkedin.com/in/matias-guillen']].map(([label,val,href]) => (
         <div key={label}>
@@ -866,14 +921,14 @@ const App = () => {
       case 'projects':   content = <ProjectsIndex onSelect={p => openDetail(p,'project')} />; break;
       case 'skills':     content = <SkillsPage />; break;
       case 'experience': content = <ExperienceLeadershipPage subTab={expSubTab} onSubTabChange={setExpSubTab} onSelect={openDetail} />; break;
-      case 'awards':     content = <AwardsPage />; break;
+      case 'awards':     content = <AwardsPage onSelect={openDetail} />; break;
       case 'resume':     content = <ResumePage />; break;
       case 'contact':    content = <ContactDesktop />; break;
       default:           content = <HomeFull onNavigate={navigate} />;
     }
   }
 
-  const activePage = detail ? (detailType === 'project' ? 'projects' : 'experience') : page;
+  const activePage = detail ? (detailType === 'project' ? 'projects' : detailType === 'award' ? 'awards' : 'experience') : page;
 
   if (isMobile) {
     return (
