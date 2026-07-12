@@ -824,7 +824,7 @@ const EXPERIENCE_DATA = [
     date: 'May 2026 – Aug 2026',
     thumb: 'assets/photos/phased-array-radar.gif',
     desc: 'Programming and RF test validation for a Linux-based safety system and S-band phased array antenna calibration at Lockheed Martin RMS.',
-    summary: 'Programmed a Linux-based real-time RF safety system in C to acquire and transmit serial ADAM I/O data, validating a bit-exact match against the legacy FPGA it replaced using oscilloscopes and RF test equipment. Configured peripheral modules through TI SysConfig to emulate FPGA behavior on a TI board, reproducing peak and average RF power detector outputs in agreement with calibration data. Also developed test plans and review documentation for near-field calibration of S-band phased array antennas, tracing requirements in DOORS to keep test coverage aligned with system specifications across software and hardware.',
+    summary: 'Programmed a Linux-based real-time RF safety system in C to acquire and transmit serial I/O data, validating a bit-exact match against the legacy FPGA it replaced using oscilloscopes and RF test equipment. Configured peripheral modules through TI SysConfig to emulate FPGA behavior on a TI board, reproducing peak and average RF power detector outputs in agreement with calibration data. Also developed test plans and review documentation for near-field calibration of S-band phased array antennas, tracing requirements in DOORS to keep test coverage aligned with system specifications across software and hardware.',
     skills: ['RF & Signal Analysis','C / Embedded C','Embedded Systems','Test Engineering Documentation','DOORS','Oscilloscope / Lab Equipment','Linux','Logic Analyzer','Synthesized Signal Generator'],
     specs: [['Role','EE Antenna and RF Intern'],['Employer','Lockheed Martin (RMS)'],['Location','Moorestown, NJ'],['Period','May 2026 – Aug 2026']],
   },
@@ -832,9 +832,9 @@ const EXPERIENCE_DATA = [
     id: 'cwep',
     title: 'Production Test Engineering – CWEP',
     date: 'Apr 2024 – Apr 2026',
-    thumb: 'assets/photos/cwep-test-setup.jpg',
+    thumb: 'assets/photos/cwep-aircraft-sensor.gif',
     desc: 'Failure analysis, custom test fixture design, and documentation/calibration management for production RF hardware test at Lockheed Martin MFC.',
-    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements, supporting test centers for SITC and MEC.',
+    summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements, supporting the Sensors Test and Integration Center (SITC) and Microelectronics Center (MEC).',
     skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering','Calibration','SAP','FDM / 3D Printing'],
     specs: [['Role','Production Test Engineering – CWEP'],['Employer','Lockheed Martin MFC – College Work Experience Program (CWEP)'],['Location','Orlando, FL'],['Period','Apr 2024 – Apr 2026']],
   },
@@ -853,7 +853,7 @@ const PROJECTS_DATA = [
 const LEADERSHIP_SOFT_SKILLS = ['Public Speaking','Project Management','Team Management','Event Planning','Marketing'];
 
 const LEADERSHIP_DATA = [
-  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2026 – Present',  thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. I served as chapter officer from Apr 2025 to Apr 2026, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2026 – Present',  thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. I previously served as chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.', skills: LEADERSHIP_SOFT_SKILLS },
   { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.', skills: LEADERSHIP_SOFT_SKILLS },
   { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads. This included my own project, the Internal Project Competition, which taught valuable electrical engineering skills to freshman and sophomore students.', skills: LEADERSHIP_SOFT_SKILLS },
   { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'During my freshman year, I got involved with IEEE through community service initiatives. Some of the pictures you see are from a few of the events and workshops I helped host that year, spanning FIRST Robotics events, beach cleanups, and E-Week events.', skills: LEADERSHIP_SOFT_SKILLS },
@@ -862,7 +862,7 @@ const LEADERSHIP_DATA = [
 
 /* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
 const PHOTO_MAP = {
-  'ieee-president':      [{ src: 'assets/photos/president-1.jpg', caption: 'IEEE UCF recruiting event, spring 2026.' },{ src: 'assets/photos/president-2.jpg', caption: 'Spring general body meeting 1 with AMD panel.' },{ src: 'assets/photos/president-3.jpg', caption: 'IEEE x ACM family feud event, (I had the honor to dress up as Steve Harvey).' },{ src: 'assets/photos/president-workshop-helping.jpg', caption: 'Helping out at a workshop.' }],
+  'ieee-president':      [{ src: 'assets/photos/president-1.jpg', caption: 'IEEE UCF recruiting event, spring 2026.' },{ src: 'assets/photos/president-2.jpg', caption: 'Spring general body meeting 1 with AMD panel.' },{ src: 'assets/photos/president-3.jpg', caption: 'IEEE x ACM family feud event, (I had the honor to dress up as Steve Harvey).' },{ src: 'assets/photos/president-workshop-helping.jpg', caption: 'Helping out at a basic breadboarding workshop.' }],
   'ieee-project-chair':  [{ src: 'assets/photos/project-chair-header.jpg', caption: 'Presenting the IEEE UCF project lineup at the Fall 2024 General Body Meeting.' },{ src: 'assets/photos/project-chair-photo2.jpg', caption: 'IEEE UCF 2024-25 Officer Board' }],
   'ieee-hkn':            [{ src: 'assets/photos/hkn-1.jpg', caption: 'HKN Induction Ceremony – Spring 2026.' },{ src: 'assets/photos/hkn-2.jpg', caption: 'HKN Induction Committee – Spring 2026.' },{ src: 'assets/photos/hkn-3.jpg', caption: 'Me with HKN logo at Induction Ceremony.' }],
   'ieee-service':        [{ src: 'assets/photos/service-committee-1.jpg', caption: 'E-Week motor workshop.' },{ src: 'assets/photos/service-committee-2.jpg', caption: 'Beach Cleanup Day, Apr 2024.' },{ src: 'assets/photos/service-committee-3.jpg', caption: 'FIRST Robotics Event, Feb 2024.' },{ src: 'assets/photos/service-committee-4.jpg', caption: 'E-Week 2024 Static Electricity Workshop, Feb 2024.' }],
@@ -871,7 +871,7 @@ const PHOTO_MAP = {
   'junior-pcb-project':  [{ src: 'assets/photos/junior-pcb-mainboard-final.jpg', caption: 'Final Mainboard' },{ src: 'assets/photos/junior-pcb-footprint-board.png', caption: 'Footprint Board' },{ src: 'assets/photos/junior-pcb-schematic-board.png', caption: 'Schematic Board' },{ src: 'assets/photos/junior-pcb-regulator-test.jpg', caption: 'Regulator Test' },{ src: 'assets/photos/junior-pcb-regulator-smd.jpg', caption: 'Regulator SMD' },{ src: 'assets/photos/junior-pcb-mainboard-smd.jpg', caption: 'Mainboard SMD' },{ src: 'assets/photos/junior-pcb-prototype-test.jpg', caption: 'Prototype Test' },{ src: 'assets/photos/junior-pcb-thermal-test.jpg', caption: 'Thermal Test' }],
   'southeastcon-2024':   [{ src: 'assets/photos/southeastcon-power-system-design.png', caption: 'Power System Design' },{ src: 'assets/photos/southeastcon-fusion360-chassis.jpg', caption: 'Fusion 360 Chassis Model' },{ src: 'assets/photos/southeastcon-physical-chassis.jpg', caption: 'Physical Chassis Model' },{ src: 'assets/photos/southeastcon-buck-converter-power-model.jpg', caption: 'Buck Converter and Power System Model' },{ src: 'assets/photos/southeastcon-final-robot-moving.jpg', caption: 'Final Robot Moving' },{ src: 'assets/photos/southeastcon-later-stage-construction-1.jpg', caption: 'Later-Stage Robot Construction' },{ src: 'assets/photos/southeastcon-later-stage-construction-2.jpg', caption: 'Later-Stage Robot Construction' }],
   'lockheed-rf':         [{ src: 'assets/photos/phased-array-radar.gif', caption: 'Phased Array Radar' }],
-  'cwep':                [{ src: 'assets/photos/cwep-test-setup.jpg', caption: 'Test Setup' }],
+  'cwep':                [{ src: 'assets/photos/cwep-aircraft-sensor.gif', caption: 'Sensor from Aircraft Sending and Receiving Data of Target' }],
   'lead-scholars':       [{ src: 'assets/photos/lead-scholars-logo.jpg', caption: 'Lead Scholars Logo' }],
   'circuit-design-2nd-place': [{ src: 'assets/photos/award-circuit-2nd-place.jpg', caption: '2nd Place Award Photo' },{ src: 'assets/photos/award-circuit-team.jpg', caption: 'Circuit Design Team Photo' },{ src: 'assets/photos/award-circuit-final-design.jpg', caption: 'Final Circuit Design' }],
   'exemplary-student-branch': [{ src: 'assets/photos/award-exemplary-branch.jpg', caption: 'Exemplary Student Branch Photo' },{ src: 'assets/photos/award-southeastcon-group.jpg', caption: 'SoutheastCon Group Photo' },{ src: 'assets/photos/award-suboh-advisor.jpg', caption: 'Suboh Advisor Photo' }],
@@ -924,6 +924,15 @@ const ContactDesktop = () => {
   );
 };
 
+/* ─── Footer ────────────────────────────────────────────────────────────── */
+const Footer = () => (
+  <footer style={{ padding: '24px 20px', textAlign: 'center', borderTop: '1px solid rgba(17,17,17,0.08)' }}>
+    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#888', letterSpacing: '0.02em' }}>
+      © 2026 Matias Guillen. All Rights Reserved.
+    </span>
+  </footer>
+);
+
 /* ─── App ───────────────────────────────────────────────────────────────── */
 const App = () => {
   const [page, setPage] = React.useState('home');
@@ -963,8 +972,9 @@ const App = () => {
     return (
       <div style={{display:'flex', flexDirection:'column', width:'100%', minHeight:'100vh'}}>
         <MobileHeader activePage={activePage} onNavigate={navigate} />
-        <main style={{flex:1}}>
-          {content}
+        <main style={{flex:1, display:'flex', flexDirection:'column'}}>
+          <div style={{flex:1}}>{content}</div>
+          <Footer />
         </main>
       </div>
     );
@@ -973,8 +983,9 @@ const App = () => {
   return (
     <div style={{display:'flex',width:'100%',minHeight:'100vh'}}>
       <Sidebar activePage={activePage} onNavigate={navigate} />
-      <main ref={mainRef} style={{flex:1,overflowY:'auto',minHeight:'100vh'}}>
-        {content}
+      <main ref={mainRef} style={{flex:1,overflowY:'auto',minHeight:'100vh', display:'flex', flexDirection:'column'}}>
+        <div style={{flex:1}}>{content}</div>
+        <Footer />
       </main>
     </div>
   );
