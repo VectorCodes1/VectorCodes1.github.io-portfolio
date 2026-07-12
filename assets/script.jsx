@@ -546,7 +546,6 @@ const ProjectsIndex = ({ onSelect }) => {
                   <span style={di.cardTitle}>{item.title}</span>
                   <span style={di.cardDate}>{item.date}</span>
                 </div>
-                <p style={di.cardDesc}>{item.desc}</p>
               </div>
             </div>
             </Reveal>
@@ -615,7 +614,6 @@ const ExperienceLeadershipPage = ({ subTab, onSubTabChange, onSelect }) => {
                   <span style={di.cardTitle}>{item.title}</span>
                   <span style={di.cardDate}>{item.date}</span>
                 </div>
-                <p style={di.cardDesc}>{item.desc}</p>
               </div>
             </div>
             </Reveal>
@@ -666,7 +664,6 @@ const AwardsPage = ({ onSelect }) => {
                   <span style={di.cardTitle}>{item.title}</span>
                   <span style={di.cardDate}>{item.date}</span>
                 </div>
-                <p style={di.cardDesc}>{item.desc}</p>
               </div>
             </div>
             </Reveal>
@@ -688,10 +685,9 @@ const di = {
   thumbImg: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' },
   thumbPlaceholder: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', opacity: 0.35 },
   cardBody: { padding: '18px 20px 20px' },
-  cardTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, marginBottom: 8 },
+  cardTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 },
   cardTitle: { fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111', lineHeight: 1.3 },
   cardDate: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#666', letterSpacing: '0.02em', whiteSpace: 'nowrap', flexShrink: 0 },
-  cardDesc: { fontFamily: "'EB Garamond',serif", fontStyle: 'italic', fontSize: 14, color: '#555', lineHeight: 1.5 },
 };
 
 /* ─── Detail page — desktop ─────────────────────────────────────────────── */
