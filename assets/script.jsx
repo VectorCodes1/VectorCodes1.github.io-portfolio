@@ -614,6 +614,12 @@ const ExperienceLeadershipPage = ({ subTab, onSubTabChange, onSelect }) => {
                   <span style={di.cardTitle}>{item.title}</span>
                   <span style={di.cardDate}>{item.date}</span>
                 </div>
+                {item.org && (
+                  <div style={di.cardOrg}>
+                    <img src={item.org.logo} alt="" aria-hidden="true" style={di.cardOrgLogo} />
+                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10.5, color: '#555', letterSpacing: '0.02em' }}>{item.org.name}</span>
+                  </div>
+                )}
               </div>
             </div>
             </Reveal>
@@ -688,6 +694,8 @@ const di = {
   cardTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 },
   cardTitle: { fontFamily: "'EB Garamond',serif", fontSize: 17, color: '#111', lineHeight: 1.3 },
   cardDate: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#666', letterSpacing: '0.02em', whiteSpace: 'nowrap', flexShrink: 0 },
+  cardOrg: { display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 },
+  cardOrgLogo: { width: 18, height: 18, objectFit: 'contain', flexShrink: 0, borderRadius: 2 },
 };
 
 /* ─── Detail page — desktop ─────────────────────────────────────────────── */
@@ -819,6 +827,7 @@ const EXPERIENCE_DATA = [
     title: 'Electrical Engineering Antenna and RF Intern',
     date: 'May 2026 – Aug 2026',
     thumb: 'assets/photos/phased-array-radar.gif',
+    org: { logo: 'assets/lockheed_martin_logo.jpg', name: 'Lockheed Martin' },
     desc: 'Programming and RF test validation for a Linux-based safety system and S-band phased array antenna calibration at Lockheed Martin RMS.',
     summary: 'Programmed a Linux-based real-time RF safety system in C to acquire and transmit serial I/O data, validating a bit-exact match against the legacy FPGA it replaced using oscilloscopes and RF test equipment. Configured peripheral modules through TI SysConfig to emulate FPGA behavior on a TI board, reproducing peak and average RF power detector outputs in agreement with calibration data. Also developed test plans and review documentation for near-field calibration of S-band phased array antennas, tracing requirements in DOORS to keep test coverage aligned with system specifications across software and hardware.',
     skills: ['RF & Signal Analysis','C / Embedded C','Embedded Systems','Test Engineering Documentation','DOORS','Oscilloscope / Lab Equipment','Linux','Logic Analyzer','Synthesized Signal Generator'],
@@ -829,6 +838,7 @@ const EXPERIENCE_DATA = [
     title: 'Production Test Engineering – CWEP',
     date: 'Apr 2024 – Apr 2026',
     thumb: 'assets/photos/cwep-aircraft-sensor.gif',
+    org: { logo: 'assets/lockheed_martin_logo.jpg', name: 'Lockheed Martin' },
     desc: 'Failure analysis, custom test fixture design, and documentation/calibration management for production RF hardware test at Lockheed Martin MFC.',
     summary: 'Conducted component-level failure analysis on 20 sensor hardware units monthly using multimeters and test equipment, and engineered 12 custom test fixtures in SolidWorks to mitigate moisture interference and improve RF signal integrity. Managed the review process for 160 certified test documents in Windchill, maintaining clear work instructions for 34 Electronics Test Specialists across 8 program areas, supporting 35 unique hardware builds and 15 U.S. government and allied customers. Ensured 100% operational readiness for 4,500 annual test operations by managing the calibration schedule for 135 test assets in Indysoft, coordinating with the metrology lab to prioritize single-point failures across 9 contract requirements, supporting the Sensors Test and Integration Center (SITC) and Microelectronics Center (MEC).',
     skills: ['Test Engineering Documentation','Windchill','SolidWorks','Circuit Design Analysis','Oscilloscope / Lab Equipment','Soldering','Calibration','SAP','FDM / 3D Printing'],
@@ -849,11 +859,11 @@ const PROJECTS_DATA = [
 const LEADERSHIP_SOFT_SKILLS = ['Public Speaking','Project Management','Team Management','Event Planning','Marketing'];
 
 const LEADERSHIP_DATA = [
-  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2026 – Present',  thumb: 'assets/photos/hkn-1.jpg',                desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. I previously served as chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.', skills: LEADERSHIP_SOFT_SKILLS },
-  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.', skills: LEADERSHIP_SOFT_SKILLS },
-  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads. This included my own project, the Internal Project Competition, which taught valuable electrical engineering skills to freshman and sophomore students.', skills: LEADERSHIP_SOFT_SKILLS },
-  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', desc: 'During my freshman year, I got involved with IEEE through community service initiatives. Some of the pictures you see are from a few of the events and workshops I helped host that year, spanning FIRST Robotics events, beach cleanups, and E-Week events.', skills: LEADERSHIP_SOFT_SKILLS },
-  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: 'assets/photos/lead-scholars-logo.jpg',  desc: 'Two-year leadership program I was involved in during my freshman and sophomore year. I helped organizations like Hope Chest Thrift Store, SERV, and First Robotics during my involvement, while also learning about various leadership principles and strategies.', link: { url: 'https://stars.library.ucf.edu/hip-2024fall/50/', label: 'View one of my servant leadership projects' }, skills: ['Public Speaking','Project Management','Team Management','Event Planning'], specs: [['Role','UCF LEAD Scholars Member'],['Organization','UCF LEAD Scholars Academy'],['Period','Mar 2023 – Apr 2025']] },
+  { id: 'ieee-hkn',           title: 'IEEE HKN Zeta Chi Chapter Vice President', date: 'Apr 2026 – Present',  thumb: 'assets/photos/hkn-1.jpg',                org: { logo: 'assets/photos/hkn-logo.png', name: 'IEEE-HKN' },              desc: 'I now serve as Vice President of the Zeta Chi chapter of IEEE Eta Kappa Nu, the IEEE honor society for electrical and computer engineering. I previously served as chapter officer, and since my involvement with the club I have helped lead induction ceremonies and overall club organization and structure, providing growth and sustainability for the chapter.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-president',     title: 'IEEE UCF President',                      date: 'Apr 2025 – Apr 2026', thumb: 'assets/photos/president-1.jpg',          org: { logo: 'assets/ieee_ucf_logo.jpg', name: 'IEEE UCF' },                 desc: 'Over my junior year as an EE, I had the opportunity to lead IEEE UCF, which gave me hands-on experience working with 13 other officers, coordinating 30+ events with various companies, and securing over $10,000 in sponsorships.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-project-chair', title: 'IEEE UCF Project Chair',                  date: 'Apr 2024 – Apr 2025', thumb: 'assets/photos/project-chair-1.jpg',      org: { logo: 'assets/ieee_ucf_logo.jpg', name: 'IEEE UCF' },                 desc: 'Over my sophomore year as an EE, I had the chance to serve in a technical officer position in IEEE UCF as Project Chair, where I led a group of 8 project leads. This included my own project, the Internal Project Competition, which taught valuable electrical engineering skills to freshman and sophomore students.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'ieee-service',       title: 'IEEE UCF Service Committee',               date: 'Feb 2024 – Apr 2024', thumb: 'assets/photos/service-committee-1.jpg', org: { logo: 'assets/ieee_ucf_logo.jpg', name: 'IEEE UCF' },                 desc: 'During my freshman year, I got involved with IEEE through community service initiatives. Some of the pictures you see are from a few of the events and workshops I helped host that year, spanning FIRST Robotics events, beach cleanups, and E-Week events.', skills: LEADERSHIP_SOFT_SKILLS },
+  { id: 'lead-scholars',      title: 'UCF LEAD Scholars Member',                 date: 'Mar 2023 – Apr 2025', thumb: 'assets/photos/lead-scholars-logo.jpg',  org: { logo: 'assets/photos/lead-scholars-logo.jpg', name: 'UCF LEAD Scholars Academy' }, desc: 'Two-year leadership program I was involved in during my freshman and sophomore year. I helped organizations like Hope Chest Thrift Store, SERV, and First Robotics during my involvement, while also learning about various leadership principles and strategies.', link: { url: 'https://stars.library.ucf.edu/hip-2024fall/50/', label: 'View one of my servant leadership projects' }, skills: ['Public Speaking','Project Management','Team Management','Event Planning'], specs: [['Role','UCF LEAD Scholars Member'],['Organization','UCF LEAD Scholars Academy'],['Period','Mar 2023 – Apr 2025']] },
 ];
 
 /* ✏️  EDIT YOUR CONTENT HERE — Photo Map */
