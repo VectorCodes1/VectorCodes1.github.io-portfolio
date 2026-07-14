@@ -321,10 +321,11 @@ const AboutPhoto = () => {
 const AWARDS_DATA = [
   {
     id: 'circuit-design-2nd-place',
-    title: '2nd Place in Student Circuit Design Competition',
+    title: '2nd Place in IEEE Student Circuit Design Competition',
     date: 'Mar 2026',
     thumb: 'assets/photos/award-circuit-2nd-place.jpg',
-    desc: "I served as the competition and documentation lead for a team that placed 2nd out of 39 schools located in the IEEE Region 3 area. My role involved the design and development of a circuit system and embedded device for an automated water safety system, while also overseeing the project's technical documentation.",
+    desc: "I served as the competition and documentation lead for a team that placed 2nd out of 39 schools located in the IEEE Region 3 area. The competition itself took place in Huntsville, Alabama during SoutheastCon 2026, where we had 4 hours to complete and build the system from start to finish. My role involved the design and development of a circuit system and embedded device for an automated water safety system, while also overseeing the project's technical documentation.",
+    link: { intro: 'If you would like to view more of what we contributed to the competition, please see the PDF below.', url: 'assets/circuit-design-2nd-place-report.pdf', label: 'Technical Documentation' },
     specs: [['Issued by','IEEE Region 3 - Student Activity Awards'],['Date','Mar 2026'],['Associated with','IEEE UCF']],
   },
   {
@@ -751,9 +752,10 @@ const DesktopDetail = ({ item, type, onBack }) => {
               </div>
             )}
             {item.link && (
-              <p style={dd.linkRow}>
+              <div style={dd.linkRow}>
+                {item.link.intro && <span style={dd.linkIntro}>{item.link.intro}</span>}
                 <a href={item.link.url} target="_blank" rel="noopener noreferrer" style={dd.link}>{item.link.label} →</a>
-              </p>
+              </div>
             )}
           </div>
 
@@ -809,6 +811,7 @@ const dd = {
   skillRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16 },
   skillChip: { fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, color: '#1B3A5C', border: '1px solid rgba(27,58,92,0.35)', padding: '2px 8px', background: 'rgba(27,58,92,0.04)', letterSpacing: '0.02em' },
   linkRow: { marginTop: 20 },
+  linkIntro: { fontFamily: "'EB Garamond',serif", fontSize: 16, lineHeight: 1.6, color: '#444', display: 'block', marginBottom: 8 },
   link: { fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: '#1B3A5C', letterSpacing: '0.02em', textDecoration: 'underline' },
   gallery: { display: 'flex', flexDirection: 'column', gap: 32, alignItems: 'center' },
   figure: { width: '100%', maxWidth: 480, margin: '0 auto' },
