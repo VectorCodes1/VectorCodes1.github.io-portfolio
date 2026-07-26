@@ -392,7 +392,7 @@ const HomeFull = ({ onNavigate }) => {
 };
 
 const hf = {
-  page: { padding: '64px 56px 96px', maxWidth: 820 },
+  page: { padding: '64px 56px 96px', maxWidth: 820, margin: '0 auto' },
   hero: { marginBottom: 48 },
   h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(2.8rem,4vw,4rem)', fontWeight: 400, color: '#111', lineHeight: 1.05, marginBottom: 24, letterSpacing: '-0.01em' },
   welcome: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(2rem,3.2vw,2.6rem)', fontWeight: 500, color: '#111', lineHeight: 1.15, marginBottom: 16, letterSpacing: '-0.01em' },
@@ -683,7 +683,7 @@ const AwardsPage = ({ onSelect }) => {
 
 const di = {
   page: { flex: 1 },
-  inner: { padding: '40px 56px 96px', maxWidth: 900 },
+  inner: { padding: '40px 56px 96px', maxWidth: 900, margin: '0 auto' },
   h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 400, color: '#111', marginBottom: 32 },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px,1fr))', gap: 20 },
   card: { border: '1px solid rgba(17,17,17,0.12)', borderTop: '3px solid #1B3A5C', background: '#fff', cursor: 'pointer', transition: 'box-shadow 0.15s, transform 0.15s', overflow: 'hidden' },
@@ -796,7 +796,7 @@ const dd = {
   zoomOverlay: { position: 'fixed', inset: 0, background: 'rgba(17,17,17,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, cursor: 'zoom-out' },
   zoomImg: { maxWidth: '92vw', maxHeight: '90vh', objectFit: 'contain' },
   zoomClose: { position: 'absolute', top: 16, right: 20, width: 40, height: 40, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: 28, lineHeight: 1, cursor: 'pointer', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 },
-  inner: { padding: '32px 56px 96px', maxWidth: 1000 },
+  inner: { padding: '32px 56px 96px', maxWidth: 1000, margin: '0 auto' },
   backBtn: { fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#1B3A5C', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.02em', padding: '0 0 28px', display: 'block' },
   titleBlock: { marginBottom: 36 },
   h1: { fontFamily: "'EB Garamond',serif", fontSize: 'clamp(1.8rem,3vw,2.6rem)', fontWeight: 400, color: '#111', margin: 0 },
@@ -915,7 +915,7 @@ const ContactDesktop = () => {
   return (
   <div style={{flex:1}}>
     <StickyNav title="Contact" />
-    <div style={{padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth:680}}>
+    <div style={{padding: isMobile ? '28px 20px 64px' : '40px 56px 96px', maxWidth:680, margin: '0 auto'}}>
       <p style={{fontFamily:"'EB Garamond',serif",fontSize:17,lineHeight:1.7,color:'#111',marginBottom:40,textWrap:'pretty'}}>
         I'm always happy to connect with others! Please contact me through these mediums!
       </p>
