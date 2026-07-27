@@ -368,12 +368,12 @@ const HomeFull = ({ onNavigate }) => {
     </div>
     </Reveal>
 
-    <div style={hf.dividerWrap}><div style={hf.divNode}></div><div style={hf.divLine}></div></div>
+    <div style={hf.dividerWrap}><div style={{ ...hf.divNode, left: isMobile ? 0 : 114 }}></div><div style={hf.divLine}></div></div>
 
     {/* About */}
     <Reveal delay={60}>
     <div style={hf.aboutRow}>
-      <div style={hf.aboutText}>
+      <div style={{ ...hf.aboutText, marginLeft: isMobile ? 0 : 114 }}>
         <span style={hf.sectionLabel}>About</span>
         <p style={hf.aboutBio}>
           Hi, I'm Matias (mah-TEE-ahs), a Florida native who enjoys the outdoors and traveling. As a
