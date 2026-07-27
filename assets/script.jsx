@@ -360,7 +360,7 @@ const HomeFull = ({ onNavigate }) => {
     <Reveal>
     <div style={hf.hero}>
       <h1 style={hf.welcome}>Welcome to my Portfolio!</h1>
-      <p style={hf.bio}>
+      <p style={{ ...hf.bio, marginLeft: isMobile ? 0 : 114 }}>
         Electrical engineering student @ University of Central Florida specializing in RF &amp;
         antenna systems. From production test and development to embedded hardware setup, I have
         real, practical experience across multiple domains.
