@@ -359,8 +359,8 @@ const HomeFull = ({ onNavigate }) => {
     {/* Hero */}
     <Reveal>
     <div style={hf.hero}>
-      <h1 style={hf.welcome}>Welcome to my Portfolio!</h1>
-      <p style={{ ...hf.bio, marginLeft: isMobile ? 0 : 114 }}>
+      <h1 style={{ ...hf.welcome, marginLeft: isMobile ? 0 : 114 }}>Welcome to my Portfolio!</h1>
+      <p style={{ ...hf.bio, maxWidth: 480, marginLeft: isMobile ? 0 : 114 }}>
         Electrical engineering student @ University of Central Florida specializing in RF &amp;
         antenna systems. From production test and development to embedded hardware setup, I have
         real, practical experience across multiple domains.
@@ -368,12 +368,12 @@ const HomeFull = ({ onNavigate }) => {
     </div>
     </Reveal>
 
-    <div style={hf.dividerWrap}><div style={{ ...hf.divNode, left: isMobile ? 0 : 114 }}></div><div style={hf.divLine}></div></div>
+    <div style={hf.dividerWrap}><div style={{ ...hf.divNode, left: isMobile ? 0 : 114 }}></div><div style={{ ...hf.divLine, marginLeft: isMobile ? 0 : 114 }}></div></div>
 
     {/* About */}
     <Reveal delay={60}>
     <div style={hf.aboutRow}>
-      <div style={{ ...hf.aboutText, marginLeft: isMobile ? 0 : 114 }}>
+      <div style={{ ...hf.aboutText, maxWidth: 480, marginLeft: isMobile ? 0 : 114 }}>
         <span style={hf.sectionLabel}>About</span>
         <p style={hf.aboutBio}>
           Hi, I'm Matias (mah-TEE-ahs), a Florida native who enjoys the outdoors and traveling. As a
